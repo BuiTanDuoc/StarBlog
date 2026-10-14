@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "StarBlog.Api": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "launchUrl": "api-docs/swagger",
+      "applicationUrl": "http://localhost:5039",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

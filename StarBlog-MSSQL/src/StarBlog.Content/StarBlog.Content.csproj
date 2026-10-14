@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <LangVersion>default</LangVersion>
+        <AssemblyName>StarBlog.Content</AssemblyName>
+        <RootNamespace>StarBlog.Content</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\StarBlog.Data\StarBlog.Data.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="MailKit" Version="4.14.1" />
+        <PackageReference Include="Markdig" Version="0.45.0" />
+    </ItemGroup>
+
+</Project>

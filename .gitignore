@@ -479,3 +479,4 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
+StarBlog-MSSQL/src/StarBlog.Web/wwwroot/lib/
