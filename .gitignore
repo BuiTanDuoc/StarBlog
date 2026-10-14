@@ -480,3 +480,4 @@ MigrationBackup/
 FodyWeavers.xsd
 
 StarBlog-MSSQL/src/StarBlog.Web/wwwroot/lib/
+StarBlog-Admin/build/
