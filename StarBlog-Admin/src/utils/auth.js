@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
 
 /**
- * 检查是否已登录
+ * Kiểm tra xem đã đăng nhập chưa
  * @return boolean
  */
 export const isLogin = () => {
@@ -14,7 +14,7 @@ export const isLogin = () => {
 }
 
 /**
- * 检查登录是否过期
+ * Kiểm tra đăng nhập đã hết hạn chưa
  * @return boolean
  */
 export const isExpired = () => {
@@ -29,7 +29,7 @@ export const isExpired = () => {
 }
 
 /**
- * 读取保存的token
+ * Đọc token đã lưu
  * @return string
  */
 export const getToken = () => {
@@ -37,20 +37,20 @@ export const getToken = () => {
 }
 
 /**
- * 保存登录信息
- * @param token 密钥
- * @param username 用户名
- * @param expiration token过期时间
+ * Lưu thông tin đăng nhập
+ * @param token Khóa bí mật
+ * @param username Tên người dùng
+ * @param expiration token Thời gian hết hạn
  */
 export const login = (token, username, expiration) => {
-  // 保存token到Cookie
+  // Lưu token vào Cookie
   Cookies.set('token', token)
-  // 保存登录数据到本地会话
+  // Lưu dữ liệu đăng nhập vào phiên cục bộ
   localStorage.setItem('user', username)
   localStorage.setItem('expiration', expiration)
 }
 
-// 注销
+// Đăng xuất
 export const logout = () => {
   Cookies.set('token', null)
   localStorage.removeItem('user')

@@ -12,28 +12,28 @@
     </el-table-column>
     <el-table-column
       prop="name"
-      label="推荐名称"
+      label="Tên đề xuất"
       width="250">
     </el-table-column>
     <el-table-column
       prop="description"
-      label="推荐说明"
+      label="Mô tả đề xuất"
       width="500"
       :show-overflow-tooltip="true">
     </el-table-column>
     <el-table-column
       prop="iconCssClass"
-      label="图标"
+      label="Biểu tượng"
       width="200">
     </el-table-column>
     <el-table-column
       prop="category.id"
-      label="分类ID"
+      label="ID danh mục"
       width="80">
     </el-table-column>
     <el-table-column
       prop="category.name"
-      label="分类名称">
+      label="Tên danh mục">
     </el-table-column>
     <el-table-column
       align="right">
@@ -41,13 +41,13 @@
         <el-input
           v-model="search"
           size="mini"
-          placeholder="输入关键字搜索"/>
+          placeholder="Nhập từ khóa để tìm kiếm"/>
       </template>
       <template slot-scope="scope">
         <el-button
           size="mini"
           type="warning" plain
-          @click="cancelFeatured(scope.$index, scope.row)">取消推荐
+          @click="cancelFeatured(scope.$index, scope.row)">Bỏ đề xuất
         </el-button>
       </template>
     </el-table-column>
@@ -85,14 +85,14 @@ export default {
         .finally(() => this.loading = false)
     },
     cancelFeatured(index, item) {
-      this.$confirm('你确定吗?', 'Are you sure?', {type: 'warning'})
+      this.$confirm('Bạn có chắc không?', 'Are you sure?', {type: 'warning'})
         .then(() => {
           this.$api.featuredCategory.deleteItem(item.id)
-            .then(res => this.$message.success(`操作成功。${res.message}`))
-            .catch(res => this.$message.error(`操作失败。${res.message}`))
+            .then(res => this.$message.success(`Thao tác thành công. ${res.message}`))
+            .catch(res => this.$message.error(`Thao tác thất bại. ${res.message}`))
             .finally(() => this.loadData())
         })
-        .catch(() => this.$message('操作取消'))
+        .catch(() => this.$message('Hủy thao tác'))
     }
   }
 }

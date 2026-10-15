@@ -1,22 +1,22 @@
 <template>
   <div class="pb-5">
     <el-breadcrumb separator-class="el-icon-arrow-right" class="my-3">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>博客</el-breadcrumb-item>
-      <el-breadcrumb-item :to="{ path: '/post/list' }">文章管理</el-breadcrumb-item>
-      <el-breadcrumb-item v-if="mode==='edit'">编辑文章</el-breadcrumb-item>
-      <el-breadcrumb-item v-if="mode==='new'">新建文章</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/' }">Trang chủ</el-breadcrumb-item>
+      <el-breadcrumb-item>Blog</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/post/list' }">Quản lý bài viết</el-breadcrumb-item>
+      <el-breadcrumb-item v-if="mode==='edit'">Sửa bài viết</el-breadcrumb-item>
+      <el-breadcrumb-item v-if="mode==='new'">Tạo bài viết mới</el-breadcrumb-item>
     </el-breadcrumb>
 
     <el-divider></el-divider>
 
     <div class="d-flex justify-content-between mb-1">
-      <div>标题</div>
+      <div>Tiêu đề</div>
       <el-link v-if="post!==null" type="primary" target="_blank">{{ `${baseUrl}/Blog/Post/${post.id}` }}</el-link>
     </div>
-    <el-input v-model="postTitle" placeholder="文章标题" class="mb-3"></el-input>
+    <el-input v-model="postTitle" placeholder="Tiêu đề bài viết" class="mb-3"></el-input>
 
-    <div class="mb-1">内容</div>
+    <div class="mb-1">Nội dung</div>
     <v-md-editor
       class="mb-4"
       v-model="postContent"
@@ -30,32 +30,32 @@
 
     <el-divider></el-divider>
 
-    <el-descriptions title="文章信息" :column="2" border>
-      <el-descriptions-item label="文章ID">{{ post.id }}</el-descriptions-item>
-      <el-descriptions-item label="状态">
+    <el-descriptions title="Thông tin bài viết" :column="2" border>
+      <el-descriptions-item label="ID bài viết">{{ post.id }}</el-descriptions-item>
+      <el-descriptions-item label="Trạng thái">
         <el-tag size="small">{{ post.status }}</el-tag>
       </el-descriptions-item>
-      <el-descriptions-item label="添加时间">{{ post.creationTime }}</el-descriptions-item>
-      <el-descriptions-item label="修改时间">{{ post.lastUpdateTime }}</el-descriptions-item>
+      <el-descriptions-item label="Thời gian thêm">{{ post.creationTime }}</el-descriptions-item>
+      <el-descriptions-item label="Thời gian sửa">{{ post.lastUpdateTime }}</el-descriptions-item>
     </el-descriptions>
 
-    <el-divider content-position="left">文章选项</el-divider>
+    <el-divider content-position="left">Tùy chọn bài viết</el-divider>
 
     <el-form label-position="left" label-width="auto" :model="form" class="text-start">
-      <el-form-item label="模式" prop="isPublish">
-        <el-radio v-model="form.isPublish" :label="true">发表</el-radio>
-        <el-radio v-model="form.isPublish" :label="false">保存草稿</el-radio>
+      <el-form-item label="Chế độ" prop="isPublish">
+        <el-radio v-model="form.isPublish" :label="true">Đăng</el-radio>
+        <el-radio v-model="form.isPublish" :label="false">Lưu bản nháp</el-radio>
       </el-form-item>
 
       <el-row :gutter="20">
         <el-col :span="8">
           <el-form-item label="Slug" prop="slug">
             <el-input v-model="form.slug" maxlength="150" show-word-limit placeholder="Slug"></el-input>
-            <small>友好地址名，只能使用字母、数字、-连字符、_下划线，不超过150个字符</small>
+            <small>Tên địa chỉ thân thiện, chỉ được dùng chữ cái, số, dấu gạch nối -, dấu gạch dưới _, không quá 150 ký tự</small>
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="分类" prop="category">
+          <el-form-item label="Danh mục" prop="category">
             <el-cascader class="w-100" :options="categoryTree" clearable :props="{
                 checkStrictly:true,
                 expandTrigger:'hover',
@@ -64,27 +64,27 @@
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="文章标记" prop="status">
+          <el-form-item label="Đánh dấu bài viết" prop="status">
             <el-input v-model="form.status" maxlength="20" show-word-limit placeholder="Status"></el-input>
-            <small>提取原markdown文件的文件名前缀，用于区分文章状态。如：未完成、老文</small>
+            <small>Trích xuất tiền tố tên tệp của tệp markdown gốc, dùng để phân biệt trạng thái bài viết. Ví dụ: chưa hoàn thành, bài cũ</small>
           </el-form-item>
         </el-col>
       </el-row>
 
-      <el-form-item label="简介" prop="summary">
+      <el-form-item label="Giới thiệu" prop="summary">
         <el-input type="textarea" v-model="form.summary" :rows="8" maxlength="200" show-word-limit
-                  placeholder="简介"></el-input>
+                  placeholder="Giới thiệu"></el-input>
       </el-form-item>
     </el-form>
 
     <div class="text-end">
-      <el-button type="primary" plain @click="onSaveClick" :loading="saveButtonLoading">保存</el-button>
+      <el-button type="primary" plain @click="onSaveClick" :loading="saveButtonLoading">Lưu</el-button>
     </div>
   </div>
 </template>
 
 <script>
-// todo 应该增加一个关闭页面提示，或者是关闭页面自动保存的功能~
+// todo Nên thêm cảnh báo khi đóng trang, hoặc chức năng tự động lưu khi đóng trang~
 import {baseUrl} from "@/utils/global";
 import {dateTimeBeautify} from "@/utils/dateTime";
 import VMdEditor from "@kangc/v-md-editor/lib/codemirror-editor";
@@ -97,7 +97,7 @@ export default {
   data() {
     return {
       baseUrl: baseUrl,
-      // 编辑模式：new / edit
+      // Chế độ chỉnh sửa: new / edit
       mode: 'new',
       postTitle: '',
       postContent: '',
@@ -119,12 +119,12 @@ export default {
     this.loadCategories()
   },
   methods: {
-    // 全屏切换
+    // Chuyển đổi toàn màn hình
     fullscreenChange(isFullscreen) {
       this.$store.commit('onFullscreenChange')
     },
     /**
-     * 上传图片处理
+     * Xử lý tải ảnh lên
      * @param event
      * @param insertImage Function
      * @param files
@@ -134,15 +134,15 @@ export default {
 
       this.$api.blogPost.uploadImage(this.post.id, file)
         .then(res => {
-          this.$message.success(`添加图片：${res.data.imgName}`)
+          this.$message.success(`Thêm ảnh: ${res.data.imgName}`)
           insertImage({
             url: res.data.imgUrl.replaceAll('\\', '/'),
             desc: res.data.imgName
           })
         })
-        .catch(res => this.$message.error(`上传图片失败。${res.message}`))
+        .catch(res => this.$message.error(`Tải ảnh lên thất bại. ${res.message}`))
     },
-    // 初始化
+    // Khởi tạo
     init() {
       let id = this.$route.params.id
       if (id) {
@@ -159,13 +159,13 @@ export default {
             this.form.isPublish = this.post.isPublish
             this.form.summary = this.post.summary
             this.form.category = this.post.categoryId
-            this.$notify.info({title: '当前模式：修改文章', message: `加载文章：${this.postTitle}`})
+            this.$notify.info({title: 'Chế độ hiện tại: sửa bài viết', message: `Tải bài viết: ${this.postTitle}`})
           })
-          .catch(res => this.$message.error(`获取信息失败。${res.message}`))
+          .catch(res => this.$message.error(`Lấy thông tin thất bại. ${res.message}`))
       } else {
         this.mode = 'new'
         this.post = {}
-        this.$notify.warning({title: '当前模式：新建文章', message: '注意：只有保存文章之后才能上传图片！'})
+        this.$notify.warning({title: 'Chế độ hiện tại: tạo bài viết mới', message: 'Lưu ý: chỉ có thể tải ảnh lên sau khi đã lưu bài viết!'})
       }
     },
     loadCategories() {
@@ -206,19 +206,19 @@ export default {
       if (this.mode === 'new') {
         this.$api.blogPost.add(post)
           .then(res => {
-            this.$message.success(`保存成功。`)
-            // 新建完就跳转到编辑页面
+            this.$message.success(`Lưu thành công.`)
+            // Tạo xong thì chuyển sang trang chỉnh sửa
             this.$router.push(`/post/edit/${res.data.id}`)
           })
           .catch(res => {
             console.log(res)
-            this.$message.error(`操作失败。${res.message}`)
+            this.$message.error(`Thao tác thất bại. ${res.message}`)
           })
           .finally(() => this.saveButtonLoading = false)
       } else {
         this.$api.blogPost.update(post)
-          .then(res => this.$message.success(`保存成功。`))
-          .catch(res => this.$message.error(`操作失败。${res.message}`))
+          .then(res => this.$message.success(`Lưu thành công.`))
+          .catch(res => this.$message.error(`Thao tác thất bại. ${res.message}`))
           .finally(() => this.saveButtonLoading = false)
       }
     }

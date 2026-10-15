@@ -10,7 +10,7 @@ import ErrorHandler from "./utils/errorHandler"
 import global from './utils/global'
 import store from './store'
 
-// bootstrap 的部分css引入
+// Import một phần css của bootstrap
 import 'bootstrap/dist/css/bootstrap-reboot.css'
 import 'bootstrap/dist/css/bootstrap-utilities.css'
 
@@ -20,17 +20,17 @@ import 'element-ui/lib/theme-chalk/index.css'
 // FontAwesome
 import 'font-awesome/css/font-awesome.min.css'
 
-// DataV 图表
+// DataV Biểu đồ
 import dataV from '@jiaminghi/data-view'
 
-// markdown编辑器
+// markdown Trình soạn thảo
 import VMdEditor from '@kangc/v-md-editor/lib/codemirror-editor';
 import '@kangc/v-md-editor/lib/style/codemirror-editor.css';
 import githubTheme from '@kangc/v-md-editor/lib/theme/github.js';
 import '@kangc/v-md-editor/lib/theme/style/github.css';
 // highlightjs
 import hljs from 'highlight.js';
-// codemirror 编辑器的相关资源
+// codemirror Tài nguyên liên quan đến trình soạn thảo
 import Codemirror from 'codemirror';
 // mode
 import 'codemirror/mode/markdown/markdown';
@@ -61,16 +61,16 @@ Vue.use(VMdEditor);
 Vue.config.productionTip = false
 
 Vue.use(dataV)
-// 引入Element
+// Import Element
 Vue.use(ElementUI)
-// 引入API模块
+// Import module API
 Vue.use(api)
-// Exceptionless模块
+// Exceptionless Module
 Vue.use(Exceptionless)
-// 全局异步处理模块
+// Module xử lý bất đồng bộ toàn cục
 Vue.use(ErrorHandler)
 
-// 挂载全局配置模块
+// Gắn module cấu hình toàn cục
 Vue.prototype.global = global
 
 /* eslint-disable no-new */

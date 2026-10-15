@@ -1,6 +1,6 @@
 import axios from '../axios'
 
-// 获取列表
+// Lấy danh sách
 export const getList = (page = 1, pageSize = 10) => {
   return axios({
     url: 'Photo',
@@ -9,7 +9,7 @@ export const getList = (page = 1, pageSize = 10) => {
   })
 }
 
-// 获取指定项目
+// Lấy mục được chỉ định
 export const get = photoId => {
   return axios({
     url: `Photo/${photoId}/`,
@@ -17,7 +17,7 @@ export const get = photoId => {
   })
 }
 
-// 上传图片
+// Tải ảnh lên
 export const add = (title, location, file) => {
   let formData = new FormData()
   formData.append('title', title)
@@ -32,7 +32,7 @@ export const add = (title, location, file) => {
   })
 }
 
-// 删除指定项目
+// Xóa mục được chỉ định
 export const deleteItem = itemId => {
   return axios({
     url: `Photo/${itemId}/`,
@@ -40,7 +40,7 @@ export const deleteItem = itemId => {
   })
 }
 
-// 设置推荐
+// Đặt đề xuất
 export const setFeatured = itemId => {
   return axios({
     url: `Photo/${itemId}/SetFeatured`,
@@ -48,7 +48,7 @@ export const setFeatured = itemId => {
   })
 }
 
-// 取消推荐
+// Bỏ đề xuất
 export const cancelFeatured = itemId => {
   return axios({
     url: `Photo/${itemId}/CancelFeatured`,
@@ -56,7 +56,7 @@ export const cancelFeatured = itemId => {
   })
 }
 
-// 更新图片信息
+// Cập nhật thông tin ảnh
 export const update = data => {
   return axios({
     url: `Photo/${data.id}/`,

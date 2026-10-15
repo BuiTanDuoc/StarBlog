@@ -6,7 +6,7 @@ export const getNodes = () => {
   })
 }
 
-// 获取全部分类
+// Lấy tất cả danh mục
 export const getAll = () => {
   return axios({
     url: 'Category/All',
@@ -30,7 +30,7 @@ export const getPosts = (itemId, page = 1, pageSize = 20) => {
   })
 }
 
-// 获取指定项目
+// Lấy mục được chỉ định
 export const get = itemId => {
   return axios({
     url: `Category/${itemId}`,
@@ -38,7 +38,7 @@ export const get = itemId => {
   })
 }
 
-// 添加分类
+// Thêm danh mục
 export const add = data => {
   return axios({
     url: `Category`,
@@ -47,7 +47,7 @@ export const add = data => {
   })
 }
 
-// 更新分类
+// Cập nhật danh mục
 export const update = data => {
   return axios({
     url: `Category/${data.id}/`,
@@ -63,14 +63,14 @@ export const deleteItem = itemId => {
   })
 }
 
-// 分类词云
+// Đám mây từ danh mục
 export const wordCloud = () => {
   return axios({
     url: 'Category/WordCloud'
   })
 }
 
-// 设置推荐分类
+// Đặt danh mục đề xuất
 export const setFeatured = (itemId, data) => {
   return axios({
     url: `Category/${itemId}/SetFeatured`,
@@ -79,7 +79,7 @@ export const setFeatured = (itemId, data) => {
   })
 }
 
-// 取消推荐分类
+// Bỏ đề xuất danh mục
 export const cancelFeatured = itemId => {
   return axios({
     url: `Category/${itemId}/CancelFeatured`,
@@ -87,7 +87,7 @@ export const cancelFeatured = itemId => {
   })
 }
 
-// 设置为可见
+// Đặt thành hiển thị
 export const setVisible = itemId => {
   return axios({
     url: `Category/${itemId}/SetVisible`,
@@ -95,7 +95,7 @@ export const setVisible = itemId => {
   })
 }
 
-// 设置为不可见
+// Đặt thành không hiển thị
 export const setInvisible = itemId => {
   return axios({
     url: `Category/${itemId}/SetInvisible`,

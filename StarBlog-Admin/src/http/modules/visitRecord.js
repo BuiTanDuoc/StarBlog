@@ -1,6 +1,6 @@
 import axios from '../axios'
 
-// 获取列表
+// Lấy danh sách
 export const getList = (
   {
     excludeApi = false,
@@ -30,7 +30,7 @@ export const getList = (
   })
 }
 
-// 获取指定项目
+// Lấy mục được chỉ định
 export const get = id => {
   return axios({
     url: `VisitRecord/${id}/`,
@@ -38,17 +38,17 @@ export const get = id => {
   })
 }
 
-// 获取全部项目
+// Lấy tất cả các mục
 export const getAll = () => {
   return axios({url: 'VisitRecord/All'})
 }
 
-// 获取概览数据
+// Lấy dữ liệu tổng quan
 export const getOverview = () => {
   return axios({url: 'VisitRecord/Overview'})
 }
 
-// 获取趋势数据
+// Lấy dữ liệu xu hướng
 export const getTrend = (days = 7) => {
   return axios({
     url: 'VisitRecord/DailyTrend',
@@ -57,7 +57,7 @@ export const getTrend = (days = 7) => {
   })
 }
 
-// 获取统计数据
+// Lấy dữ liệu thống kê
 export const getStats = (date = null) => {
   return axios({
     url: 'VisitRecord/Stats',

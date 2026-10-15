@@ -55,17 +55,17 @@
       />
       <el-table-column
         prop="applyTimeStr"
-        label="申请时间"
+        label="Thời gian yêu cầu"
         :show-overflow-tooltip="true"
       />
       <el-table-column
         fixed="right"
-        label="操作"
+        label="Thao tác"
         width="150">
         <template slot-scope="scope">
-          <el-link type="primary" @click="accept(scope.row)">通过</el-link>
-          <el-link type="info" @click="reject(scope.row)">拒绝</el-link>
-          <el-link type="danger" @click="onItemDeleteClick(scope.row)">删除</el-link>
+          <el-link type="primary" @click="accept(scope.row)">Duyệt</el-link>
+          <el-link type="info" @click="reject(scope.row)">Từ chối</el-link>
+          <el-link type="danger" @click="onItemDeleteClick(scope.row)">Xóa</el-link>
         </template>
       </el-table-column>
     </el-table>
@@ -101,19 +101,19 @@ export default {
             item.applyTimeStr = utils.dateTimeBeautify(item.applyTime)
           })
         })
-        .catch(res => this.$message.error(`获取列表出错：${res.message}`))
+        .catch(res => this.$message.error(`Lỗi khi lấy danh sách: ${res.message}`))
     },
     onItemDeleteClick(item) {
-      this.$confirm('此操作将删除该申请, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm('Thao tác này sẽ xóa yêu cầu này, bạn có muốn tiếp tục không?', 'Thông báo', {
+        confirmButtonText: 'Xác nhận',
+        cancelButtonText: 'Hủy',
         type: 'warning'
       }).then(() => {
         this.$api.linkExchange.deleteItem(item.id)
-          .then(res => this.$message.success(`删除成功。${res.message}`))
-          .catch(res => this.$message.error(`操作失败。${res.message}`))
+          .then(res => this.$message.success(`Xóa thành công. ${res.message}`))
+          .catch(res => this.$message.error(`Thao tác thất bại. ${res.message}`))
           .finally(() => this.loadData())
-      }).catch(() => this.$message('已取消删除'))
+      }).catch(() => this.$message('Đã hủy xóa'))
     },
     addReason(id, action, reason) {
       console.log(id, action, reason)
@@ -125,8 +125,8 @@ export default {
       }
 
       if (promise) {
-        promise.then(res => this.$message.success('操作成功'))
-          .catch(res => this.$message.error(`操作失败。${res.message}`))
+        promise.then(res => this.$message.success('Thao tác thành công'))
+          .catch(res => this.$message.error(`Thao tác thất bại. ${res.message}`))
           .finally(() => this.loadData())
       }
     },

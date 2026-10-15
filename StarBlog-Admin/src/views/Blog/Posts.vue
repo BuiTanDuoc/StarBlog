@@ -4,13 +4,13 @@
       <el-row type="flex" justify="space-between">
         <el-row :gutter="10">
           <el-col :span="8">
-            <el-input v-model="search" placeholder="请输入关键字" prefix-icon="el-icon-search" clearable
+            <el-input v-model="search" placeholder="Vui lòng nhập từ khóa" prefix-icon="el-icon-search" clearable
               @input="handleSearchInput" @clear="handleSearchClear">
             </el-input>
           </el-col>
           <el-col :span="8">
             <el-cascader class="w-100" :options="categoriesTree" v-model="currentCategoryId" filterable clearable
-              placeholder="分类筛选" :props="{
+              placeholder="Lọc danh mục" :props="{
                 checkStrictly: true,
                 expandTrigger: 'hover',
                 emitPath: false,
@@ -18,61 +18,61 @@
             </el-cascader>
           </el-col>
           <el-col :span="3">
-            <el-select v-model="currentStatus" clearable filterable placeholder="文章标记" @change="handleStatusChange">
+            <el-select v-model="currentStatus" clearable filterable placeholder="Đánh dấu bài viết" @change="handleStatusChange">
               <el-option v-for="item in statusList" :key="item" :label="item" :value="item" />
             </el-select>
           </el-col>
           <el-col :span="3">
-            <el-select v-model="currentIsPublish" clearable placeholder="文章状态" @change="handlePublishStatusChange">
-              <el-option label="全部" :value="null" />
-              <el-option label="已发布" :value="true" />
-              <el-option label="草稿" :value="false" />
+            <el-select v-model="currentIsPublish" clearable placeholder="Trạng thái bài viết" @change="handlePublishStatusChange">
+              <el-option label="Tất cả" :value="null" />
+              <el-option label="Đã xuất bản" :value="true" />
+              <el-option label="Bản nháp" :value="false" />
             </el-select>
           </el-col>
           <el-col :span="2">
-            <el-button @click="handleClearFilters" type="info" plain>清空筛选</el-button>
+            <el-button @click="handleClearFilters" type="info" plain>Xóa bộ lọc</el-button>
           </el-col>
         </el-row>
         <div>
-          <el-button @click="addPost" type="primary">添加文章</el-button>
+          <el-button @click="addPost" type="primary">Thêm bài viết</el-button>
           <el-dropdown @command="handleBatchCommand" :disabled="!hasSelection">
             <el-button type="warning" :disabled="!hasSelection">
-              批量操作<i class="el-icon-arrow-down el-icon--right"></i>
+              Thao tác hàng loạt<i class="el-icon-arrow-down el-icon--right"></i>
             </el-button>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="batchDelete">批量删除</el-dropdown-item>
-              <el-dropdown-item command="batchMoveCategory">批量移动分类</el-dropdown-item>
-              <el-dropdown-item command="batchSetFeatured">批量设置推荐</el-dropdown-item>
-              <el-dropdown-item command="batchCancelFeatured">批量取消推荐</el-dropdown-item>
-              <el-dropdown-item command="batchSetTop">批量设置置顶</el-dropdown-item>
-              <el-dropdown-item command="batchPublish">批量发布</el-dropdown-item>
-              <el-dropdown-item command="batchUnpublish">批量设为草稿</el-dropdown-item>
+              <el-dropdown-item command="batchDelete">Xóa hàng loạt</el-dropdown-item>
+              <el-dropdown-item command="batchMoveCategory">Chuyển danh mục hàng loạt</el-dropdown-item>
+              <el-dropdown-item command="batchSetFeatured">Thiết lập đề xuất hàng loạt</el-dropdown-item>
+              <el-dropdown-item command="batchCancelFeatured">Bỏ đề xuất hàng loạt</el-dropdown-item>
+              <el-dropdown-item command="batchSetTop">Thiết lập ghim hàng loạt</el-dropdown-item>
+              <el-dropdown-item command="batchPublish">Xuất bản hàng loạt</el-dropdown-item>
+              <el-dropdown-item command="batchUnpublish">Đặt làm bản nháp hàng loạt</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
-          <el-button @click="toggleSelection()" :disabled="!hasSelection">取消选择</el-button>
+          <el-button @click="toggleSelection()" :disabled="!hasSelection">Bỏ chọn</el-button>
         </div>
       </el-row>
     </el-header>
     <el-main>
-      <!-- 加载骨架屏 -->
+      <!-- Skeleton khi tải -->
       <div v-if="loading && posts.length === 0" class="skeleton-container">
         <el-skeleton :rows="8" animated />
       </div>
 
-      <!-- 表格 -->
+      <!-- Bảng -->
       <el-table v-else v-loading="loading" ref="table" :data="posts" stripe style="width: 100%"
         height="calc(100vh - 280px)" @selection-change="handleSelectionChange"
-        :default-sort="{ prop: 'lastUpdateTime', order: 'descending' }" empty-text="暂无数据">
+        :default-sort="{ prop: 'lastUpdateTime', order: 'descending' }" empty-text="Chưa có dữ liệu">
         <el-table-column type="selection" width="50" fixed="left" />
         <el-table-column prop="id" label="ID" width="80" :show-overflow-tooltip="true" />
-        <el-table-column prop="isPublish" label="状态" width="150" fixed="left">
+        <el-table-column prop="isPublish" label="Trạng thái" width="150" fixed="left">
           <template v-slot="scope">
-            <el-switch v-model="scope.row.isPublish" active-text="已发布" inactive-text="草稿"
+            <el-switch v-model="scope.row.isPublish" active-text="Đã xuất bản" inactive-text="Bản nháp"
               @change="handlePublishToggle(scope.row)" :loading="scope.row.statusLoading">
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column prop="title" label="标题" min-width="300" sortable :show-overflow-tooltip="true">
+        <el-table-column prop="title" label="Tiêu đề" min-width="300" sortable :show-overflow-tooltip="true">
           <template v-slot="scope">
             <div class="title-cell">
               <el-link :href="`${baseUrl}/Blog/Post/${scope.row.id}`" target="_blank" class="post-title">
@@ -84,18 +84,18 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="status" label="标记" width="120">
+        <el-table-column prop="status" label="Đánh dấu" width="120">
           <template v-slot="scope">
             <el-tag v-if="scope.row.status" size="small" type="info">{{ scope.row.status }}</el-tag>
             <span v-else>-</span>
           </template>
         </el-table-column>
-        <el-table-column prop="viewCount" label="阅读量" width="100" sortable>
+        <el-table-column prop="viewCount" label="Lượt đọc" width="100" sortable>
           <template v-slot="scope">
             <span>{{ scope.row.viewCount || 0 }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="creationTime" label="创建时间" width="180" sortable>
+        <el-table-column prop="creationTime" label="Thời gian tạo" width="180" sortable>
           <template v-slot="scope">
             <div class="time-cell">
               <i class="el-icon-time"></i>
@@ -103,33 +103,33 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="category.name" label="分类" width="150" :show-overflow-tooltip="true">
+        <el-table-column prop="category.name" label="Danh mục" width="150" :show-overflow-tooltip="true">
           <template v-slot="scope">
             <el-tag v-if="scope.row.category" size="small">{{ scope.row.category.name }}</el-tag>
-            <span v-else>未分类</span>
+            <span v-else>Chưa phân loại</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="操作" width="240" fixed="right">
+        <el-table-column align="center" label="Thao tác" width="240" fixed="right">
           <template v-slot="scope">
             <div class="action-buttons">
               <el-button type="text" size="mini" @click="onItemEditClick(scope.row)">
-                <i class="el-icon-edit"></i> 编辑
+                <i class="el-icon-edit"></i> Chỉnh sửa
               </el-button>
               <el-button type="text" size="mini" @click="copyPostLink(scope.row)">
-                <i class="el-icon-link"></i> 复制链接
+                <i class="el-icon-link"></i> Sao chép liên kết
               </el-button>
               <el-dropdown @command="cmd => onItemDropdownClick(scope.row, cmd)" size="mini">
                 <el-button type="text" size="mini">
-                  更多<i class="el-icon-arrow-down el-icon--right"></i>
+                  Thêm<i class="el-icon-arrow-down el-icon--right"></i>
                 </el-button>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item command="setFeatured" :disabled="scope.row.isFeatured">设置推荐</el-dropdown-item>
-                  <el-dropdown-item command="cancelFeatured" :disabled="!scope.row.isFeatured">取消推荐</el-dropdown-item>
-                  <el-dropdown-item command="setTop" :disabled="scope.row.isTop">设置置顶</el-dropdown-item>
-                  <el-dropdown-item command="cancelTop" :disabled="!scope.row.isTop">取消置顶</el-dropdown-item>
-                  <el-dropdown-item command="moveToCategory" divided>移动到分类</el-dropdown-item>
+                  <el-dropdown-item command="setFeatured" :disabled="scope.row.isFeatured">Đặt đề xuất</el-dropdown-item>
+                  <el-dropdown-item command="cancelFeatured" :disabled="!scope.row.isFeatured">Bỏ đề xuất</el-dropdown-item>
+                  <el-dropdown-item command="setTop" :disabled="scope.row.isTop">Đặt ghim</el-dropdown-item>
+                  <el-dropdown-item command="cancelTop" :disabled="!scope.row.isTop">Bỏ ghim</el-dropdown-item>
+                  <el-dropdown-item command="moveToCategory" divided>Chuyển đến danh mục</el-dropdown-item>
                   <el-dropdown-item command="delete">
-                    <span style="color: #f56c6c;">删除文章</span>
+                    <span style="color: #f56c6c;">Xóa bài viết</span>
                   </el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
@@ -138,18 +138,18 @@
         </el-table-column>
       </el-table>
 
-      <!-- 分页 -->
+      <!-- Phân trang -->
       <el-pagination class="py-3 text-center" @size-change="handlePageSizeChange"
         @current-change="handleCurrentPageChange" :current-page="currentPage" :page-sizes="[10, 20, 40, 60, 80, 100]"
         :page-size="pageSize" background layout="total, sizes, prev, pager, next, jumper" :total="totalCount">
       </el-pagination>
     </el-main>
 
-    <!-- 批量移动分类对话框 -->
-    <el-dialog title="批量移动分类" :visible.sync="batchMoveCategoryVisible" width="500px">
+    <!-- Hộp thoại chuyển danh mục hàng loạt -->
+    <el-dialog title="Chuyển danh mục hàng loạt" :visible.sync="batchMoveCategoryVisible" width="500px">
       <el-form>
-        <el-form-item label="目标分类">
-          <el-cascader v-model="targetCategoryId" :options="categoriesTree" placeholder="请选择目标分类" :props="{
+        <el-form-item label="Danh mục đích">
+          <el-cascader v-model="targetCategoryId" :options="categoriesTree" placeholder="Vui lòng chọn danh mục đích" :props="{
             checkStrictly: true,
             expandTrigger: 'hover',
             emitPath: false,
@@ -158,22 +158,22 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="batchMoveCategoryVisible = false">取消</el-button>
-        <el-button type="primary" @click="confirmBatchMoveCategory" :loading="batchOperationLoading">确定</el-button>
+        <el-button @click="batchMoveCategoryVisible = false">Hủy</el-button>
+        <el-button type="primary" @click="confirmBatchMoveCategory" :loading="batchOperationLoading">Xác nhận</el-button>
       </div>
     </el-dialog>
 
-    <!-- 单个文章移动分类对话框 -->
-    <el-dialog title="移动到分类" :visible.sync="moveCategoryVisible" width="500px">
+    <!-- Hộp thoại chuyển danh mục cho một bài viết -->
+    <el-dialog title="Chuyển đến danh mục" :visible.sync="moveCategoryVisible" width="500px">
       <el-form>
-        <el-form-item label="文章标题">
+        <el-form-item label="Tiêu đề bài viết">
           <span>{{ currentMovingPost ? currentMovingPost.title : '' }}</span>
         </el-form-item>
-        <el-form-item label="当前分类">
-          <span>{{ currentMovingPost && currentMovingPost.category ? currentMovingPost.category.name : '未分类' }}</span>
+        <el-form-item label="Danh mục hiện tại">
+          <span>{{ currentMovingPost && currentMovingPost.category ? currentMovingPost.category.name : 'Chưa phân loại' }}</span>
         </el-form-item>
-        <el-form-item label="目标分类">
-          <el-cascader v-model="singleTargetCategoryId" :options="categoriesTree" placeholder="请选择目标分类" :props="{
+        <el-form-item label="Danh mục đích">
+          <el-cascader v-model="singleTargetCategoryId" :options="categoriesTree" placeholder="Vui lòng chọn danh mục đích" :props="{
             checkStrictly: true,
             expandTrigger: 'hover',
             emitPath: false,
@@ -182,8 +182,8 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="moveCategoryVisible = false">取消</el-button>
-        <el-button type="primary" @click="confirmSingleMoveCategory" :loading="batchOperationLoading">确定</el-button>
+        <el-button @click="moveCategoryVisible = false">Hủy</el-button>
+        <el-button type="primary" @click="confirmSingleMoveCategory" :loading="batchOperationLoading">Xác nhận</el-button>
       </div>
     </el-dialog>
   </el-container>
@@ -212,27 +212,27 @@ export default {
       currentIsPublish: null,
       selectedPosts: [],
       hasSelection: false,
-      searchTimer: null, // 搜索防抖定时器
+      searchTimer: null, // Bộ đếm thời gian debounce cho tìm kiếm
       batchMoveCategoryVisible: false,
       targetCategoryId: null,
       batchOperationLoading: false,
-      // 单个文章移动分类相关
+      // Liên quan đến chuyển danh mục cho một bài viết
       moveCategoryVisible: false,
       currentMovingPost: null,
       singleTargetCategoryId: null
     }
   },
   mounted() {
-    // 加载分类
+    // Tải danh mục
     this.loadCategories()
-    // 加载博客文章
+    // Tải bài viết blog
     this.loadBlogPosts()
-    // 加载文章状态列表
+    // Tải danh sách trạng thái bài viết
     this.loadStatusList()
   },
   methods: {
     /**
-     * 加载分类树
+     * Tải cây danh mục
      */
     loadCategories() {
       const mapNodes = (nodes) => {
@@ -250,11 +250,11 @@ export default {
 
       this.$api.category.getNodes()
         .then(res => this.categoriesTree = mapNodes(res.data))
-        .catch(res => this.$message.error(`加载分类列表出错：${res.message}`))
+        .catch(res => this.$message.error(`Lỗi khi tải danh sách danh mục: ${res.message}`))
     },
 
     /**
-     * 加载博客文章列表
+     * Tải danh sách bài viết blog
      */
     loadBlogPosts() {
       this.loading = true
@@ -267,23 +267,23 @@ export default {
         this.totalCount = res.pagination.totalItemCount
         this.posts = res.data.map(item => ({
           ...item,
-          statusLoading: false // 添加状态切换加载标识
+          statusLoading: false // Thêm cờ tải cho chuyển đổi trạng thái
         }))
-      }).catch(res => this.$message.error(`获取文章列表出错：${res.message}`))
+      }).catch(res => this.$message.error(`Lỗi khi lấy danh sách bài viết: ${res.message}`))
         .finally(() => this.loading = false)
     },
 
     /**
-     * 加载文章状态列表
+     * Tải danh sách trạng thái bài viết
      */
     loadStatusList() {
       this.$api.blog.getStatusList().then(res => {
         this.statusList = res.data
-      }).catch(res => this.$message.error(`加载状态列表出错：${res.message}`))
+      }).catch(res => this.$message.error(`Lỗi khi tải danh sách trạng thái: ${res.message}`))
     },
 
     /**
-     * 格式化日期时间显示
+     * Định dạng hiển thị ngày giờ
      */
     formatDateTime(dateTime) {
       if (!dateTime) return '-'
@@ -291,7 +291,7 @@ export default {
     },
 
     /**
-     * 搜索输入处理（防抖）
+     * Xử lý nhập tìm kiếm (debounce)
      */
     handleSearchInput() {
       if (this.searchTimer) {
@@ -304,7 +304,7 @@ export default {
     },
 
     /**
-     * 搜索清空处理
+     * Xử lý khi xóa tìm kiếm
      */
     handleSearchClear() {
       this.search = ''
@@ -313,7 +313,7 @@ export default {
     },
 
     /**
-     * 分类变化处理
+     * Xử lý khi danh mục thay đổi
      */
     handleCategoryChange() {
       this.currentPage = 1
@@ -321,7 +321,7 @@ export default {
     },
 
     /**
-     * 状态变化处理
+     * Xử lý khi trạng thái thay đổi
      */
     handleStatusChange() {
       this.currentPage = 1
@@ -329,7 +329,7 @@ export default {
     },
 
     /**
-     * 发布状态变化处理
+     * Xử lý khi trạng thái xuất bản thay đổi
      */
     handlePublishStatusChange() {
       this.currentPage = 1
@@ -337,7 +337,7 @@ export default {
     },
 
     /**
-     * 清空所有筛选条件
+     * Xóa tất cả điều kiện lọc
      */
     handleClearFilters() {
       this.search = ''
@@ -346,58 +346,58 @@ export default {
       this.currentIsPublish = null
       this.currentPage = 1
       this.loadBlogPosts()
-      this.$message.success('已清空所有筛选条件')
+      this.$message.success('Đã xóa tất cả điều kiện lọc')
     },
 
     /**
-     * 发布状态切换
+     * Chuyển đổi trạng thái xuất bản
      */
     handlePublishToggle(post) {
       const targetStatus = post.isPublish
       post.statusLoading = true
 
-      // 这里需要根据实际API调整
+      // Ở đây cần điều chỉnh theo API thực tế
       const apiCall = targetStatus ?
         this.$api.blogPost.publish(post.id) :
         this.$api.blogPost.unpublish(post.id)
 
       apiCall.then(() => {
-        this.$message.success(`文章已${targetStatus ? '发布' : '设为草稿'}`)
+        this.$message.success(`Bài viết đã ${targetStatus ? 'được xuất bản' : 'chuyển sang bản nháp'}`)
       }).catch(err => {
-        post.isPublish = !targetStatus // 恢复原状态
-        this.$message.error(`操作失败：${err.message}`)
+        post.isPublish = !targetStatus // Khôi phục trạng thái ban đầu
+        this.$message.error(`Thao tác thất bại: ${err.message}`)
       }).finally(() => {
         post.statusLoading = false
       })
     },
 
     /**
-     * 复制文章链接
+     * Sao chép liên kết bài viết
      */
     copyPostLink(post) {
       const link = `${this.baseUrl}/Blog/Post/${post.id}`
       if (navigator.clipboard) {
         navigator.clipboard.writeText(link).then(() => {
-          this.$message.success('链接已复制到剪贴板')
+          this.$message.success('Đã sao chép liên kết vào clipboard')
         })
       } else {
-        // 兼容旧浏览器
+        // Tương thích trình duyệt cũ
         const textArea = document.createElement('textarea')
         textArea.value = link
         document.body.appendChild(textArea)
         textArea.select()
         document.execCommand('copy')
         document.body.removeChild(textArea)
-        this.$message.success('链接已复制到剪贴板')
+        this.$message.success('Đã sao chép liên kết vào clipboard')
       }
     },
 
     /**
-     * 批量操作命令处理
+     * Xử lý lệnh thao tác hàng loạt
      */
     handleBatchCommand(command) {
       if (this.selectedPosts.length === 0) {
-        this.$message.warning('请先选择要操作的文章')
+        this.$message.warning('Vui lòng chọn bài viết cần thao tác trước')
         return
       }
 
@@ -427,12 +427,12 @@ export default {
     },
 
     /**
-     * 批量删除文章
+     * Xóa bài viết hàng loạt
      */
     handleBatchDelete() {
-      this.$confirm(`确定要删除选中的 ${this.selectedPosts.length} 篇文章吗？此操作不可恢复！`, '批量删除确认', {
-        confirmButtonText: '确定删除',
-        cancelButtonText: '取消',
+      this.$confirm(`Bạn có chắc muốn xóa ${this.selectedPosts.length} bài viết đã chọn? Thao tác này không thể hoàn tác!`, 'Xác nhận xóa hàng loạt', {
+        confirmButtonText: 'Xác nhận xóa',
+        cancelButtonText: 'Hủy',
         type: 'warning'
       }).then(() => {
         this.batchOperationLoading = true
@@ -442,12 +442,12 @@ export default {
 
         Promise.all(deletePromises)
           .then(() => {
-            this.$message.success(`成功删除 ${this.selectedPosts.length} 篇文章`)
+            this.$message.success(`Đã xóa thành công ${this.selectedPosts.length} bài viết`)
             this.loadBlogPosts()
             this.toggleSelection()
           })
           .catch(err => {
-            this.$message.error(`批量删除失败：${err.message}`)
+            this.$message.error(`Xóa hàng loạt thất bại: ${err.message}`)
           })
           .finally(() => {
             this.batchOperationLoading = false
@@ -456,11 +456,11 @@ export default {
     },
 
     /**
-     * 确认批量移动分类
+     * Xác nhận chuyển danh mục hàng loạt
      */
     confirmBatchMoveCategory() {
       if (!this.targetCategoryId) {
-        this.$message.warning('请选择目标分类')
+        this.$message.warning('Vui lòng chọn danh mục đích')
         return
       }
 
@@ -474,14 +474,14 @@ export default {
 
       Promise.all(movePromises)
         .then(() => {
-          this.$message.success(`成功移动 ${this.selectedPosts.length} 篇文章到新分类`)
+          this.$message.success(`Đã chuyển thành công ${this.selectedPosts.length} bài viết sang danh mục mới`)
           this.batchMoveCategoryVisible = false
           this.targetCategoryId = null
           this.loadBlogPosts()
           this.toggleSelection()
         })
         .catch(err => {
-          this.$message.error(`批量移动分类失败：${err.message}`)
+          this.$message.error(`Chuyển danh mục hàng loạt thất bại: ${err.message}`)
         })
         .finally(() => {
           this.batchOperationLoading = false
@@ -489,7 +489,7 @@ export default {
     },
 
     /**
-     * 批量设置推荐
+     * Thiết lập đề xuất hàng loạt
      */
     handleBatchSetFeatured() {
       this.batchOperationLoading = true
@@ -499,12 +499,12 @@ export default {
 
       Promise.all(promises)
         .then(() => {
-          this.$message.success(`成功设置 ${this.selectedPosts.length} 篇文章为推荐`)
+          this.$message.success(`Đã đặt thành công ${this.selectedPosts.length} bài viết làm đề xuất`)
           this.loadBlogPosts()
           this.toggleSelection()
         })
         .catch(err => {
-          this.$message.error(`批量设置推荐失败：${err.message}`)
+          this.$message.error(`Thiết lập đề xuất hàng loạt thất bại: ${err.message}`)
         })
         .finally(() => {
           this.batchOperationLoading = false
@@ -512,7 +512,7 @@ export default {
     },
 
     /**
-     * 批量取消推荐
+     * Bỏ đề xuất hàng loạt
      */
     handleBatchCancelFeatured() {
       this.batchOperationLoading = true
@@ -522,12 +522,12 @@ export default {
 
       Promise.all(promises)
         .then(() => {
-          this.$message.success(`成功取消 ${this.selectedPosts.length} 篇文章的推荐`)
+          this.$message.success(`Đã hủy thành công ${this.selectedPosts.length} bài viết khỏi danh sách đề xuất`)
           this.loadBlogPosts()
           this.toggleSelection()
         })
         .catch(err => {
-          this.$message.error(`批量取消推荐失败：${err.message}`)
+          this.$message.error(`Bỏ đề xuất hàng loạt thất bại: ${err.message}`)
         })
         .finally(() => {
           this.batchOperationLoading = false
@@ -535,7 +535,7 @@ export default {
     },
 
     /**
-     * 批量设置置顶
+     * Thiết lập ghim hàng loạt
      */
     handleBatchSetTop() {
       this.batchOperationLoading = true
@@ -545,12 +545,12 @@ export default {
 
       Promise.all(promises)
         .then(() => {
-          this.$message.success(`成功设置 ${this.selectedPosts.length} 篇文章为置顶`)
+          this.$message.success(`Đã đặt thành công ${this.selectedPosts.length} bài viết làm bài ghim`)
           this.loadBlogPosts()
           this.toggleSelection()
         })
         .catch(err => {
-          this.$message.error(`批量设置置顶失败：${err.message}`)
+          this.$message.error(`Thiết lập ghim hàng loạt thất bại: ${err.message}`)
         })
         .finally(() => {
           this.batchOperationLoading = false
@@ -558,7 +558,7 @@ export default {
     },
 
     /**
-     * 批量发布文章
+     * Xuất bản bài viết hàng loạt
      */
     handleBatchPublish() {
       this.batchOperationLoading = true
@@ -570,18 +570,18 @@ export default {
         }))
 
       if (promises.length === 0) {
-        this.$message.info('选中的文章都已经是发布状态')
+        this.$message.info('Các bài viết đã chọn đều đang ở trạng thái xuất bản')
         return
       }
 
       Promise.all(promises)
         .then(() => {
-          this.$message.success(`成功发布 ${promises.length} 篇文章`)
+          this.$message.success(`Đã xuất bản thành công ${promises.length} bài viết`)
           this.loadBlogPosts()
           this.toggleSelection()
         })
         .catch(err => {
-          this.$message.error(`批量发布失败：${err.message}`)
+          this.$message.error(`Xuất bản hàng loạt thất bại: ${err.message}`)
         })
         .finally(() => {
           this.batchOperationLoading = false
@@ -589,7 +589,7 @@ export default {
     },
 
     /**
-     * 批量设为草稿
+     * Đặt làm bản nháp hàng loạt
      */
     handleBatchUnpublish() {
       this.batchOperationLoading = true
@@ -601,18 +601,18 @@ export default {
         }))
 
       if (promises.length === 0) {
-        this.$message.info('选中的文章都已经是草稿状态')
+        this.$message.info('Các bài viết đã chọn đều đang là bản nháp')
         return
       }
 
       Promise.all(promises)
         .then(() => {
-          this.$message.success(`成功将 ${promises.length} 篇文章设为草稿`)
+          this.$message.success(`Đã chuyển thành công ${promises.length} bài viết sang bản nháp`)
           this.loadBlogPosts()
           this.toggleSelection()
         })
         .catch(err => {
-          this.$message.error(`批量设为草稿失败：${err.message}`)
+          this.$message.error(`Đặt làm bản nháp hàng loạt thất bại: ${err.message}`)
         })
         .finally(() => {
           this.batchOperationLoading = false
@@ -622,70 +622,70 @@ export default {
     // ... existing code ...
 
     /**
-     * 添加文章按钮
+     * Nút thêm bài viết
      */
     addPost() {
       this.$router.push('/post/new')
     },
 
     /**
-     * 编辑文章
+     * Sửa bài viết
      */
     onItemEditClick(post) {
       this.$router.push(`/post/edit/${post.id}`)
     },
 
     /**
-     * 下拉菜单点击处理
+     * Xử lý khi nhấp vào menu thả xuống
      */
     onItemDropdownClick(post, command) {
       switch (command) {
         case 'setFeatured':
           this.$api.blogPost.setFeatured(post.id)
             .then(res => {
-              this.$message.success('设置推荐成功')
+              this.$message.success('Đặt đề xuất thành công')
               this.loadBlogPosts()
             })
-            .catch(res => this.$message.error(`操作失败。${res.message}`))
+            .catch(res => this.$message.error(`Thao tác thất bại. ${res.message}`))
           break
         case 'cancelFeatured':
           this.$api.blogPost.cancelFeatured(post.id)
             .then(res => {
-              this.$message.success('取消推荐成功')
+              this.$message.success('Bỏ đề xuất thành công')
               this.loadBlogPosts()
             })
-            .catch(res => this.$message.error(`操作失败。${res.message}`))
+            .catch(res => this.$message.error(`Thao tác thất bại. ${res.message}`))
           break
         case 'setTop':
           this.$api.blogPost.setTop(post.id)
             .then(res => {
-              this.$message.success(`设置置顶成功。${res.message}`)
+              this.$message.success(`Đặt ghim thành công. ${res.message}`)
               this.loadBlogPosts()
             })
-            .catch(res => this.$message.error(`设置置顶失败。${res.message}`))
+            .catch(res => this.$message.error(`Đặt ghim thất bại. ${res.message}`))
           break
         case 'cancelTop':
-          // 需要添加取消置顶的API
+          // Cần thêm API hủy ghim
           this.$api.blogPost.cancelTop(post.id)
             .then(res => {
-              this.$message.success('取消置顶成功')
+              this.$message.success('Bỏ ghim thành công')
               this.loadBlogPosts()
             })
-            .catch(res => this.$message.error(`操作失败。${res.message}`))
+            .catch(res => this.$message.error(`Thao tác thất bại. ${res.message}`))
           break
         case 'delete':
-          this.$confirm('此操作将永久删除该文章, 是否继续?', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
+          this.$confirm('Thao tác này sẽ xóa vĩnh viễn bài viết này, bạn có muốn tiếp tục không?', 'Thông báo', {
+            confirmButtonText: 'Xác nhận',
+            cancelButtonText: 'Hủy',
             type: 'warning'
           }).then(() => {
             this.$api.blogPost.deleteItem(post.id)
               .then(res => {
-                this.$message.success(`删除成功。${res.message}`)
+                this.$message.success(`Xóa thành công. ${res.message}`)
                 this.loadBlogPosts()
               })
-              .catch(res => this.$message.error(`操作失败。${res.message}`))
-          }).catch(() => this.$message('已取消删除'))
+              .catch(res => this.$message.error(`Thao tác thất bại. ${res.message}`))
+          }).catch(() => this.$message('Đã hủy xóa'))
           break
         case 'moveToCategory':
           this.currentMovingPost = post
@@ -696,7 +696,7 @@ export default {
     },
 
     /**
-     * 分页大小变化处理
+     * Xử lý khi kích thước trang thay đổi
      */
     handlePageSizeChange(pageSize) {
       this.pageSize = pageSize
@@ -704,7 +704,7 @@ export default {
     },
 
     /**
-     * 当前页变化处理
+     * Xử lý khi trang hiện tại thay đổi
      */
     handleCurrentPageChange(page) {
       this.currentPage = page
@@ -712,7 +712,7 @@ export default {
     },
 
     /**
-     * 切换选择状态
+     * Chuyển đổi trạng thái chọn
      */
     toggleSelection(rows) {
       if (rows) {
@@ -725,7 +725,7 @@ export default {
     },
 
     /**
-     * 选择变化处理
+     * Xử lý khi lựa chọn thay đổi
      */
     handleSelectionChange(val) {
       this.selectedPosts = val
@@ -733,16 +733,16 @@ export default {
     },
 
     /**
-     * 确认单个文章移动分类
+     * Xác nhận chuyển danh mục cho một bài viết
      */
     confirmSingleMoveCategory() {
       if (!this.singleTargetCategoryId) {
-        this.$message.warning('请选择目标分类')
+        this.$message.warning('Vui lòng chọn danh mục đích')
         return
       }
 
       if (!this.currentMovingPost) {
-        this.$message.error('未找到要移动的文章')
+        this.$message.error('Không tìm thấy bài viết cần chuyển')
         return
       }
 
@@ -752,14 +752,14 @@ export default {
         categoryId: this.singleTargetCategoryId
       })
         .then(() => {
-          this.$message.success('文章移动分类成功')
+          this.$message.success('Chuyển danh mục bài viết thành công')
           this.moveCategoryVisible = false
           this.currentMovingPost = null
           this.singleTargetCategoryId = null
           this.loadBlogPosts()
         })
         .catch(err => {
-          this.$message.error(`移动分类失败：${err.message}`)
+          this.$message.error(`Chuyển danh mục thất bại: ${err.message}`)
         })
         .finally(() => {
           this.batchOperationLoading = false
@@ -829,7 +829,7 @@ export default {
   font-size: 12px;
 }
 
-/* 响应式设计 */
+/* Thiết kế responsive */
 @media (max-width: 768px) {
   .el-header .el-row {
     flex-direction: column;
@@ -846,7 +846,7 @@ export default {
   }
 }
 
-/* 表格优化 */
+/* Tối ưu bảng */
 .el-table {
   font-size: 14px;
 }
@@ -861,13 +861,13 @@ export default {
   background-color: #f5f7fa;
 }
 
-/* 分页样式优化 */
+/* Tối ưu kiểu phân trang */
 .el-pagination {
   margin-top: 20px;
   text-align: center;
 }
 
-/* 对话框样式 */
+/* Kiểu dáng hộp thoại */
 .dialog-footer {
   text-align: right;
 }

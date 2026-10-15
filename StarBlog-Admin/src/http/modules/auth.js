@@ -1,7 +1,7 @@
 import axios from '../axios'
 
 
-// 登录
+// Đăng nhập
 export const login = data => {
   return axios({
     url: 'Auth',
@@ -10,7 +10,7 @@ export const login = data => {
   })
 }
 
-// 获取用户信息
+// Lấy thông tin người dùng
 export const get = () => axios({
   url: 'Auth',
   method: 'get'

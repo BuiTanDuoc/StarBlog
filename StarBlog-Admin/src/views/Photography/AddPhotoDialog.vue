@@ -1,10 +1,10 @@
 <template>
-  <el-dialog title="上传图片" :visible.sync="dialogFormVisible" width="30%">
+  <el-dialog title="Tải ảnh lên" :visible.sync="dialogFormVisible" width="30%">
     <el-form ref="uploadForm" :model="form" :rules="formRules" label-width="80px">
-      <el-form-item label="图片名称" prop="title">
+      <el-form-item label="Tên ảnh" prop="title">
         <el-input v-model="form.title" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="拍摄地点" prop="location">
+      <el-form-item label="Địa điểm chụp" prop="location">
         <el-input v-model="form.location" autocomplete="off"></el-input>
       </el-form-item>
     </el-form>
@@ -14,12 +14,12 @@
                :on-change="onUploadChange"
                :auto-upload="false">
       <i class="el-icon-upload"></i>
-      <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-      <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+      <div class="el-upload__text">Kéo tệp vào đây, hoặc <em>nhấp để tải lên</em></div>
+      <div class="el-upload__tip" slot="tip">Chỉ được tải lên tệp jpg/png, và không vượt quá 500kb</div>
     </el-upload>
     <div slot="footer" class="dialog-footer">
-      <el-button @click="close">取 消</el-button>
-      <el-button type="primary" @click="submitUpload">确 定</el-button>
+      <el-button @click="close">Hủy</el-button>
+      <el-button type="primary" @click="submitUpload">Xác nhận</el-button>
     </div>
   </el-dialog>
 </template>
@@ -43,10 +43,10 @@ export default {
       },
       formRules: {
         title: [
-          {required: true, message: '请输入图片标题', trigger: 'blur'},
-          {min: 1, max: 200, message: '长度在 1 到 200 个字符', trigger: 'blur'}
+          {required: true, message: 'Vui lòng nhập tiêu đề ảnh', trigger: 'blur'},
+          {min: 1, max: 200, message: 'Độ dài từ 1 đến 200 ký tự', trigger: 'blur'}
         ],
-        location: [{required: true, message: '请输入拍摄地点', trigger: 'blur'}],
+        location: [{required: true, message: 'Vui lòng nhập địa điểm chụp', trigger: 'blur'}],
       }
     }
   },
@@ -54,13 +54,13 @@ export default {
     onUploadChange(file, fileList) {
       const isIMAGE = (file.raw.type === 'image/jpeg' || file.raw.type === 'image/png')
       if (!isIMAGE) {
-        this.$message.error('只能上传jpg/png图片!')
+        this.$message.error('Chỉ được tải lên ảnh jpg/png!')
         return false
       }
 
       const isLt500KB = file.raw.size / 1024 <= 500
       if (!isLt500KB) {
-        this.$message.error('图片大小不得超过500KB')
+        this.$message.error('Kích thước ảnh không được vượt quá 500KB')
         return false
       }
 
@@ -88,7 +88,7 @@ export default {
         this.$api.photo.add(this.form.title, this.form.location, this.form.file.raw)
           .then(res => {
             if (res.successful) {
-              this.$message({message: '添加图片成功', type: 'success'})
+              this.$message({message: 'Thêm ảnh thành công', type: 'success'})
               this.$emit('onAddPhotoSucceed')
               this.close()
             }

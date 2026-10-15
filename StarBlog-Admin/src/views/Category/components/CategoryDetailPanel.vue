@@ -1,32 +1,32 @@
 <template>
   <div class="category-detail-panel">
-    <!-- 未选择分类时的占位符 -->
+    <!-- Placeholder khi chưa chọn danh mục -->
     <div v-if="!selectedCategory" class="placeholder">
       <div class="placeholder-icon">
         <i class="el-icon-folder"></i>
       </div>
       <div class="placeholder-text">
-        <h3>选择一个分类</h3>
-        <p>点击左侧分类节点查看详细信息和文章列表</p>
+        <h3>Chọn một danh mục</h3>
+        <p>Nhấp vào nút danh mục bên trái để xem thông tin chi tiết và danh sách bài viết</p>
       </div>
     </div>
 
-    <!-- 选中分类时的详情展示 -->
+    <!-- Hiển thị chi tiết khi chọn danh mục -->
     <div v-else class="category-details">
-      <!-- 分类基本信息 -->
+      <!-- Thông tin cơ bản của danh mục -->
       <div class="category-info">
         <div class="info-header">
           <div class="category-title">
             <h2>{{ selectedCategory.text }}</h2>
             <div class="category-actions">
               <el-button size="small" @click="createPost">
-                <i class="el-icon-plus"></i> 新建文章
+                <i class="el-icon-plus"></i> Tạo bài viết mới
               </el-button>
               <el-button size="small" @click="addSubCategory">
-                <i class="el-icon-folder-add"></i> 添加子分类
+                <i class="el-icon-folder-add"></i> Thêm danh mục con
               </el-button>
               <el-button size="small" @click="editCategory">
-                <i class="el-icon-edit"></i> 编辑分类
+                <i class="el-icon-edit"></i> Sửa danh mục
               </el-button>
             </div>
           </div>
@@ -34,28 +34,28 @@
 
         <div class="info-stats">
           <div class="stat-item">
-            <div class="stat-label">分类ID</div>
+            <div class="stat-label">ID danh mục</div>
             <div class="stat-value">{{ selectedCategory.id }}</div>
           </div>
           <div class="stat-item">
-            <div class="stat-label">文章数量</div>
+            <div class="stat-label">Số lượng bài viết</div>
             <div class="stat-value">{{ selectedCategory.tags[0] }}</div>
           </div>
           <div class="stat-item">
-            <div class="stat-label">创建时间</div>
+            <div class="stat-label">Thời gian tạo</div>
             <div class="stat-value">{{ formatDate(selectedCategory.createTime) }}</div>
           </div>
           <div class="stat-item" v-if="selectedCategory.updateTime">
-            <div class="stat-label">更新时间</div>
+            <div class="stat-label">Thời gian cập nhật</div>
             <div class="stat-value">{{ formatDate(selectedCategory.updateTime) }}</div>
           </div>
         </div>
       </div>
 
-      <!-- 文章列表 -->
+      <!-- Danh sách bài viết -->
       <div class="posts-section">
         <div class="section-header">
-          <h3>分类文章</h3>
+          <h3>Bài viết trong danh mục</h3>
           <div class="section-actions">
             <el-button
               size="mini"
@@ -70,15 +70,15 @@
               @click="displayMode = 'icon'"
             ></el-button>
             <el-button size="mini" @click="refreshPosts">
-              <i class="el-icon-refresh"></i> 刷新
+              <i class="el-icon-refresh"></i> Làm mới
             </el-button>
           </div>
         </div>
 
         <div class="posts-content" v-loading="postsLoading">
-          <!-- 文章列表 -->
+          <!-- Danh sách bài viết -->
           <div v-if="categoryPosts.length > 0">
-            <!-- 卡片视图 -->
+            <!-- Dạng thẻ -->
             <div v-if="displayMode === 'card'" class="posts-grid">
               <ArticleCard
                 v-for="post in categoryPosts"
@@ -90,7 +90,7 @@
               />
             </div>
 
-            <!-- 图标视图 -->
+            <!-- Dạng biểu tượng -->
             <div v-else-if="displayMode === 'icon'" class="posts-icon-grid">
               <ArticleIcon
                 v-for="post in categoryPosts"
@@ -102,14 +102,14 @@
             </div>
           </div>
 
-          <!-- 空状态 -->
+          <!-- Trạng thái trống -->
           <div v-else-if="!postsLoading" class="posts-empty">
             <div class="empty-icon">
               <i class="el-icon-document"></i>
             </div>
             <div class="empty-text">
-              <h4>暂无文章</h4>
-              <p>该分类下还没有文章，点击上方"新建文章"开始创作</p>
+              <h4>Chưa có bài viết</h4>
+              <p>Danh mục này chưa có bài viết, nhấn "Tạo bài viết" ở phía trên để bắt đầu sáng tác</p>
             </div>
           </div>
         </div>
@@ -148,7 +148,7 @@ export default {
     }
   },
   methods: {
-    // 格式化日期
+    // Định dạng ngày
     formatDate(dateString) {
       if (!dateString) return '';
       const date = new Date(dateString);
@@ -161,32 +161,32 @@ export default {
       });
     },
 
-    // 创建文章
+    // Tạo bài viết
     createPost() {
       this.$emit('create-post');
     },
 
-    // 添加子分类
+    // Thêm danh mục con
     addSubCategory() {
       this.$emit('add-subcategory', this.selectedCategory);
     },
 
-    // 编辑分类
+    // Sửa danh mục
     editCategory() {
       this.$emit('edit-category', this.selectedCategory);
     },
 
-    // 刷新文章列表
+    // Làm mới danh sách bài viết
     refreshPosts() {
       this.$emit('refresh-posts');
     },
 
-    // 查看文章
+    // Xem bài viết
     viewPost(post) {
       this.$emit('view-post', post);
     },
 
-    // 编辑文章
+    // Sửa bài viết
     editPost(post) {
       this.$emit('edit-post', post);
     },
@@ -196,7 +196,7 @@ export default {
     },
 
     handleIconSelect(post) {
-      // 在图标模式下，单击图标等同于查看文章
+      // Ở chế độ biểu tượng, nhấp vào biểu tượng tương đương với xem bài viết
       this.viewPost(post);
     }
   }
@@ -210,7 +210,7 @@ export default {
   overflow-y: auto;
 }
 
-/* 占位符样式 */
+/* Kiểu dáng placeholder */
 .placeholder {
   display: flex;
   flex-direction: column;
@@ -241,7 +241,7 @@ export default {
   line-height: 1.5;
 }
 
-/* 分类详情样式 */
+/* Kiểu dáng chi tiết danh mục */
 .category-details {
   height: 100%;
   display: flex;
@@ -301,7 +301,7 @@ export default {
   font-weight: 600;
 }
 
-/* 文章列表样式 */
+/* Kiểu dáng danh sách bài viết */
 .posts-section {
   flex: 1;
   display: flex;
@@ -343,7 +343,7 @@ export default {
   gap: 16px;
 }
 
-/* 空状态样式 */
+/* Kiểu dáng trạng thái trống */
 .posts-empty {
   display: flex;
   flex-direction: column;
@@ -373,7 +373,7 @@ export default {
   line-height: 1.5;
 }
 
-/* 响应式设计 */
+/* Thiết kế responsive */
 @media (max-width: 768px) {
   .category-info {
     padding: 16px;

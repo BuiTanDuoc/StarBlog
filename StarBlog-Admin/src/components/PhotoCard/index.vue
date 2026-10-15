@@ -4,9 +4,9 @@
     width="260"
     trigger="manual"
     v-model="visible">
-    <p>图片名称：{{ photo.title }}</p>
-    <p>拍摄地点：{{ photo.location }}</p>
-    <p>上传时间：{{ dateTimeStr }}</p>
+    <p>Tên ảnh: {{ photo.title }}</p>
+    <p>Địa điểm chụp: {{ photo.location }}</p>
+    <p>Thời gian tải lên: {{ dateTimeStr }}</p>
     <el-button-group>
       <el-button type="primary" icon="el-icon-edit" @click="emitEdit"></el-button>
       <el-button type="warning" icon="el-icon-check" @click="setFeatured"></el-button>
@@ -14,13 +14,13 @@
       <el-button type="danger" icon="el-icon-delete" @click="deletePhoto"></el-button>
     </el-button-group>
     <el-card slot="reference" :body-style="{ padding: '0px' }" class="photo-card">
-      <!-- 推荐角标 -->
-      <el-tag v-if="photo.isFeatured" type="warning" size="mini" class="featured-badge">推荐</el-tag>
-      <!-- 选择模式复选框 -->
+      <!-- Huy hiệu đề xuất -->
+      <el-tag v-if="photo.isFeatured" type="warning" size="mini" class="featured-badge">Đề xuất</el-tag>
+      <!-- Ô chọn của chế độ chọn -->
       <el-checkbox v-if="selectionMode" v-model="localSelected" class="select-checkbox" @change="onSelectChanged"></el-checkbox>
-      <!-- 显式更多按钮 -->
+      <!-- Hiển thị nút Thêm -->
       <el-button circle size="mini" icon="el-icon-more" class="more-btn" @click="togglePopover"></el-button>
-      <!-- 图片：开启懒加载与预览 -->
+      <!-- Ảnh: bật tải lười (lazy loading) và xem trước -->
       <el-image :src="photo.url" class="image" :preview-src-list="[photo.url]"
                 :lazy="true"
                 @contextmenu.prevent="onImageRightClick">
@@ -83,34 +83,34 @@ export default {
     setFeatured() {
       this.$api.photo.setFeatured(this.photo.id)
         .then(res => {
-          this.$message.success('设置推荐成功')
+          this.$message.success('Đặt đề xuất thành công')
           this.$emit('onFeaturedChange', { id: this.photo.id, isFeatured: true })
         })
-        .catch(res => this.$message.error(`操作失败。${res.message}`))
+        .catch(res => this.$message.error(`Thao tác thất bại. ${res.message}`))
       this.togglePopover()
     },
     cancelFeatured() {
       this.$api.photo.cancelFeatured(this.photo.id)
         .then(res => {
-          this.$message.success('取消推荐成功')
+          this.$message.success('Bỏ đề xuất thành công')
           this.$emit('onFeaturedChange', { id: this.photo.id, isFeatured: false })
         })
-        .catch(res => this.$message.error(`操作失败。${res.message}`))
+        .catch(res => this.$message.error(`Thao tác thất bại. ${res.message}`))
       this.togglePopover()
     },
     deletePhoto() {
-      this.$confirm('此操作将永久删除该图片, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm('Thao tác này sẽ xóa vĩnh viễn ảnh này, bạn có muốn tiếp tục không?', 'Thông báo', {
+        confirmButtonText: 'Xác nhận',
+        cancelButtonText: 'Hủy',
         type: 'warning'
       }).then(() => {
         this.$api.photo.deleteItem(this.photo.id)
           .then(res => {
-            this.$message.success(`删除成功。${res.message}`)
+            this.$message.success(`Xóa thành công. ${res.message}`)
             this.$emit('onItemDeleted')
           })
-          .catch(res => this.$message.error(`操作失败。${res.message}`))
-      }).catch(() => this.$message('已取消删除'))
+          .catch(res => this.$message.error(`Thao tác thất bại. ${res.message}`))
+      }).catch(() => this.$message('Đã hủy xóa'))
       this.togglePopover()
     }
   }

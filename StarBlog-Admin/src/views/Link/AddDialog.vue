@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="添加友情链接" :visible.sync="dialogFormVisible" width="30%">
+  <el-dialog title="Thêm liên kết bạn bè" :visible.sync="dialogFormVisible" width="30%">
     <el-form ref="uploadForm" label-position="left" :model="form" :rules="formRules" label-width="auto">
       <el-form-item label="name" prop="name">
         <el-input v-model="form.name" autocomplete="off"></el-input>
@@ -15,8 +15,8 @@
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button @click="close">取 消</el-button>
-      <el-button type="primary" @click="submitUpload">确 定</el-button>
+      <el-button @click="close">Hủy</el-button>
+      <el-button type="primary" @click="submitUpload">Xác nhận</el-button>
     </div>
   </el-dialog>
 </template>
@@ -43,8 +43,8 @@ export default {
         visible: 1
       },
       formRules: {
-        name: [{required: true, message: '请输入 name', trigger: 'blur'},],
-        url: [{required: true, message: '请输入 url', trigger: 'blur'}],
+        name: [{required: true, message: 'Vui lòng nhập name', trigger: 'blur'},],
+        url: [{required: true, message: 'Vui lòng nhập url', trigger: 'blur'}],
       }
     }
   },
@@ -89,13 +89,13 @@ export default {
           this.$api.link.add(this.form)
             .then(res => {
               if (res.successful) {
-                this.$message({message: '添加成功', type: 'success'})
+                this.$message({message: 'Thêm thành công', type: 'success'})
                 this.$emit('onAddSucceed')
                 this.close()
               }
             })
             .catch(res => {
-              this.$message({message: `添加失败！${res.message}`, type: 'error'})
+              this.$message({message: `Thêm thất bại! ${res.message}`, type: 'error'})
             })
         }
 
@@ -103,13 +103,13 @@ export default {
           this.$api.link.update(this.form)
             .then(res => {
               if (res.successful) {
-                this.$message({message: '修改成功', type: 'success'})
+                this.$message({message: 'Sửa thành công', type: 'success'})
                 this.$emit('onUpdateSucceed')
                 this.close()
               }
             })
             .catch(res => {
-              this.$message({message: `修改失败！${res.message}`, type: 'error'})
+              this.$message({message: `Sửa thất bại! ${res.message}`, type: 'error'})
             })
         }
       })

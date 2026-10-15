@@ -1,6 +1,6 @@
 import axios from '../axios'
 
-// 获取置顶博客
+// Lấy blog được ghim
 export const top = () => {
   return axios({
     url: 'Blog/Top',
@@ -8,7 +8,7 @@ export const top = () => {
   })
 }
 
-// 获取推荐博客
+// Lấy blog đề xuất
 export const featured = () => {
   return axios({
     url: 'Blog/Featured',
@@ -16,21 +16,21 @@ export const featured = () => {
   })
 }
 
-// 获取博客概况信息
+// Lấy thông tin tổng quan blog
 export const overview = () => {
   return axios({
     url: 'Blog/Overview',
   })
 }
 
-// 博客文章状态列表
+// Danh sách trạng thái bài viết blog
 export const getStatusList = () => {
   return axios({
     url: 'Blog/GetStatusList'
   })
 }
 
-// 文章上传
+// Tải bài viết lên
 export const upload = (title, summary, categoryId, file, zipEncoding = 'utf-8') => {
   let formData = new FormData()
   formData.append('title', title)

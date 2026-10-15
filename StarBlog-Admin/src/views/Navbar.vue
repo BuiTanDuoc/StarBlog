@@ -8,7 +8,7 @@
       <img v-if="collapse" src="@/assets/codelab.jpg"/>
       <div>{{ collapse ? '' : appName }}</div>
     </div>
-    <!-- 导航菜单 -->
+    <!-- Menu điều hướng -->
     <el-menu ref="navMenu"
              :style="{'display': fullscreen? 'none':''}"
              :default-active="$route.path"
@@ -20,56 +20,56 @@
     >
       <el-menu-item index="/">
         <i class="el-icon-s-home"></i>
-        <span slot="title">主页</span>
+        <span slot="title">Trang chủ</span>
       </el-menu-item>
       <el-submenu index="blog">
         <template slot="title">
           <i class="el-icon-s-grid"></i>
-          <span>博客</span>
+          <span>Blog</span>
         </template>
-        <el-menu-item-group title="分类管理">
-          <el-menu-item index="/category/list">分类列表</el-menu-item>
-          <el-menu-item index="/category/tree">分类树</el-menu-item>
-          <el-menu-item index="/category/featured">推荐分类</el-menu-item>
+        <el-menu-item-group title="Quản lý danh mục">
+          <el-menu-item index="/category/list">Danh sách danh mục</el-menu-item>
+          <el-menu-item index="/category/tree">Cây danh mục</el-menu-item>
+          <el-menu-item index="/category/featured">Danh mục đề xuất</el-menu-item>
         </el-menu-item-group>
-        <el-menu-item-group title="文章管理">
-          <el-menu-item index="/post/list">文章列表</el-menu-item>
-          <el-menu-item index="/post/featured">推荐文章</el-menu-item>
-          <el-menu-item index="/post/top">置顶文章</el-menu-item>
+        <el-menu-item-group title="Quản lý bài viết">
+          <el-menu-item index="/post/list">Danh sách bài viết</el-menu-item>
+          <el-menu-item index="/post/featured">Bài viết đề xuất</el-menu-item>
+          <el-menu-item index="/post/top">Bài viết được ghim</el-menu-item>
         </el-menu-item-group>
-        <el-menu-item-group title="评论管理">
-          <el-menu-item index="/comment/list">评论管理</el-menu-item>
+        <el-menu-item-group title="Quản lý bình luận">
+          <el-menu-item index="/comment/list">Quản lý bình luận</el-menu-item>
         </el-menu-item-group>
-        <el-menu-item-group title="黑科技">
-          <el-menu-item index="/post/upload">打包上传</el-menu-item>
+        <el-menu-item-group title="Công nghệ đỉnh">
+          <el-menu-item index="/post/upload">Đóng gói và tải lên</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
       <el-submenu index="photography">
         <template slot="title">
           <i class="el-icon-camera"></i>
-          <span>摄影</span>
+          <span>Nhiếp ảnh</span>
         </template>
-        <el-menu-item-group title="照片管理">
-          <el-menu-item index="/photo/list">照片列表</el-menu-item>
-          <el-menu-item index="/photo/featured">推荐图片</el-menu-item>
+        <el-menu-item-group title="Quản lý ảnh">
+          <el-menu-item index="/photo/list">Danh sách ảnh</el-menu-item>
+          <el-menu-item index="/photo/featured">Ảnh đề xuất</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
       <el-menu-item index="/visit_record/list">
         <i class="el-icon-menu"></i>
-        <span slot="title">访问日志</span>
+        <span slot="title">Nhật ký truy cập</span>
       </el-menu-item>
       <el-menu-item index="/config/list">
         <i class="el-icon-s-tools"></i>
-        <span slot="title">配置中心</span>
+        <span slot="title">Trung tâm cấu hình</span>
       </el-menu-item>
       <el-submenu index="link">
         <template slot="title">
           <i class="el-icon-link"></i>
-          <span>友情链接</span>
+          <span>Liên kết bạn bè</span>
         </template>
-        <el-menu-item-group title="友情链接管理">
-          <el-menu-item index="/link/list">友情链接</el-menu-item>
-          <el-menu-item index="/link_exchange/list">友链申请管理</el-menu-item>
+        <el-menu-item-group title="Quản lý liên kết bạn bè">
+          <el-menu-item index="/link/list">Liên kết bạn bè</el-menu-item>
+          <el-menu-item index="/link_exchange/list">Quản lý yêu cầu trao đổi liên kết</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
     </el-menu>
@@ -111,9 +111,9 @@ export default {
     this.handleRoute(this.$route)
   },
   methods: {
-    // 路由操作处理
+    // Xử lý thao tác route
     handleRoute(route) {
-      // tab标签页选中, 如果不存在则先添加
+      // tab Tab được chọn, nếu chưa tồn tại thì thêm trước
       let tab = this.mainTabs.filter(item => item.name === route.name)[0]
       if (!tab) {
         tab = {
@@ -128,7 +128,7 @@ export default {
         this.mainTabs = this.mainTabs.concat(tab)
       }
       this.mainTabsActiveName = tab.name
-      // 切换标签页时同步更新高亮菜单
+      // Đồng bộ làm nổi bật menu khi chuyển tab
       if (this.$refs.navMenu != null) {
         this.$refs.navMenu.activeIndex = '' + route.meta.index
         this.$refs.navMenu.initOpenedMenu()

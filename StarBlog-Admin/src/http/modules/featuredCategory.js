@@ -1,6 +1,6 @@
 import axios from "../axios"
 
-// 获取全部
+// Lấy tất cả
 export const getAll = () => {
   return axios({
     url: 'FeaturedCategory',
@@ -8,7 +8,7 @@ export const getAll = () => {
   })
 }
 
-// 获取指定项目
+// Lấy mục được chỉ định
 export const get = itemId => {
   return axios({
     url: `FeaturedCategory/${itemId}`,
@@ -16,7 +16,7 @@ export const get = itemId => {
   })
 }
 
-// 添加项目
+// Thêm dự án
 export const add = data => {
   return axios({
     url: 'FeaturedCategory',
@@ -25,7 +25,7 @@ export const add = data => {
   })
 }
 
-// 删除指定项目
+// Xóa mục được chỉ định
 export const deleteItem = itemId => {
   return axios({
     url: `FeaturedCategory/${itemId}/`,

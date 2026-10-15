@@ -1,6 +1,6 @@
 <template>
   <div class="categories-tree-container">
-    <!-- 左侧面板 -->
+    <!-- Bảng bên trái -->
     <div class="left-panel" :style="{ width: leftPanelWidth + '%' }">
       <CategoryTreePanel
         :tree-data="treeData"
@@ -12,13 +12,13 @@
       />
     </div>
 
-    <!-- 分割线 -->
+    <!-- Đường phân cách -->
     <ResizableDivider
       :is-resizing="isResizing"
       @start-resize="startResize"
     />
 
-    <!-- 右侧面板 -->
+    <!-- Bảng bên phải -->
     <div class="right-panel" :style="{ width: (100 - leftPanelWidth) + '%' }">
       <CategoryDetailPanel
         :selected-category="selectedCategory"
@@ -34,7 +34,7 @@
       />
     </div>
 
-    <!-- 添加分类对话框 -->
+    <!-- Hộp thoại thêm danh mục -->
     <AddCategoryDialog
       ref="addDialog"
       @add-succeed="onAddSucceed"
@@ -61,29 +61,29 @@ export default {
     return {
       loading: false,
       treeData: [],
-      selectedCategory: null, // 当前选中的分类
-      categoryPosts: [], // 当前分类的文章列表
-      postsLoading: false, // 文章加载状态
-      leftPanelWidth: 35, // 左侧面板宽度百分比
-      isResizing: false // 是否正在调整大小
+      selectedCategory: null, // Danh mục đang chọn
+      categoryPosts: [], // Danh sách bài viết của danh mục hiện tại
+      postsLoading: false, // Trạng thái tải bài viết
+      leftPanelWidth: 35, // Phần trăm chiều rộng bảng bên trái
+      isResizing: false // Có đang thay đổi kích thước hay không
     }
   },
   watch: {
-    // 移除searchText的watch，因为搜索功能已经移到子组件中
+    // Gỡ watch của searchText vì chức năng tìm kiếm đã được chuyển sang component con
   },
   mounted() {
     this.loadData()
-    // 添加鼠标事件监听器用于调整面板大小
+    // Thêm bộ lắng nghe sự kiện chuột để thay đổi kích thước bảng
     document.addEventListener('mousemove', this.handleResize)
     document.addEventListener('mouseup', this.stopResize)
   },
   beforeDestroy() {
-    // 清理事件监听器
+    // Dọn dẹp bộ lắng nghe sự kiện
     document.removeEventListener('mousemove', this.handleResize)
     document.removeEventListener('mouseup', this.stopResize)
   },
   methods: {
-    // 处理菜单命令
+    // Xử lý lệnh menu
     handleMenuCommand(command) {
       const { action, data } = command
       switch (action) {
@@ -102,18 +102,18 @@ export default {
       }
     },
 
-    // 处理节点点击事件
+    // Xử lý sự kiện nhấp vào nút
     handleNodeClick(data) {
       this.selectCategory(data)
     },
 
-    // 选择分类
+    // Chọn danh mục
     selectCategory(category) {
       this.selectedCategory = category
       this.loadCategoryPosts()
     },
 
-    // 加载分类文章
+    // Tải bài viết của danh mục
     async loadCategoryPosts() {
       if (!this.selectedCategory) return
 
@@ -124,18 +124,18 @@ export default {
           1, // page
           50 // pageSize
         )
-        console.log('加载分类文章成功:', res.data);
+        console.log('Tải bài viết của danh mục thành công:', res.data);
         this.categoryPosts = res.data || []
       } catch (error) {
-        console.error('加载分类文章失败:', error)
-        this.$message.error('加载分类文章失败')
+        console.error('Tải bài viết của danh mục thất bại:', error)
+        this.$message.error('Tải bài viết của danh mục thất bại')
         this.categoryPosts = []
       } finally {
         this.postsLoading = false
       }
     },
 
-    // 面板大小调整
+    // Thay đổi kích thước bảng
     startResize(e) {
       this.isResizing = true
       e.preventDefault()
@@ -148,7 +148,7 @@ export default {
       const containerRect = container.getBoundingClientRect()
       const newWidth = ((e.clientX - containerRect.left) / containerRect.width) * 100
 
-      // 限制宽度范围在20%-60%之间
+      // Giới hạn phạm vi chiều rộng trong khoảng 20%-60%
       if (newWidth >= 20 && newWidth <= 60) {
         this.leftPanelWidth = newWidth
       }
@@ -158,7 +158,7 @@ export default {
       this.isResizing = false
     },
 
-    // 数据加载
+    // Tải dữ liệu
     async loadData() {
       this.loading = true
       try {
@@ -166,13 +166,13 @@ export default {
         this.treeData = res.data || []
       } catch (error) {
         console.error(error)
-        this.$message.error(error.message || '加载分类数据失败')
+        this.$message.error(error.message || 'Tải dữ liệu danh mục thất bại')
       } finally {
         this.loading = false
       }
     },
 
-    // 获取所有节点的key
+    // Lấy key của tất cả các nút
     getAllNodeKeys(nodes) {
       let keys = []
       nodes.forEach(node => {
@@ -184,49 +184,49 @@ export default {
       return keys
     },
 
-    // 查看分类文章
+    // Xem bài viết của danh mục
     viewCategoryPosts(category) {
-      // 跳转到分类详情页面
+      // Chuyển đến trang chi tiết danh mục
       this.$router.push({
         path: `/category/detail/${category.id}`,
       })
     },
 
-    // 查看文章详情
+    // Xem chi tiết bài viết
     viewPost(post) {
-      // 跳转到文章编辑页面
+      // Chuyển đến trang chỉnh sửa bài viết
       this.$router.push({
         path: `/post/edit/${post.id}`,
       })
     },
 
-    // 编辑文章
+    // Sửa bài viết
     editPost(post) {
       this.$router.push({
         path: `/post/edit/${post.id}`,
       })
     },
 
-    // 删除文章
+    // Xóa bài viết
     deletePost(post) {
-      this.$confirm(`确定要删除文章"${post.title}"吗？`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(`Bạn có chắc muốn xóa bài viết "${post.title}" không?`, 'Thông báo', {
+        confirmButtonText: 'Xác nhận',
+        cancelButtonText: 'Hủy',
         type: 'warning'
       }).then(async () => {
         try {
           await this.$api.blogPost.deleteItem(post.id)
-          this.$message.success('删除成功')
-          this.loadCategoryPosts() // 重新加载文章列表
+          this.$message.success('Xóa thành công')
+          this.loadCategoryPosts() // Tải lại danh sách bài viết
         } catch (error) {
-          this.$message.error(`删除失败：${error.message}`)
+          this.$message.error(`Xóa thất bại: ${error.message}`)
         }
       }).catch(() => {
-        this.$message('已取消删除')
+        this.$message('Đã hủy xóa')
       })
     },
 
-    // 创建文章
+    // Tạo bài viết
     createPost() {
       this.$router.push({
         path: '/blog/add',
@@ -234,66 +234,66 @@ export default {
       })
     },
 
-    // 添加分类
+    // Thêm danh mục
     handleAdd() {
       this.$refs.addDialog.add()
     },
 
-    // 添加子分类
+    // Thêm danh mục con
     addSubCategory(parentCategory) {
-      // 调用对话框的addSubCategory方法，传入父分类信息
+      // Gọi phương thức addSubCategory của hộp thoại, truyền vào thông tin danh mục cha
       this.$refs.addDialog.addSubCategory({
         id: parentCategory.id,
         name: parentCategory.text
       })
     },
 
-    // 编辑分类
+    // Sửa danh mục
     editCategory(category) {
-      // 将树形数据转换为编辑所需的格式
+      // Chuyển dữ liệu cây sang định dạng cần thiết cho việc chỉnh sửa
       const editData = {
         id: category.id,
         name: category.text,
-        // 这里可能需要根据实际API调用获取更多详细信息
+        // Ở đây có thể cần gọi API thực tế để lấy thêm thông tin chi tiết
       }
       this.$refs.addDialog.edit(editData)
     },
 
-    // 删除分类
+    // Xóa danh mục
     deleteCategory(category) {
-      this.$confirm(`此操作将删除分类"${category.text}"，是否继续?`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(`Thao tác này sẽ xóa danh mục"${category.text}", bạn có muốn tiếp tục không?`, 'Thông báo', {
+        confirmButtonText: 'Xác nhận',
+        cancelButtonText: 'Hủy',
         type: 'warning'
       }).then(async () => {
         try {
           const res = await this.$api.category.deleteItem(category.id)
-          this.$message.success(`删除成功。${res.message || ''}`)
+          this.$message.success(`Xóa thành công. ${res.message || ''}`)
           this.loadData()
-          // 如果删除的是当前选中的分类，清空选择
+          // Nếu danh mục bị xóa là danh mục đang chọn thì xóa lựa chọn
           if (this.selectedCategory && this.selectedCategory.id === category.id) {
             this.selectedCategory = null
             this.categoryPosts = []
           }
         } catch (error) {
-          this.$message.error(`操作失败。${error.message}`)
+          this.$message.error(`Thao tác thất bại. ${error.message}`)
         }
       }).catch(() => {
-        this.$message('已取消删除')
+        this.$message('Đã hủy xóa')
       })
     },
 
-    // 添加成功回调
+    // Callback khi thêm thành công
     onAddSucceed() {
-      this.$message.success('添加成功')
+      this.$message.success('Thêm thành công')
       this.loadData()
     },
 
-    // 更新成功回调
+    // Callback khi cập nhật thành công
     onUpdateSucceed() {
-      this.$message.success('保存成功')
+      this.$message.success('Lưu thành công')
       this.loadData()
-      // 如果更新的是当前选中的分类，重新加载文章
+      // Nếu danh mục được cập nhật là danh mục đang chọn thì tải lại bài viết
       if (this.selectedCategory) {
         this.loadCategoryPosts()
       }
@@ -309,7 +309,7 @@ export default {
   background: #f5f5f5;
 }
 
-/* 左侧面板样式 */
+/* Kiểu dáng bảng bên trái */
 .left-panel {
   background: white;
   border-right: 1px solid #e4e7ed;
@@ -319,7 +319,7 @@ export default {
   max-width: 500px;
 }
 
-/* 右侧面板样式 */
+/* Kiểu dáng bảng bên phải */
 .right-panel {
   background: white;
   display: flex;
@@ -327,7 +327,7 @@ export default {
   min-width: 400px;
 }
 
-/* 响应式设计 */
+/* Thiết kế responsive */
 @media (max-width: 768px) {
   .categories-tree-container {
     flex-direction: column;

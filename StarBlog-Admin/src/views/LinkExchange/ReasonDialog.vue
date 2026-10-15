@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="补充信息" :visible.sync="dialogFormVisible" width="30%">
+  <el-dialog title="Thông tin bổ sung" :visible.sync="dialogFormVisible" width="30%">
     <el-form ref="uploadForm" :model="form" label-width="80px">
       <el-form-item label="id" prop="id">
         <el-input v-model="form.id" readonly="readonly" autocomplete="off"></el-input>
@@ -8,12 +8,12 @@
         <el-input v-model="form.action" readonly="readonly" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item label="reason" prop="reason">
-        <el-input v-model="form.reason" autocomplete="off" placeholder="输入通过/拒绝原因"></el-input>
+        <el-input v-model="form.reason" autocomplete="off" placeholder="Nhập lý do duyệt/từ chối"></el-input>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button @click="close">取 消</el-button>
-      <el-button type="primary" @click="submitUpload">确 定</el-button>
+      <el-button @click="close">Hủy</el-button>
+      <el-button type="primary" @click="submitUpload">Xác nhận</el-button>
     </div>
   </el-dialog>
 </template>

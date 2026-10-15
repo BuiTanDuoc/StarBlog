@@ -12,11 +12,11 @@ const ORIGINAL_THEME = '#409EFF' // default color
 export default {
   name: 'ThemePicker',
   props: {
-    default: { // 初始化主题，可由外部传入
+    default: { // Khởi tạo chủ đề, có thể truyền từ bên ngoài
       type: String,
       default: null
     },
-    size: { // 初始化主题，可由外部传入
+    size: { // Khởi tạo chủ đề, có thể truyền từ bên ngoài
       type: String,
       default: 'small'
     }
@@ -25,7 +25,7 @@ export default {
     return {
       chalk: '', // content of theme-chalk css
       theme: ORIGINAL_THEME,
-      showSuccess: true // 是否弹出换肤成功消息
+      showSuccess: true // Có hiển thị thông báo đổi giao diện thành công hay không
     }
   },
   mounted() {
@@ -38,7 +38,7 @@ export default {
   watch: {
     theme(val, oldVal) {
       if (typeof val !== 'string') return
-      // 替换CSS样式，修改主题色
+      // Thay thế kiểu CSS, đổi màu chủ đề
       const themeCluster = this.getThemeCluster(val.replace('#', ''))
       const originalCluster = this.getThemeCluster(oldVal.replace('#', ''))
       console.log(themeCluster, originalCluster)
@@ -73,10 +73,10 @@ export default {
         if (typeof innerText !== 'string') return
         style.innerText = this.updateStyle(innerText, originalCluster, themeCluster)
       })
-      // 响应外部操作
+      // Phản hồi với thao tác bên ngoài
       this.$emit('onThemeChange', val)
       if (this.showSuccess) {
-        this.$message({message: '换肤成功', type: 'success'})
+        this.$message({message: 'Đổi giao diện thành công', type: 'success'})
       } else {
         this.showSuccess = true
       }

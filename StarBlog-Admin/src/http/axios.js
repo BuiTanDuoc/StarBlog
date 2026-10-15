@@ -12,42 +12,42 @@ export default function $axios(options) {
       timeout: config.timeout,
       withCredentials: config.withCredentials
     })
-    // request 请求拦截器
+    // request Bộ chặn yêu cầu
     instance.interceptors.request.use(
       config => {
         if (!auth.isLogin()) {
-          // 重定向到登录页面
+          // Chuyển hướng đến trang đăng nhập
           router.push('/login')
         }
 
-        // 发送请求时携带token
+        // Đính kèm khi gửi yêu cầu token
         let token = auth.getToken()
         config.headers.Authorization = `Bearer ${token}`
 
         return config
       },
       error => {
-        // 请求发生错误时
+        // Khi yêu cầu xảy ra lỗi
         console.log('request:', error)
-        // 判断请求超时
+        // Kiểm tra yêu cầu hết thời gian chờ
         if (error.code === 'ECONNABORTED' && error.message.indexOf('timeout') !== -1) {
-          console.log('timeout请求超时')
+          console.log('timeout Yêu cầu hết thời gian chờ')
         }
-        // 需要重定向到错误页面
+        // Cần chuyển hướng đến trang lỗi
         const errorInfo = error.response
         console.log(errorInfo)
         if (errorInfo) {
-          error = errorInfo.data  // 页面那边catch的时候就能拿到详细的错误信息,看最下边的Promise.reject
+          error = errorInfo.data  // Phía trang khi catch sẽ lấy được thông tin lỗi chi tiết, xem Promise.reject ở dưới cùng
           const errorStatus = errorInfo.status; // 404 403 500 ...
           router.push({
             path: `/error/${errorStatus}`
           })
         }
-        return Promise.reject(error) // 在调用的那边可以拿到(catch)你想返回的错误信息
+        return Promise.reject(error) // Phía nơi gọi có thể lấy được (catch) thông tin lỗi bạn muốn trả về
       }
     )
 
-    // response 响应拦截器
+    // response Bộ chặn phản hồi
     instance.interceptors.response.use(
       response => {
         return response.data
@@ -55,56 +55,56 @@ export default function $axios(options) {
       err => {
         let reason = err
         if (err && err.response) {
-          // 包装一下默认的错误提示
+          // Bọc lại thông báo lỗi mặc định
           switch (err.response.status) {
             case 400:
-              err.message = '请求参数错误'
+              err.message = 'Tham số yêu cầu không hợp lệ'
               break
             case 401:
-              err.message = '请先登录再访问'
+              err.message = 'Vui lòng đăng nhập trước khi truy cập'
               break
             case 403:
-              err.message = '拒绝访问，没有访问权限'
+              err.message = 'Từ chối truy cập, không có quyền truy cập'
               break
             case 404:
-              err.message = `请求地址出错: ${err.response.config.url}`
+              err.message = `Địa chỉ yêu cầu bị lỗi: ${err.response.config.url}`
               break
             case 408:
-              err.message = '请求超时'
+              err.message = 'Yêu cầu hết thời gian chờ'
               break
             case 500:
-              err.message = '服务器内部错误'
+              err.message = 'Lỗi nội bộ máy chủ'
               break
             case 501:
-              err.message = '服务未实现'
+              err.message = 'Dịch vụ chưa được triển khai'
               break
             case 502:
-              err.message = '网关错误'
+              err.message = 'Lỗi gateway'
               break
             case 503:
-              err.message = '服务不可用'
+              err.message = 'Dịch vụ không khả dụng'
               break
             case 504:
-              err.message = '网关超时'
+              err.message = 'Hết thời gian chờ của gateway'
               break
             case 505:
-              err.message = 'HTTP版本不受支持'
+              err.message = 'Phiên bản HTTP không được hỗ trợ'
               break
             default:
           }
 
-          // 如果有错误响应的话就处理
+          // Nếu có phản hồi lỗi thì xử lý
           if (err.response.data) {
             reason = err.response.data
-            // 如果没有返回错误信息的话就用上面的默认信息
+            // Nếu không có thông tin lỗi trả về thì dùng thông tin mặc định ở trên
             if (!reason.message) reason.message = err.message
           }
         }
         console.error(err)
-        return Promise.reject(reason) // 返回接口返回的错误信息
+        return Promise.reject(reason) // Trả về thông tin lỗi mà API trả về
       }
     )
-    // 请求处理
+    // Xử lý yêu cầu
     instance(options).then(res => {
       resolve(res)
       return false

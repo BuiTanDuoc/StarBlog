@@ -1,19 +1,19 @@
 <template>
-  <el-dialog title="推荐分类信息" :visible.sync="dialogFormVisible">
+  <el-dialog title="Thông tin danh mục đề xuất" :visible.sync="dialogFormVisible">
     <el-form ref="form" :model="form">
-      <el-form-item label="推荐名称" :label-width="formLabelWidth">
+      <el-form-item label="Tên đề xuất" :label-width="formLabelWidth">
         <el-input v-model="form.name" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="说明" :label-width="formLabelWidth">
+      <el-form-item label="Mô tả" :label-width="formLabelWidth">
         <el-input v-model="form.description" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="图标类名" :label-width="formLabelWidth">
+      <el-form-item label="Tên class biểu tượng" :label-width="formLabelWidth">
         <el-input v-model="form.iconCssClass" autocomplete="off"></el-input>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button @click="close">取 消</el-button>
-      <el-button type="primary" @click="submit">确 定</el-button>
+      <el-button @click="close">Hủy</el-button>
+      <el-button type="primary" @click="submit">Xác nhận</el-button>
     </div>
   </el-dialog>
 </template>
@@ -37,12 +37,12 @@ export default {
       },
       formRules: {
         name: [
-          {required: true, message: '请输入推荐名称', trigger: 'blur'},
-          {min: 1, max: 20, message: '长度在 1 到 20 个字符', trigger: 'blur'}
+          {required: true, message: 'Vui lòng nhập tên đề xuất', trigger: 'blur'},
+          {min: 1, max: 20, message: 'Độ dài từ 1 đến 20 ký tự', trigger: 'blur'}
         ],
         description: [
-          {required: true, message: '请输入说明', trigger: 'blur'},
-          {min: 1, max: 300, message: '长度在 1 到 300 个字符', trigger: 'blur'}
+          {required: true, message: 'Vui lòng nhập mô tả', trigger: 'blur'},
+          {min: 1, max: 300, message: 'Độ dài từ 1 đến 300 ký tự', trigger: 'blur'}
         ],
       }
     }
@@ -65,10 +65,10 @@ export default {
 
         this.$api.category.setFeatured(this.category.id, this.form)
           .then(res => {
-            this.$message.success(`操作成功。${res.message}`)
+            this.$message.success(`Thao tác thành công. ${res.message}`)
             this.$emit('onAddPhotoSucceed')
           })
-          .catch(res => this.$message.error(`操作失败。${res.message}`))
+          .catch(res => this.$message.error(`Thao tác thất bại. ${res.message}`))
           .finally(() => this.close())
       })
     },

@@ -1,8 +1,8 @@
 'use strict'
 
 /**
- * 生产环境配置
- * 从环境变量中读取敏感配置信息，避免硬编码到代码中
+ * Cấu hình môi trường production
+ * Đọc thông tin cấu hình nhạy cảm từ biến môi trường, tránh mã hóa cứng vào mã nguồn
  */
 module.exports = {
   NODE_ENV: '"production"',

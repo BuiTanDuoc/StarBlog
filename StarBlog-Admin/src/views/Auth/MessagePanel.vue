@@ -1,6 +1,6 @@
 <template>
   <div class="message-panel">
-    <div class="message-header">您有 {{ data.length }} 条消息</div>
+    <div class="message-header">Bạn có {{ data.length }} tin nhắn</div>
     <div class="message-content">
       <div v-for="item in data" :key="item.key" class="message-item">
         <div class="message-avatar">
@@ -17,7 +17,7 @@
         </div>
       </div>
     </div>
-    <div class="message-footer">查看所有消息</div>
+    <div class="message-footer">Xem tất cả tin nhắn</div>
   </div>
 </template>
 
@@ -31,37 +31,37 @@ export default {
         {
           key: "1",
           avatar: '@/assets/user.png',
-          content: '你修改了用户密码',
-          sender: '用户1',
-          time: '5分钟前'
+          content: 'Bạn đã đổi mật khẩu',
+          sender: 'Người dùng 1',
+          time: '5 phút trước'
         },
         {
           key: "2",
           avatar: '@/assets/user.png',
-          content: '你修改了用户头像',
-          sender: '用户2',
-          time: '2小时前'
+          content: 'Bạn đã thay đổi ảnh đại diện',
+          sender: 'Người dùng 2',
+          time: '2 giờ trước'
         },
         {
           key: "3",
           avatar: '@/assets/user.png',
-          content: '今日25名新成员加入',
-          sender: '用户3',
-          time: '昨天'
+          content: 'Hôm nay có 25 thành viên mới tham gia',
+          sender: 'Người dùng 3',
+          time: 'Hôm qua'
         },
         {
           key: "4",
           avatar: '@/assets/user.png',
-          content: '您发表了一篇新随笔',
-          sender: '用户4',
-          time: '昨天'
+          content: 'Bạn đã đăng một bài viết ngắn mới',
+          sender: 'Người dùng 4',
+          time: 'Hôm qua'
         },
         {
           key: "5",
           avatar: '@/assets/user.png',
-          content: '您发表了一篇新随笔',
-          sender: '用户5',
-          time: '前天'
+          content: 'Bạn đã đăng một bài viết ngắn mới',
+          sender: 'Người dùng 5',
+          time: 'Hôm kia'
         }]
     }
   },
@@ -70,7 +70,7 @@ export default {
   },
   methods: {
     handleClick: function () {
-      // 按钮操作处理函数
+      // Hàm xử lý thao tác nút
       this.$emit('click', {})
     }
   },

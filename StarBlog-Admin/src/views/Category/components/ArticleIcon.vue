@@ -18,11 +18,11 @@ export default {
   },
   methods: {
     handleClick() {
-      // 单击事件可以用于选中，这里我们先触发一个 select 事件
+      // Sự kiện nhấp đơn có thể dùng để chọn, ở đây tạm thời kích hoạt một sự kiện select
       this.$emit('select', this.post);
     },
     handleDblClick() {
-      // 双击事件用于查看文章
+      // Sự kiện nhấp đúp để xem bài viết
       this.$emit('view', this.post);
     }
   }

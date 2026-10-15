@@ -7,7 +7,7 @@ function isPromise(ret) {
 }
 
 const errorHandler = (error, vm, info) => {
-  console.error('抛出全局异常', 'vm=', vm, 'info=', info)
+  console.error('Ném ngoại lệ toàn cục', 'vm=', vm, 'info=', info)
   console.error(error)
   // exLessClient.submitException(error)
 }
@@ -19,7 +19,7 @@ function registerActionHandle(actions) {
       let ret = fn.apply(this, args)
       if (isPromise(ret)) {
         return ret.catch(errorHandler)
-      } else { // 默认错误处理
+      } else { // Xử lý lỗi mặc định
         return ret
       }
     }
@@ -50,7 +50,7 @@ const registerVue = (instance) => {
 let GlobalError = {
   install: (Vue, options) => {
     /**
-     * 全局异常处理
+     * Xử lý ngoại lệ toàn cục
      * @param {*} error
      * @param {*} vm
      */

@@ -1,11 +1,11 @@
 <template>
   <div class="categories-container">
-    <!-- 头部操作栏 -->
+    <!-- Thanh thao tác phần đầu -->
     <div class="header-actions">
       <div class="search-section">
         <el-input
           v-model="search"
-          placeholder="搜索分类..."
+          placeholder="Tìm danh mục..."
           prefix-icon="el-icon-search"
           size="medium"
           style="width: 300px;"
@@ -19,12 +19,12 @@
           @click="handleAdd"
           size="medium"
         >
-          添加分类
+          Thêm danh mục
         </el-button>
       </div>
     </div>
 
-    <!-- 分类卡片网格 -->
+    <!-- Lưới thẻ danh mục -->
     <div class="categories-grid" v-loading="loading">
       <div
         v-for="category in filteredCategories"
@@ -38,14 +38,14 @@
           </div>
           <div class="category-info">
             <h3 class="category-name">{{ category.name }}</h3>
-            <p class="category-description">{{ category.description || '暂无描述' }}</p>
+            <p class="category-description">{{ category.description || 'Chưa có mô tả' }}</p>
           </div>
           <div class="category-status">
             <el-tag
               :type="category.visible ? 'success' : 'info'"
               size="mini"
             >
-              {{ category.visible ? '可见' : '隐藏' }}
+              {{ category.visible ? 'Hiển thị' : 'Ẩn' }}
             </el-tag>
           </div>
         </div>
@@ -53,12 +53,12 @@
         <div class="card-content">
           <div class="stats">
             <div class="stat-item">
-              <span class="stat-label">文章数量</span>
+              <span class="stat-label">Số lượng bài viết</span>
               <span class="stat-value">{{ category.posts || 0 }}</span>
             </div>
             <div class="stat-item">
-              <span class="stat-label">上级分类</span>
-              <span class="stat-value">{{ category.parentId || '无' }}</span>
+              <span class="stat-label">Danh mục cha</span>
+              <span class="stat-value">{{ category.parentId || 'Không' }}</span>
             </div>
           </div>
         </div>
@@ -70,7 +70,7 @@
             @click="viewCategoryDetail(category)"
             icon="el-icon-document"
           >
-            管理文章
+            Quản lý bài viết
           </el-button>
           <el-button
             size="mini"
@@ -78,7 +78,7 @@
             @click="toggleVisibility(category)"
             :icon="category.visible ? 'el-icon-view' : 'el-icon-hide'"
           >
-            {{ category.visible ? '隐藏' : '显示' }}
+            {{ category.visible ? 'Ẩn' : 'Hiển thị' }}
           </el-button>
           <el-button
             size="mini"
@@ -86,7 +86,7 @@
             @click="setFeatured(category)"
             icon="el-icon-star-off"
           >
-            推荐
+            Đề xuất
           </el-button>
           <el-button
             size="mini"
@@ -95,20 +95,20 @@
             icon="el-icon-delete"
             class="delete-btn"
           >
-            删除
+            Xóa
           </el-button>
         </div>
       </div>
 
-      <!-- 空状态 -->
+      <!-- Trạng thái trống -->
       <div v-if="filteredCategories.length === 0 && !loading" class="empty-state">
         <i class="el-icon-folder-opened empty-icon"></i>
-        <p class="empty-text">暂无分类数据</p>
-        <el-button type="primary" @click="handleAdd">创建第一个分类</el-button>
+        <p class="empty-text">Chưa có dữ liệu danh mục</p>
+        <el-button type="primary" @click="handleAdd">Tạo danh mục đầu tiên</el-button>
       </div>
     </div>
 
-    <!-- 对话框组件 -->
+    <!-- Thành phần hộp thoại -->
     <add-category-dialog
       ref="addDialog"
       @onAddSucceed="onAddSucceed"
@@ -152,7 +152,7 @@ export default {
     this.loadData()
   },
   methods: {
-    // 数据加载
+    // Tải dữ liệu
     async loadData() {
       this.loading = true
       try {
@@ -166,15 +166,15 @@ export default {
       }
     },
 
-    // 跳转到分类详情页面
+    // Chuyển đến trang chi tiết danh mục
     viewCategoryDetail(category) {
       this.$router.push({
-        name: '分类详情',
+        name: 'Chi tiết danh mục',
         params: { id: category.id }
       })
     },
 
-    // 原有功能
+    // Chức năng gốc
     handleAdd() {
       this.$refs.addDialog.add()
     },
@@ -184,20 +184,20 @@ export default {
     },
 
     handleDelete(item) {
-      this.$confirm('此操作将删除该分类, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm('Thao tác này sẽ xóa danh mục này, bạn có muốn tiếp tục không?', 'Thông báo', {
+        confirmButtonText: 'Xác nhận',
+        cancelButtonText: 'Hủy',
         type: 'warning'
       }).then(async () => {
         try {
           const res = await this.$api.category.deleteItem(item.id)
-          this.$message.success(`删除成功。${res.message}`)
+          this.$message.success(`Xóa thành công. ${res.message}`)
           this.loadData()
         } catch (error) {
-          this.$message.error(`操作失败。${error.message}`)
+          this.$message.error(`Thao tác thất bại. ${error.message}`)
         }
       }).catch(() => {
-        this.$message('已取消删除')
+        this.$message('Đã hủy xóa')
       })
     },
 
@@ -208,10 +208,10 @@ export default {
         } else {
           await this.$api.category.setVisible(item.id)
         }
-        this.$message.success('操作成功')
+        this.$message.success('Thao tác thành công')
         this.loadData()
       } catch (error) {
-        this.$message.error(`操作失败：${error.message}`)
+        this.$message.error(`Thao tác thất bại: ${error.message}`)
       }
     },
 
@@ -223,16 +223,16 @@ export default {
     },
 
     onAddSucceed() {
-      this.$message.success('添加成功')
+      this.$message.success('Thêm thành công')
       this.loadData()
     },
 
     onUpdateSucceed() {
-      this.$message.success('保存成功')
+      this.$message.success('Lưu thành công')
       this.loadData()
     },
 
-    // 工具方法
+    // Phương thức tiện ích
     formatDate(dateString) {
       if (!dateString) return ''
       const date = new Date(dateString)
@@ -249,7 +249,7 @@ export default {
   min-height: 100vh;
 }
 
-/* 头部操作栏 */
+/* Thanh thao tác phần đầu */
 .header-actions {
   display: flex;
   justify-content: space-between;
@@ -266,7 +266,7 @@ export default {
   gap: 12px;
 }
 
-/* 分类卡片网格 */
+/* Lưới thẻ danh mục */
 .categories-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -386,7 +386,7 @@ export default {
   background-color: #fef0f0 !important;
 }
 
-/* 空状态 */
+/* Trạng thái trống */
 .empty-state {
   grid-column: 1 / -1;
   text-align: center;
@@ -408,7 +408,7 @@ export default {
   margin: 0 0 20px 0;
 }
 
-/* 响应式设计 */
+/* Thiết kế responsive */
 @media (max-width: 768px) {
   .categories-grid {
     grid-template-columns: 1fr;

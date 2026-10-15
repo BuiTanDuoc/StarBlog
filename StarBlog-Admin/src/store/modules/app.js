@@ -1,14 +1,14 @@
 export default {
   state: {
-    appName: "StarBlog Admin",  // 应用名称
-    themeColor: "#1993DFFF",  // 主题颜色
-    oldThemeColor: "#1993DFFF",   // 上一次主题颜色
-    collapse: false,  // 导航栏收缩状态
-    menuRouteLoaded: false,    // 菜单和路由是否已经加载
-    fullscreen: false,      // 全屏状态
+    appName: "StarBlog Admin",  // Tên ứng dụng
+    themeColor: "#1993DFFF",  // Màu chủ đề
+    oldThemeColor: "#1993DFFF",   // Màu chủ đề lần trước
+    collapse: false,  // Trạng thái thu gọn của thanh điều hướng
+    menuRouteLoaded: false,    // Menu và route đã được tải hay chưa
+    fullscreen: false,      // Trạng thái toàn màn hình
   },
   getters: {
-    collapse(state) {   // 对应着上面state
+    collapse(state) {   // Tương ứng với state ở trên
       return state.collapse
     },
     fullscreen(state) {
@@ -16,20 +16,20 @@ export default {
     }
   },
   mutations: {
-    // 改变收缩状态
+    // Thay đổi trạng thái thu gọn
     onCollapse(state) {
       state.collapse = !state.collapse
     },
-    // 改变主题颜色
+    // Đổi màu chủ đề
     setThemeColor(state, themeColor) {
       state.oldThemeColor = state.themeColor
       state.themeColor = themeColor
     },
-    // 改变菜单和路由的加载状态
+    // Thay đổi trạng thái tải của menu và route
     menuRouteLoaded(state, menuRouteLoaded) {
       state.menuRouteLoaded = menuRouteLoaded;
     },
-    // 切换全屏
+    // Chuyển đổi toàn màn hình
     onFullscreenChange(state) {
       state.fullscreen = !state.fullscreen
     }

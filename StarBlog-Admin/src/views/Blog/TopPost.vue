@@ -1,9 +1,9 @@
 <template>
-  <el-result icon="info" title="置顶文章" subTitle="当前置顶文章信息">
+  <el-result icon="info" title="Bài viết được ghim" subTitle="Thông tin bài viết đang được ghim">
     <template slot="extra">
-      <p>分类：{{ data.category.name }}</p>
-      <p>ID：{{ data.id }}</p>
-      <el-link type="primary" :href="`${baseUrl}/Blog/Post/${data.id}`" target="_blank">标题：{{ data.title }}</el-link>
+      <p>Danh mục: {{ data.category.name }}</p>
+      <p>ID: {{ data.id }}</p>
+      <el-link type="primary" :href="`${baseUrl}/Blog/Post/${data.id}`" target="_blank">Tiêu đề: {{ data.title }}</el-link>
     </template>
   </el-result>
 </template>

@@ -10,7 +10,7 @@ export default {
   name: 'App',
   computed: {
     hasNavbar() {
-      // 登录页面、404页面等不需要导航栏空间的页面
+      // Các trang như đăng nhập, 404 không cần không gian thanh điều hướng
       const fullscreenRoutes = ['/login', '/Login', '/404']
       return !fullscreenRoutes.includes(this.$route.path)
     }
@@ -26,7 +26,7 @@ export default {
   color: #2c3e50;
 }
 
-/* 只有需要导航栏的页面才添加顶部边距 */
+/* Chỉ thêm khoảng cách phía trên cho các trang cần thanh điều hướng */
 #app.has-navbar {
   margin-top: 60px;
 }

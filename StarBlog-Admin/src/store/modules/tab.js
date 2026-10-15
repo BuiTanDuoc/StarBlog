@@ -1,8 +1,8 @@
 export default {
   state: {
-    // 主入口标签页
+    // Tab nhập chính
     mainTabs: [],
-    // 当前标签页名
+    // Tên tab hiện tại
     mainTabsActiveName: ''
   },
   mutations: {

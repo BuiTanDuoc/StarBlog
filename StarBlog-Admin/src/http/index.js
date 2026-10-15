@@ -1,4 +1,4 @@
-// 导入所有接口
+// Import tất cả API
 import api from './api'
 
 const install = Vue => {
@@ -8,7 +8,7 @@ const install = Vue => {
   install.installed = true;
 
   Object.defineProperties(Vue.prototype, {
-    // 注意，此处挂载在 Vue 原型的 $api 对象上
+    // Lưu ý: ở đây được gắn vào đối tượng $api trên prototype của Vue
     $api: {
       get() {
         return api

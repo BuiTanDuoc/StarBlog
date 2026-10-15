@@ -21,33 +21,33 @@
     </div>
     <div class="main-operation">
         <span class="main-operation-item">
-          <el-button size="small" icon="fa fa-male"> 个人中心</el-button>
+          <el-button size="small" icon="fa fa-male"> Trung tâm cá nhân</el-button>
         </span>
       <span class="main-operation-item">
-          <el-button size="small" icon="fa fa-key"> 修改密码</el-button>
+          <el-button size="small" icon="fa fa-key"> Đổi mật khẩu</el-button>
         </span>
     </div>
     <div class="other-operation">
       <div class="other-operation-item">
         <i class="fa fa-eraser"></i>
-        清除缓存
+        Xóa bộ nhớ đệm
       </div>
       <div class="other-operation-item">
         <i class="fa fa-user"></i>
-        在线人数
+        Số người trực tuyến
       </div>
       <div class="other-operation-item">
         <i class="fa fa-bell"></i>
-        访问次数
+        Số lần truy cập
       </div>
       <div class="other-operation-item">
         <i class="fa fa-undo"></i>
-        备份恢复
+        Sao lưu và khôi phục
       </div>
     </div>
     <div class="personal-footer" @click="logout">
       <i class="fa fa-sign-out"></i>
-      注销
+      Đăng xuất
     </div>
   </div>
 </template>
@@ -64,8 +64,8 @@ export default {
       default: {
         name: "admin",
         avatar: "@/assets/user.png",
-        role: "超级管理员",
-        registerInfo: "注册时间：2021-12-25 "
+        role: "Quản trị viên cấp cao",
+        registerInfo: "Thời gian đăng ký: 2021-12-25 "
       }
     }
   },
@@ -73,9 +73,9 @@ export default {
     return {}
   },
   methods: {
-    // 退出登录
+    // Đăng xuất
     logout: function () {
-      this.$confirm("确认退出吗?", "提示", {
+      this.$confirm("Bạn có chắc muốn đăng xuất không?", "Thông báo", {
         type: "warning"
       }).then(() => {
         auth.logout()

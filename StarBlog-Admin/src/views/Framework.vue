@@ -1,10 +1,10 @@
 <template>
   <div class="container">
-    <!-- 导航菜单栏 -->
+    <!-- Thanh menu điều hướng -->
     <navbar></navbar>
-    <!-- 头部区域 -->
+    <!-- Vùng đầu trang -->
     <header-bar></header-bar>
-    <!-- 主内容区域 -->
+    <!-- Vùng nội dung chính -->
     <main-content></main-content>
   </div>
 </template>

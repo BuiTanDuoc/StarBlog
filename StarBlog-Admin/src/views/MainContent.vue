@@ -1,8 +1,8 @@
 <template>
   <div id="main-container" class="main-container"
        :class="$store.state.app.collapse?'position-collapse-left':'position-left'">
-    <!-- 标签页 -->
-    <!-- 标签页 -->
+    <!-- Tab -->
+    <!-- Tab -->
     <div class="tab-container" :style="{'display': fullscreen? 'none':''}">
       <el-tabs
         class="tabs text-center"
@@ -15,10 +15,10 @@
         <el-dropdown class="tabs-tools" :show-timeout="0" trigger="hover">
           <div style="font-size:20px;width:50px;"><i class="el-icon-arrow-down"></i></div>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item @click.native="tabsCloseCurrentHandle">关闭当前标签</el-dropdown-item>
-            <el-dropdown-item @click.native="tabsCloseOtherHandle">关闭其它标签</el-dropdown-item>
-            <el-dropdown-item @click.native="tabsCloseAllHandle">关闭全部标签</el-dropdown-item>
-            <el-dropdown-item @click.native="tabsRefreshCurrentHandle">刷新当前标签</el-dropdown-item>
+            <el-dropdown-item @click.native="tabsCloseCurrentHandle">Đóng tab hiện tại</el-dropdown-item>
+            <el-dropdown-item @click.native="tabsCloseOtherHandle">Đóng các tab khác</el-dropdown-item>
+            <el-dropdown-item @click.native="tabsCloseAllHandle">Đóng tất cả tab</el-dropdown-item>
+            <el-dropdown-item @click.native="tabsRefreshCurrentHandle">Làm mới tab hiện tại</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
         <el-tab-pane v-for="item in mainTabs"
@@ -27,7 +27,7 @@
         </el-tab-pane>
       </el-tabs>
     </div>
-    <!-- 主内容区域 -->
+    <!-- Vùng nội dung chính -->
     <div class="main-content">
       <keep-alive>
         <transition name="fade" mode="out-in">
@@ -67,21 +67,21 @@ export default {
     })
   },
   methods: {
-    // tabs, 选中tab
+    // tabs, đã chọn tab
     selectedTabHandle(elTab) {
       console.log(this.mainTabs)
-      console.log('选中tab:', elTab)
+      console.log('Đã chọn tab:', elTab)
       let tabSet = this.mainTabs.filter(item => item.name === elTab.name)
       if (tabSet.length >= 1) {
         let tab = tabSet[0]
         this.$router.push({name: tab.name, params: tab.params})
       }
     },
-    // tabs, 删除tab
+    // tabs, xóa tab
     removeTabHandle(tabName) {
       this.mainTabs = this.mainTabs.filter(item => item.name !== tabName)
       if (this.mainTabs.length >= 1) {
-        // 当前选中tab被删除
+        // Tab đang chọn bị xóa
         if (tabName === this.mainTabsActiveName) {
           this.$router.push({name: this.mainTabs[this.mainTabs.length - 1].name}, () => {
             this.mainTabsActiveName = this.$route.name
@@ -91,20 +91,20 @@ export default {
         this.$router.push("/")
       }
     },
-    // tabs, 关闭当前
+    // tabs, đóng tab hiện tại
     tabsCloseCurrentHandle() {
       this.removeTabHandle(this.mainTabsActiveName)
     },
-    // tabs, 关闭其它
+    // tabs, đóng các tab khác
     tabsCloseOtherHandle() {
       this.mainTabs = this.mainTabs.filter(item => item.name === this.mainTabsActiveName)
     },
-    // tabs, 关闭全部
+    // tabs, đóng tất cả
     tabsCloseAllHandle() {
       this.mainTabs = []
       this.$router.push("/")
     },
-    // tabs, 刷新当前
+    // tabs, làm mới tab hiện tại
     tabsRefreshCurrentHandle() {
       let tempTabName = this.mainTabsActiveName
       this.removeTabHandle(tempTabName)

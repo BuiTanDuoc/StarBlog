@@ -1,10 +1,10 @@
 <template>
   <div class="category-detail-container">
-    <!-- 头部信息 -->
+    <!-- Thông tin phần đầu -->
     <div class="detail-header">
       <div class="header-left">
         <el-button type="text" icon="el-icon-arrow-left" @click="goBack" class="back-button">
-          返回分类列表
+          Quay lại danh sách danh mục
         </el-button>
       </div>
       <div class="category-info">
@@ -13,37 +13,37 @@
         </div>
         <div class="category-details">
           <h1 class="category-name">{{ category.name }}</h1>
-          <p class="category-description">{{ category.description || '暂无描述' }}</p>
+          <p class="category-description">{{ category.description || 'Chưa có mô tả' }}</p>
           <div class="category-meta">
             <el-tag :type="category.visible ? 'success' : 'info'" size="small">
-              {{ category.visible ? '可见' : '隐藏' }}
+              {{ category.visible ? 'Hiển thị' : 'Ẩn' }}
             </el-tag>
-            <span class="meta-item">文章总数: {{ totalArticleCount }}</span>
-            <span class="meta-item">已加载: {{ categoryArticles.length }}</span>
+            <span class="meta-item">Tổng số bài viết: {{ totalArticleCount }}</span>
+            <span class="meta-item">Đã tải: {{ categoryArticles.length }}</span>
           </div>
         </div>
       </div>
       <div class="header-actions">
         <el-button type="primary" icon="el-icon-edit" @click="editCategory">
-          编辑分类
+          Sửa danh mục
         </el-button>
         <el-button type="success" icon="el-icon-check" @click="saveChanges" :loading="saving" :disabled="!hasChanges">
-          保存修改
+          Lưu thay đổi
         </el-button>
       </div>
     </div>
 
-    <!-- 主要内容区域 -->
+    <!-- Vùng nội dung chính -->
     <div class="detail-content">
-      <!-- 左侧：可添加的文章列表 -->
+      <!-- Bên trái: danh sách bài viết có thể thêm -->
       <div class="articles-panel left-panel">
         <div class="panel-header">
-          <h3>可添加的文章</h3>
+          <h3>Bài viết có thể thêm</h3>
           <div class="panel-controls">
-            <el-input v-model="articleSearch" placeholder="搜索文章..." prefix-icon="el-icon-search" size="small"
+            <el-input v-model="articleSearch" placeholder="Tìm bài viết..." prefix-icon="el-icon-search" size="small"
               style="width: 200px;" clearable @input="searchArticles" />
             <el-cascader v-model="filterCategoryId" :options="categoriesTree" filterable clearable
-              placeholder="筛选分类" size="small" style="width: 150px; margin-left: 10px;" :props="{
+              placeholder="Lọc danh mục" size="small" style="width: 150px; margin-left: 10px;" :props="{
                 checkStrictly: true,
                 expandTrigger: 'hover',
                 emitPath: false,
@@ -51,7 +51,7 @@
             </el-cascader>
             <el-button size="small" icon="el-icon-refresh" @click="refreshAvailableArticles"
               :loading="loadingAvailableArticles">
-              刷新
+              Làm mới
             </el-button>
           </div>
         </div>
@@ -69,42 +69,42 @@
             <div class="article-actions">
               <el-button v-if="!isArticleInCategory(article.id)" size="mini" type="primary" icon="el-icon-plus"
                 @click="addArticleToCategory(article)">
-                添加
+                Thêm
               </el-button>
-              <span v-else class="already-added">已添加</span>
+              <span v-else class="already-added">Đã thêm</span>
             </div>
           </div>
 
-          <!-- 空状态 -->
+          <!-- Trạng thái trống -->
           <div v-if="availableArticles.length === 0 && !loadingAvailableArticles" class="empty-articles">
             <i class="el-icon-document-remove"></i>
-            <p>暂无可添加的文章</p>
+            <p>Chưa có bài viết nào có thể thêm</p>
           </div>
 
-          <!-- 加载更多 -->
+          <!-- Tải thêm -->
           <div v-if="availableArticles.length > 0 && hasMoreAvailableArticles" class="load-more-section">
             <el-button type="text" @click="loadMoreAvailableArticles" :loading="loadingAvailableArticles"
               icon="el-icon-more">
-              加载更多
+              Tải thêm
             </el-button>
           </div>
         </div>
       </div>
 
-      <!-- 右侧：当前分类的文章列表 -->
+      <!-- Bên phải: danh sách bài viết của danh mục hiện tại -->
       <div class="articles-panel right-panel">
         <div class="panel-header">
-          <h3>当前分类文章</h3>
+          <h3>Bài viết của danh mục hiện tại</h3>
           <div class="panel-controls">
-            <el-input v-model="categoryArticleSearch" placeholder="搜索当前分类文章..." prefix-icon="el-icon-search"
+            <el-input v-model="categoryArticleSearch" placeholder="Tìm bài viết của danh mục hiện tại..." prefix-icon="el-icon-search"
               size="small" style="width: 200px;" clearable />
             <el-button size="small" type="primary" icon="el-icon-refresh" @click="refreshCategoryArticles"
               :loading="loadingCategoryArticles">
-              刷新
+              Làm mới
             </el-button>
             <el-button size="small" type="danger" icon="el-icon-delete" @click="removeSelectedArticles"
               :disabled="newlyAddedSelectedCount === 0">
-              移除新添加 ({{ newlyAddedSelectedCount }})
+              Gỡ bài mới thêm ({{ newlyAddedSelectedCount }})
             </el-button>
           </div>
         </div>
@@ -123,31 +123,31 @@
             </div>
             <div class="article-actions">
               <el-button v-if="isNewlyAddedArticle(article.id)" size="mini" type="danger" icon="el-icon-minus" @click="removeArticleFromCategory(article)">
-                移除
+                Gỡ
               </el-button>
-              <span v-else class="cannot-remove">已保存</span>
+              <span v-else class="cannot-remove">Đã lưu</span>
             </div>
           </div>
 
-          <!-- 空状态 -->
+          <!-- Trạng thái trống -->
           <div v-if="filteredCategoryArticles.length === 0 && !loadingCategoryArticles" class="empty-articles">
             <i class="el-icon-document-add"></i>
-            <p>该分类下暂无文章</p>
-            <p class="empty-tip">从左侧列表中选择文章添加到此分类</p>
+            <p>Danh mục này chưa có bài viết</p>
+            <p class="empty-tip">Chọn bài viết từ danh sách bên trái để thêm vào danh mục này</p>
           </div>
 
-          <!-- 加载更多 -->
+          <!-- Tải thêm -->
           <div v-if="categoryArticles.length > 0 && hasMoreCategoryArticles" class="load-more-section">
             <el-button type="text" @click="loadMoreCategoryArticles" :loading="loadingCategoryArticles"
               icon="el-icon-more">
-              加载更多 ({{ categoryArticles.length }}/{{ totalArticleCount }})
+              Tải thêm ({{ categoryArticles.length }}/{{ totalArticleCount }})
             </el-button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 编辑分类对话框 -->
+    <!-- Hộp thoại sửa danh mục -->
     <add-category-dialog ref="editDialog" @onUpdateSucceed="onCategoryUpdated" />
   </div>
 </template>
@@ -162,22 +162,22 @@ export default {
   },
   data() {
     return {
-      // 基础数据
+      // Dữ liệu cơ bản
       category: {},
       allCategories: [],
       categoriesTree: [],
 
-      // 文章数据
+      // Dữ liệu bài viết
       availableArticles: [],
       categoryArticles: [],
       selectedArticles: [],
 
-      // 搜索和筛选
+      // Tìm kiếm và lọc
       articleSearch: '',
       categoryArticleSearch: '',
       filterCategoryId: '',
 
-      // 分页数据
+      // Dữ liệu phân trang
       availableArticlesPage: 1,
       availableArticlesPageSize: 20,
       categoryArticlesPage: 1,
@@ -185,12 +185,12 @@ export default {
       totalArticleCount: 0,
       totalAvailableCount: 0,
 
-      // 加载状态
+      // Trạng thái tải
       loadingAvailableArticles: false,
       loadingCategoryArticles: false,
       saving: false,
 
-      // 变更追踪
+      // Theo dõi thay đổi
       pendingChanges: {
         added: []
       }
@@ -214,7 +214,7 @@ export default {
         article.title.toLowerCase().includes(this.categoryArticleSearch.toLowerCase())
       )
     },
-    // 计算可移除的新添加文章数量
+    // Tính số lượng bài viết mới thêm có thể gỡ
     newlyAddedSelectedCount() {
       return this.selectedArticles.filter(articleId => 
         this.pendingChanges.added.includes(articleId)
@@ -228,13 +228,13 @@ export default {
     async initializeData() {
       const categoryId = this.$route.params.id
       if (!categoryId) {
-        this.$message.error('分类ID不能为空')
+        this.$message.error('ID danh mục không được để trống')
         this.goBack()
         return
       }
 
       try {
-        // 并行加载数据
+        // Tải dữ liệu song song
         await Promise.all([
           this.loadCategory(categoryId),
           this.loadAllCategories(),
@@ -243,8 +243,8 @@ export default {
           this.loadCategoryArticles(categoryId)
         ])
       } catch (error) {
-        console.error('初始化数据失败:', error)
-        this.$message.error('加载数据失败: ' + error.message)
+        console.error('Khởi tạo dữ liệu thất bại:', error)
+        this.$message.error('Tải dữ liệu thất bại: ' + error.message)
       }
     },
 
@@ -253,7 +253,7 @@ export default {
         const res = await this.$api.category.get(categoryId)
         this.category = res.data
       } catch (error) {
-        console.error('加载分类信息失败:', error)
+        console.error('Tải thông tin danh mục thất bại:', error)
         throw error
       }
     },
@@ -263,7 +263,7 @@ export default {
         const res = await this.$api.category.getAll()
         this.allCategories = res.data
       } catch (error) {
-        console.error('加载分类列表失败:', error)
+        console.error('Tải danh sách danh mục thất bại:', error)
         throw error
       }
     },
@@ -286,7 +286,7 @@ export default {
         const res = await this.$api.category.getNodes()
         this.categoriesTree = mapNodes(res.data)
       } catch (error) {
-        console.error('加载分类树失败:', error)
+        console.error('Tải cây danh mục thất bại:', error)
         throw error
       }
     },
@@ -295,13 +295,13 @@ export default {
       this.loadingAvailableArticles = true
       try {
         const res = await this.$api.blogPost.getList(
-          null,                                    // isPublish - 是否已发布（null表示不筛选）
-          null,                                    // status - 文章状态（null表示不筛选）
-          this.filterCategoryId || null,           // categoryId - 分类ID筛选
-          this.articleSearch,                      // search - 搜索关键字
-          null,                                      // sortBy - 排序方式（空字符串表示默认排序）
-          page,                                    // page - 页码
-          this.availableArticlesPageSize           // pageSize - 每页数量
+          null,                                    // isPublish - Đã xuất bản hay chưa (null nghĩa là không lọc)
+          null,                                    // status - Trạng thái bài viết (null nghĩa là không lọc)
+          this.filterCategoryId || null,           // categoryId - Lọc theo ID danh mục
+          this.articleSearch,                      // search - Từ khóa tìm kiếm
+          null,                                      // sortBy - Cách sắp xếp (chuỗi rỗng nghĩa là sắp xếp mặc định)
+          page,                                    // page - Số trang
+          this.availableArticlesPageSize           // pageSize - Số lượng mỗi trang
         )
 
         console.log('loadAvailableArticles response:', res)
@@ -321,8 +321,8 @@ export default {
 
         this.availableArticlesPage = page
       } catch (error) {
-        console.error('加载可用文章失败:', error)
-        this.$message.error('加载可用文章失败: ' + error.message)
+        console.error('Tải bài viết khả dụng thất bại:', error)
+        this.$message.error('Tải bài viết khả dụng thất bại: ' + error.message)
       } finally {
         this.loadingAvailableArticles = false
       }
@@ -354,14 +354,14 @@ export default {
 
         console.log('categoryArticles count:', this.categoryArticles.length, 'total:', this.totalArticleCount)
       } catch (error) {
-        console.error('加载分类文章失败:', error)
-        this.$message.error('加载分类文章失败: ' + error.message)
+        console.error('Tải bài viết của danh mục thất bại:', error)
+        this.$message.error('Tải bài viết của danh mục thất bại: ' + error.message)
       } finally {
         this.loadingCategoryArticles = false
       }
     },
 
-    // 刷新方法
+    // Phương thức làm mới
     async refreshAvailableArticles() {
       this.availableArticlesPage = 1
       await this.loadAvailableArticles(1, false)
@@ -372,7 +372,7 @@ export default {
       await this.loadCategoryArticles(this.category.id, 1, false)
     },
 
-    // 加载更多方法
+    // Phương thức tải thêm
     async loadMoreAvailableArticles() {
       if (!this.loadingAvailableArticles && this.hasMoreAvailableArticles) {
         const nextPage = this.availableArticlesPage + 1
@@ -387,7 +387,7 @@ export default {
       }
     },
 
-    // 搜索和筛选
+    // Tìm kiếm và lọc
     async searchArticles() {
       this.availableArticlesPage = 1
       await this.loadAvailableArticles(1, false)
@@ -398,13 +398,13 @@ export default {
       await this.loadAvailableArticles(1, false)
     },
 
-    // 文章管理
+    // Quản lý bài viết
     isArticleInCategory(articleId) {
       return this.categoryArticles.some(article => article.id === articleId) ||
         this.pendingChanges.added.includes(articleId)
     },
 
-    // 判断是否为本次新添加的文章
+    // Kiểm tra xem có phải bài viết mới thêm lần này không
     isNewlyAddedArticle(articleId) {
       return this.pendingChanges.added.includes(articleId)
     },
@@ -415,13 +415,13 @@ export default {
       this.categoryArticles.push(article)
       this.pendingChanges.added.push(article.id)
 
-      this.$message.success(`已添加文章: ${article.title}`)
+      this.$message.success(`Bài viết đã thêm: ${article.title}`)
     },
 
     removeArticleFromCategory(article) {
-      // 只允许移除本次添加的文章
+      // Chỉ cho phép gỡ các bài viết mới thêm lần này
       if (!this.pendingChanges.added.includes(article.id)) {
-        this.$message.warning('只能移除本次添加的文章')
+        this.$message.warning('Chỉ có thể gỡ các bài viết mới thêm lần này')
         return
       }
 
@@ -429,20 +429,20 @@ export default {
       if (index > -1) {
         this.categoryArticles.splice(index, 1)
         
-        // 从添加列表中删除
+        // Xóa khỏi danh sách thêm
         const addIndex = this.pendingChanges.added.indexOf(article.id)
         if (addIndex > -1) {
           this.pendingChanges.added.splice(addIndex, 1)
         }
       }
 
-      // 从选中列表中移除
+      // Xóa khỏi danh sách đã chọn
       const selectedIndex = this.selectedArticles.indexOf(article.id)
       if (selectedIndex > -1) {
         this.selectedArticles.splice(selectedIndex, 1)
       }
 
-      this.$message.success(`已移除新添加的文章: ${article.title}`)
+      this.$message.success(`Đã gỡ bài viết mới thêm: ${article.title}`)
     },
 
     removeSelectedArticles() {
@@ -451,13 +451,13 @@ export default {
       )
       
       if (newlyAddedSelected.length === 0) {
-        this.$message.warning('请选择要移除的新添加文章')
+        this.$message.warning('Vui lòng chọn bài viết mới thêm cần gỡ')
         return
       }
 
-      this.$confirm(`确定要移除这 ${newlyAddedSelected.length} 篇新添加的文章吗？`, '确认移除', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(`Bạn có chắc muốn gỡ ${newlyAddedSelected.length} bài viết mới thêm này?`, 'Xác nhận gỡ', {
+        confirmButtonText: 'Xác nhận',
+        cancelButtonText: 'Hủy',
         type: 'warning'
       }).then(() => {
         newlyAddedSelected.forEach(articleId => {
@@ -466,20 +466,20 @@ export default {
             this.removeArticleFromCategory(article)
           }
         })
-        this.$message.success(`已移除 ${newlyAddedSelected.length} 篇新添加的文章`)
+        this.$message.success(`Đã gỡ ${newlyAddedSelected.length} bài viết mới thêm`)
       })
     },
 
-    // 保存修改
+    // Lưu thay đổi
     async saveChanges() {
       if (!this.hasChanges) {
-        this.$message.info('没有需要保存的修改')
+        this.$message.info('Không có thay đổi nào cần lưu')
         return
       }
 
       this.saving = true
       try {
-        // 只处理新增文章：为新增文章设置分类
+        // Chỉ xử lý bài viết mới thêm: đặt danh mục cho bài viết mới thêm
         const addedPromises = this.pendingChanges.added.map(articleId => {
           const article = this.availableArticles.find(a => a.id === articleId)
             || this.categoryArticles.find(a => a.id === articleId)
@@ -493,29 +493,29 @@ export default {
         await Promise.all(addedPromises)
 
         this.pendingChanges = { added: [] }
-        this.$message.success('保存成功')
+        this.$message.success('Lưu thành công')
 
-        // 刷新两侧数据
+        // Làm mới dữ liệu hai bên
         await Promise.all([
           this.refreshCategoryArticles(),
           this.refreshAvailableArticles()
         ])
       } catch (error) {
-        console.error('保存失败:', error)
-        this.$message.error('保存失败：' + error.message)
+        console.error('Lưu thất bại:', error)
+        this.$message.error('Lưu thất bại:' + error.message)
       } finally {
         this.saving = false
       }
     },
 
-    // 其他操作
+    // Thao tác khác
     editCategory() {
       this.$refs.editDialog.edit(this.category)
     },
 
     onCategoryUpdated(updatedCategory) {
       this.category = { ...this.category, ...updatedCategory }
-      this.$message.success('分类信息更新成功')
+      this.$message.success('Cập nhật thông tin danh mục thành công')
     },
 
     goBack() {
@@ -751,7 +751,7 @@ export default {
   color: #66b1ff;
 }
 
-/* 响应式设计 */
+/* Thiết kế responsive */
 @media (max-width: 1200px) {
   .detail-content {
     flex-direction: column;

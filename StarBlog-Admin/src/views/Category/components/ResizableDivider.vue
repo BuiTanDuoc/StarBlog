@@ -97,7 +97,7 @@ export default {
   color: #409eff;
 }
 
-/* 响应式设计 - 在小屏幕上隐藏分割线 */
+/* Thiết kế responsive - ẩn đường phân cách trên màn hình nhỏ */
 @media (max-width: 768px) {
   .resizable-divider {
     display: none;

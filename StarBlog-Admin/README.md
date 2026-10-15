@@ -1,105 +1,105 @@
 # StarBlog Admin
 
-> 一个现代化的博客管理后台，基于 Vue + ElementUI 开发
+> Một trang quản trị blog hiện đại, được xây dựng bằng Vue + ElementUI
 
 [![Vue](https://img.shields.io/badge/Vue-2.5.2-brightgreen.svg)](https://vuejs.org/)
 [![Element UI](https://img.shields.io/badge/Element_UI-2.15.6-blue.svg)](https://element.eleme.io/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-## 项目简介
+## Giới thiệu dự án
 
-StarBlog Admin 是 [StarBlog](https://github.com/Deali-Axy/StarBlog) 博客系统的管理后台，提供完整的博客内容管理功能。StarBlog 是一个基于 .NET 6 和 ASP.NET Core 开发的现代博客系统，支持 Markdown 文章导入，遵循 RESTful 接口规范。
+StarBlog Admin là trang quản trị của hệ thống blog [StarBlog](https://github.com/Deali-Axy/StarBlog), cung cấp đầy đủ chức năng quản lý nội dung blog. StarBlog là một hệ thống blog hiện đại được phát triển trên .NET 6 và ASP.NET Core, hỗ trợ nhập bài viết Markdown và tuân theo chuẩn giao diện RESTful.
 
-本项目基于 Vue 2 和 Element UI 开发，可作为 Vue 入门学习项目，同时也是 .NET Core 全栈开发的前端部分示例。
+Dự án này được phát triển dựa trên Vue 2 và Element UI, có thể dùng làm dự án học Vue cơ bản, đồng thời là ví dụ phần frontend của phát triển full-stack .NET Core.
 
-## 功能特点
+## Tính năng nổi bật
 
-- 📝 **文章管理**：支持创建、编辑、删除博客文章，支持 Markdown 编辑器
-- 🏷️ **分类管理**：灵活的文章分类系统，支持设置推荐分类
-- 📊 **数据统计**：访问量统计、文章阅读数据分析
-- 📷 **摄影作品**：支持摄影作品的上传和管理
-- 🔗 **友链管理**：支持友情链接的添加和管理
-- 🎨 **主题切换**：支持多种主题色切换
-- 🔐 **用户认证**：安全的用户登录和权限管理
+- 📝 **Quản lý bài viết**: hỗ trợ tạo, chỉnh sửa, xóa bài viết blog, hỗ trợ trình soạn thảo Markdown
+- 🏷️ **Quản lý danh mục**: hệ thống danh mục bài viết linh hoạt, hỗ trợ đặt danh mục đề xuất
+- 📊 **Thống kê dữ liệu**: thống kê lượt truy cập, phân tích dữ liệu đọc bài viết
+- 📷 **Tác phẩm nhiếp ảnh**: hỗ trợ tải lên và quản lý tác phẩm nhiếp ảnh
+- 🔗 **Quản lý liên kết bạn bè**: hỗ trợ thêm và quản lý liên kết bạn bè
+- 🎨 **Chuyển đổi chủ đề**: hỗ trợ chuyển đổi nhiều màu chủ đề
+- 🔐 **Xác thực người dùng**: đăng nhập an toàn và quản lý quyền người dùng
 
-## 技术栈
+## Công nghệ sử dụng
 
-- **前端框架**：Vue 2.5.2
-- **UI 组件库**：Element UI 2.15.6
-- **状态管理**：Vuex 3.6.2
-- **路由管理**：Vue Router 3.0.1
-- **HTTP 请求**：Axios
-- **Markdown 编辑器**：v-md-editor
-- **数据可视化**：@jiaminghi/data-view
-- **CSS 预处理器**：Sass
+- **Framework frontend**: Vue 2.5.2
+- **UI Thư viện thành phần**: Element UI 2.15.6
+- **Quản lý trạng thái**: Vuex 3.6.2
+- **Quản lý route**: Vue Router 3.0.1
+- **HTTP Yêu cầu**: Axios
+- **Markdown Trình soạn thảo**: v-md-editor
+- **Trực quan hóa dữ liệu**:@jiaminghi/data-view
+- **CSS Bộ tiền xử lý**: Sass
 
-## 安装和使用
+## Cài đặt và sử dụng
 
-### 环境要求
+### Yêu cầu môi trường
 
 - Node.js >= 6.0.0
-- npm >= 3.0.0 或 pnpm
+- npm >= 3.0.0 hoặc pnpm
 
-### 推荐使用 pnpm
+### Khuyến nghị sử dụng pnpm
 
 ```bash
-# 安装依赖
+# Cài đặt phụ thuộc
 pnpm i
 
-# 启动开发服务器，默认地址 localhost:8080
+# Khởi động máy chủ phát triển, địa chỉ mặc định localhost:8080
 pnpm dev
 
-# 构建生产环境版本
+# Build phiên bản môi trường production
 pnpm build
 ```
 
-### 使用 npm
+### Sử dụng npm
 
 ```bash
-# 安装依赖
+# Cài đặt phụ thuộc
 npm install
 
-# 启动开发服务器，默认地址 localhost:8080
+# Khởi động máy chủ phát triển, địa chỉ mặc định localhost:8080
 npm run dev
 
-# 构建生产环境版本
+# Build phiên bản môi trường production
 npm run build
 
-# 构建生产环境版本并查看分析报告
+# Build phiên bản môi trường production và xem báo cáo phân tích
 npm run build --report
 
-# 运行单元测试
+# Chạy kiểm thử đơn vị
 npm run unit
 
-# 运行所有测试
+# Chạy tất cả kiểm thử
 npm test
 ```
 
-## 项目结构
+## Cấu trúc dự án
 
 ```
-├── build/            # Webpack 配置文件
-├── config/           # 项目配置文件
-├── src/              # 源代码
-│   ├── assets/       # 静态资源
-│   ├── components/   # 公共组件
-│   ├── http/         # API 接口和 HTTP 配置
-│   ├── router/       # 路由配置
-│   ├── store/        # Vuex 状态管理
-│   ├── utils/        # 工具函数
-│   ├── views/        # 页面视图组件
-│   ├── App.vue       # 根组件
-│   └── main.js       # 入口文件
-├── static/           # 静态文件
-└── test/             # 测试文件
+├── build/            # Webpack Tệp cấu hình
+├── config/           # Tệp cấu hình dự án
+├── src/              # Mã nguồn
+│   ├── assets/       # Tài nguyên tĩnh
+│   ├── components/   # Thành phần dùng chung
+│   ├── http/         # API Cấu hình API và HTTP
+│   ├── router/       # Cấu hình route
+│   ├── store/        # Vuex Quản lý trạng thái
+│   ├── utils/        # Hàm tiện ích
+│   ├── views/        # Component trang (view)
+│   ├── App.vue       # Component gốc
+│   └── main.js       # Tệp đầu vào
+├── static/           # Tệp tĩnh
+└── test/             # Tệp kiểm thử
 ```
 
-## 相关链接
+## Liên kết liên quan
 
-- 后端项目：[StarBlog](https://github.com/Deali-Axy/StarBlog)
-- Vue.js 文档：[https://vuejs.org/](https://vuejs.org/)
-- Element UI 文档：[https://element.eleme.io/](https://element.eleme.io/)
+- Dự án backend:[StarBlog](https://github.com/Deali-Axy/StarBlog)
+- Vue.js Tài liệu:[https://vuejs.org/](https://vuejs.org/)
+- Element UI Tài liệu:[https://element.eleme.io/](https://element.eleme.io/)
 
-## 许可证
+## Giấy phép
 
 [MIT License](LICENSE)

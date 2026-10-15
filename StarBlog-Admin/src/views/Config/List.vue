@@ -27,17 +27,17 @@
       />
       <el-table-column
         prop="description"
-        label="说明"
+        label="Mô tả"
         :show-overflow-tooltip="true"
       />
       <el-table-column
         align="right">
         <template slot="header" slot-scope="scope">
-          <el-button size="mini" @click="handleAdd">添加配置项</el-button>
+          <el-button size="mini" @click="handleAdd">Thêm mục cấu hình</el-button>
         </template>
         <template slot-scope="scope">
-          <el-link type="info" @click="onItemEditClick(scope.row)">编辑</el-link>
-          <el-link type="danger" @click="onItemDeleteClick(scope.row)">删除</el-link>
+          <el-link type="info" @click="onItemEditClick(scope.row)">Chỉnh sửa</el-link>
+          <el-link type="danger" @click="onItemDeleteClick(scope.row)">Xóa</el-link>
         </template>
       </el-table-column>
     </el-table>
@@ -64,7 +64,7 @@ export default {
     loadData() {
       this.$api.config.getAll()
         .then(res => this.data = res.data)
-        .catch(res => this.$message.error(`获取配置列表出错：${res.message}`))
+        .catch(res => this.$message.error(`Lỗi khi lấy danh sách cấu hình: ${res.message}`))
     },
     handleAdd() {
       this.$refs.addConfigDialog.show()
@@ -73,23 +73,23 @@ export default {
       this.$refs.addConfigDialog.edit(item)
     },
     onItemDeleteClick(item) {
-      this.$confirm('此操作将删除该配置项, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm('Thao tác này sẽ xóa mục cấu hình này, bạn có muốn tiếp tục không?', 'Thông báo', {
+        confirmButtonText: 'Xác nhận',
+        cancelButtonText: 'Hủy',
         type: 'warning'
       }).then(() => {
         this.$api.config.deleteItem(item.key)
-          .then(res => this.$message.success(`删除成功。${res.message}`))
-          .catch(res => this.$message.error(`操作失败。${res.message}`))
+          .then(res => this.$message.success(`Xóa thành công. ${res.message}`))
+          .catch(res => this.$message.error(`Thao tác thất bại. ${res.message}`))
           .finally(() => this.loadData())
-      }).catch(() => this.$message('已取消删除'))
+      }).catch(() => this.$message('Đã hủy xóa'))
     },
     onAddSucceed() {
-      this.$message.success('添加成功')
+      this.$message.success('Thêm thành công')
       this.loadData()
     },
     onUpdateSucceed() {
-      this.$message.success('保存成功')
+      this.$message.success('Lưu thành công')
       this.loadData()
     },
   }

@@ -3,7 +3,7 @@ import vuex from 'vuex'
 
 Vue.use(vuex);
 
-// 引入子模块
+// Import các module con
 import app from './modules/app'
 import tab from './modules/tab'
 

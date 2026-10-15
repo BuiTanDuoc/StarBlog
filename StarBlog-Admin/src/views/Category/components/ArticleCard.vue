@@ -7,7 +7,7 @@
           :type="post.isPublish ? 'success' : 'info'" 
           size="mini"
         >
-          {{ post.isPublish ? '已发布' : '草稿' }}
+          {{ post.isPublish ? 'Đã xuất bản' : 'Bản nháp' }}
         </el-tag>
       </div>
     </div>
@@ -29,10 +29,10 @@
     
     <div class="post-actions" @click.stop>
       <el-button size="mini" type="text" @click="handleEdit">
-        <i class="el-icon-edit"></i> 编辑
+        <i class="el-icon-edit"></i> Chỉnh sửa
       </el-button>
       <el-button size="mini" type="text" class="danger-text" @click="handleDelete">
-        <i class="el-icon-delete"></i> 删除
+        <i class="el-icon-delete"></i> Xóa
       </el-button>
     </div>
   </div>
@@ -48,7 +48,7 @@ export default {
     }
   },
   methods: {
-    // 格式化日期
+    // Định dạng ngày
     formatDate(dateString) {
       if (!dateString) return '';
       const date = new Date(dateString);
@@ -61,17 +61,17 @@ export default {
       });
     },
 
-    // 点击卡片
+    // Nhấp vào thẻ
     handleClick() {
       this.$emit('click', this.post);
     },
 
-    // 编辑文章
+    // Sửa bài viết
     handleEdit() {
       this.$emit('edit', this.post);
     },
 
-    // 删除文章
+    // Xóa bài viết
     handleDelete() {
       this.$emit('delete', this.post);
     }
@@ -175,7 +175,7 @@ export default {
   color: #f78989 !important;
 }
 
-/* 响应式设计 */
+/* Thiết kế responsive */
 @media (max-width: 768px) {
   .article-card {
     padding: 12px;

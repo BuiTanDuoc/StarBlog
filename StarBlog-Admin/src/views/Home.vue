@@ -2,9 +2,9 @@
   <div class="text-center">
     <el-row :gutter="8">
       <el-col :span="4">
-        <!--阅读总量-->
+        <!--Tổng lượt đọc-->
         <el-card v-loading="loading">
-          <div slot="header">访问总量</div>
+          <div slot="header">Tổng lượt truy cập</div>
           <h1>{{ visitRecordOverview.total }}</h1>
           <div>
             Pv / Uv
@@ -12,20 +12,20 @@
             {{ visitRecordOverview.pv }} / {{ visitRecordOverview.uv }}
           </div>
         </el-card>
-        <!--新的创作-->
+        <!--Sáng tác mới-->
         <el-card class="mt-2">
-          <div slot="header">新的创作</div>
+          <div slot="header">Sáng tác mới</div>
           <el-row :gutter="8">
             <el-col :span="12">
               <el-button type="warning" plain class="w-100" @click="$router.push('/post/new')">
                 <div><i class="icon-lg el-icon-tickets"></i></div>
-                <div class="mt-2">博客文章</div>
+                <div class="mt-2">Bài viết blog</div>
               </el-button>
             </el-col>
             <el-col :span="12">
               <el-button type="primary" plain class="w-100" @click="$router.push('/category/list')">
                 <div><i class="icon-lg el-icon-folder"></i></div>
-                <div class="mt-2">文章分类</div>
+                <div class="mt-2">Danh mục bài viết</div>
               </el-button>
             </el-col>
           </el-row>
@@ -33,34 +33,34 @@
             <el-col :span="12">
               <el-button type="primary" plain class="w-100" @click="$router.push('/photo/list')">
                 <div><i class="icon-lg el-icon-picture-outline"></i></div>
-                <div class="mt-2">摄影作品</div>
+                <div class="mt-2">Tác phẩm nhiếp ảnh</div>
               </el-button>
             </el-col>
             <el-col :span="12">
               <el-button type="primary" plain class="w-100" @click="notImpl">
                 <div><i class="icon-lg fa fa-code"></i></div>
-                <div class="mt-2">代码片段</div>
+                <div class="mt-2">Đoạn mã</div>
               </el-button>
             </el-col>
           </el-row>
         </el-card>
-        <!--快捷操作-->
+        <!--Thao tác nhanh-->
         <el-card class="mt-2">
-          <div slot="header">快捷操作</div>
+          <div slot="header">Thao tác nhanh</div>
           <div>
-            <el-button type="info" plain class="w-100" @click="notImpl">批量导入文章</el-button>
+            <el-button type="info" plain class="w-100" @click="notImpl">Nhập bài viết hàng loạt</el-button>
           </div>
           <div class="mt-2">
-            <el-button type="info" plain class="w-100" @click="$router.push('post/upload')">上传文章</el-button>
+            <el-button type="info" plain class="w-100" @click="$router.push('post/upload')">Tải bài viết lên</el-button>
           </div>
           <div class="mt-2">
-            <el-button type="info" plain class="w-100" @click="notImpl">批量导入图片</el-button>
+            <el-button type="info" plain class="w-100" @click="notImpl">Nhập ảnh hàng loạt</el-button>
           </div>
           <div class="mt-2">
-            <el-button type="info" plain class="w-100" @click="$router.push('/photo/list')">上传图片</el-button>
+            <el-button type="info" plain class="w-100" @click="$router.push('/photo/list')">Tải ảnh lên</el-button>
           </div>
           <div class="mt-2">
-            <el-button type="info" plain class="w-100" @click="notImpl">导出数据</el-button>
+            <el-button type="info" plain class="w-100" @click="notImpl">Xuất dữ liệu</el-button>
           </div>
         </el-card>
       </el-col>
@@ -68,48 +68,48 @@
         <el-row :gutter="8" v-loading="loading">
           <el-col :span="4">
             <el-card>
-              <div slot="header">文章数量</div>
+              <div slot="header">Số lượng bài viết</div>
               <h1>{{ overview['postsCount'] }}</h1>
             </el-card>
           </el-col>
           <el-col :span="4">
             <el-card>
-              <div slot="header">分类数量</div>
+              <div slot="header">Số lượng danh mục</div>
               <h1>{{ overview['categoriesCount'] }}</h1>
             </el-card>
           </el-col>
           <el-col :span="4">
             <el-card>
-              <div slot="header">照片数量</div>
+              <div slot="header">Số lượng ảnh</div>
               <h1>{{ overview['photosCount'] }}</h1>
             </el-card>
           </el-col>
           <el-col :span="4">
             <el-card>
-              <div slot="header">推荐文章</div>
+              <div slot="header">Bài viết đề xuất</div>
               <h1>{{ overview['featuredPostsCount'] }}</h1>
             </el-card>
           </el-col>
           <el-col :span="4">
             <el-card>
-              <div slot="header">推荐分类</div>
+              <div slot="header">Danh mục đề xuất</div>
               <h1>{{ overview['featuredCategoriesCount'] }}</h1>
             </el-card>
           </el-col>
           <el-col :span="4">
             <el-card>
-              <div slot="header">推荐图片</div>
+              <div slot="header">Ảnh đề xuất</div>
               <h1>{{ overview['featuredPhotosCount'] }}</h1>
             </el-card>
           </el-col>
         </el-row>
         <el-card class="mt-2" v-loading="loading">
           <div slot="header" class="d-flex align-items-center justify-content-between">
-            <span>数据趋势</span>
+            <span>Xu hướng dữ liệu</span>
             <div style="width: 200px">
               <el-slider v-model="trendDays" :min="1" :max="14" :step="1" @change="handleTrendDaysChange">
                 <template #default="{ value }">
-                  <span>{{ value }}天</span>
+                  <span>{{ value }} ngày</span>
                 </template>
               </el-slider>
             </div>
@@ -139,7 +139,7 @@ export default {
       if (this.trend !== null) {
         data = {
           xAxis: {
-            name: '日期',
+            name: 'Ngày tháng',
             data: this.trend.map(item => item.date),
             nameTextStyle: {
               fill: '#333',
@@ -154,7 +154,7 @@ export default {
             }
           },
           yAxis: {
-            name: '浏览量',
+            name: 'Lượt xem',
             data: 'value',
             min: 0,
             nameTextStyle: {
@@ -170,12 +170,12 @@ export default {
             }
           },
           legend: {
-            data: ['总浏览量', 'PV', 'UV', 'API', '爬虫'],
+            data: ['Tổng lượt xem', 'PV', 'UV', 'API', 'Crawler'],
             bottom: 10,
           },
           series: [
             {
-              name: '总浏览量',
+              name: 'Tổng lượt xem',
               data: this.trend.map(item => item.total),
               type: 'bar',
               gradient: {
@@ -183,7 +183,7 @@ export default {
               },
               label: {
                 show: true,
-                formatter: '{value} 次'
+                formatter: '{value} lần'
               },
             },
             {
@@ -211,7 +211,7 @@ export default {
               }
             },
             {
-              name: '爬虫',
+              name: 'Crawler',
               data: this.trend.map(item => item.spider),
               type: 'bar',
               label: {
@@ -238,7 +238,7 @@ export default {
           this.overview = res.data
           this.loadStage++
         })
-        .catch(res => this.$message.error(`获取失败！${res.message}`))
+        .catch(res => this.$message.error(`Lấy thất bại! ${res.message}`))
 
       this.$api.visitRecord.getOverview()
         .then(res => {
@@ -246,7 +246,7 @@ export default {
           this.visitRecordOverview = res.data
           this.loadStage++
         })
-        .catch(res => this.$message.error(`获取访问统计数据失败！${res.message}`))
+        .catch(res => this.$message.error(`Lấy dữ liệu thống kê truy cập thất bại! ${res.message}`))
 
       this.$api.visitRecord.getTrend(this.trendDays)
         .then(res => {
@@ -254,10 +254,10 @@ export default {
           this.trend = res.data
           this.loadStage++
         })
-        .catch(res => this.$message.error(`获取访问趋势数据失败！${res.message}`))
+        .catch(res => this.$message.error(`Lấy dữ liệu xu hướng truy cập thất bại! ${res.message}`))
     },
     notImpl() {
-      this.$message.warning('功能正在开发中…')
+      this.$message.warning('Chức năng đang được phát triển…')
     },
     handleTrendDaysChange(value) {
       this.$api.visitRecord.getTrend(value)
@@ -265,7 +265,7 @@ export default {
           this.trend = null
           this.trend = res.data
         })
-        .catch(res => this.$message.error(`获取访问趋势数据失败！${res.message}`))
+        .catch(res => this.$message.error(`Lấy dữ liệu xu hướng truy cập thất bại! ${res.message}`))
     }
   }
 }

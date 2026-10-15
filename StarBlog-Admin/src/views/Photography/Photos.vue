@@ -3,38 +3,38 @@
     <el-header height="72px">
       <el-row type="flex" justify="space-between" align="middle">
         <div class="header-left">
-          <el-button type="primary" @click="$refs.addPhotoDialog.show()">添加</el-button>
+          <el-button type="primary" @click="$refs.addPhotoDialog.show()">Thêm</el-button>
           <el-button :type="selectionMode ? 'warning' : ''" @click="toggleSelectionMode">
-            {{ selectionMode ? '退出选择模式' : '选择模式' }}
+            {{ selectionMode ? 'Thoát chế độ chọn' : 'Chế độ chọn' }}
           </el-button>
           <el-dropdown :hide-on-click="false">
             <el-button type="danger" :disabled="selectedIds.length===0">
-              批量操作<i class="el-icon-arrow-down el-icon--right"></i>
+              Thao tác hàng loạt<i class="el-icon-arrow-down el-icon--right"></i>
             </el-button>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item :disabled="selectedIds.length===0" @click.native="handleBatchDelete">批量删除</el-dropdown-item>
-              <el-dropdown-item :disabled="selectedIds.length===0" @click.native="handleBatchSetFeatured">批量设为推荐</el-dropdown-item>
-              <el-dropdown-item :disabled="selectedIds.length===0" @click.native="handleBatchCancelFeatured">批量取消推荐</el-dropdown-item>
+              <el-dropdown-item :disabled="selectedIds.length===0" @click.native="handleBatchDelete">Xóa hàng loạt</el-dropdown-item>
+              <el-dropdown-item :disabled="selectedIds.length===0" @click.native="handleBatchSetFeatured">Đặt làm đề xuất hàng loạt</el-dropdown-item>
+              <el-dropdown-item :disabled="selectedIds.length===0" @click.native="handleBatchCancelFeatured">Bỏ đề xuất hàng loạt</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </div>
         <div class="header-right">
-          <el-input placeholder="搜索标题或拍摄地点" v-model="searchKeyword" clearable size="small"
+          <el-input placeholder="Tìm theo tiêu đề hoặc địa điểm chụp" v-model="searchKeyword" clearable size="small"
                     class="mr-2" @input="onFilterInput" @clear="applyFilters" style="width: 240px;"/>
           <el-select v-model="featuredFilter" size="small" class="mr-2" style="width: 140px;" @change="applyFilters">
-            <el-option label="全部" value="all"/>
-            <el-option label="已推荐" value="featured"/>
-            <el-option label="未推荐" value="unfeatured"/>
+            <el-option label="Tất cả" value="all"/>
+            <el-option label="Đã đề xuất" value="featured"/>
+            <el-option label="Chưa đề xuất" value="unfeatured"/>
           </el-select>
-          <el-button size="small" @click="clearFilters">清空筛选</el-button>
+          <el-button size="small" @click="clearFilters">Xóa bộ lọc</el-button>
         </div>
       </el-row>
-      <el-alert v-if="guideVisible" title="使用提示" type="info" show-icon closable class="mt-2"
-                description="点击图片可预览，右上角“更多”查看操作；可开启选择模式进行批量删除/推荐/取消推荐。"/>
+      <el-alert v-if="guideVisible" title="Mẹo sử dụng" type="info" show-icon closable class="mt-2"
+                description="Nhấp vào ảnh để xem trước, nhấn Thêm ở góc trên bên phải để xem các thao tác; có thể bật chế độ chọn để xóa/đề xuất/bỏ đề xuất hàng loạt."/>
     </el-header>
     <el-main v-loading="loading">
       <div style="margin-bottom: 10px; font-size: 12px; color: #666;">
-        调试信息: loading={{loading}}, photos.length={{photos.length}}, allPhotos.length={{allPhotos.length}}
+        Thông tin gỡ lỗi: loading={{loading}}, photos.length={{photos.length}}, allPhotos.length={{allPhotos.length}}
       </div>
       <template v-if="loading">
         <div class="skeleton-grid">
@@ -54,7 +54,7 @@
                       @onEdit="openEditDialog"
           />
         </Masonry>
-        <el-empty v-else description="暂无数据"/>
+        <el-empty v-else description="Chưa có dữ liệu"/>
       </template>
       <add-photo-dialog ref="addPhotoDialog" @onAddPhotoSucceed="onAddPhotoSucceed"></add-photo-dialog>
       <edit-photo-dialog ref="editPhotoDialog" @onUpdateSucceed="onEditSucceed"></edit-photo-dialog>
@@ -98,10 +98,10 @@ export default {
       allPhotos: [],
       photos: [],
       loading: false,
-      // 选择与批量
+      // Chọn và hàng loạt
       selectionMode: false,
       selectedIds: [],
-      // 搜索与筛选
+      // Tìm kiếm và lọc
       searchKeyword: '',
       featuredFilter: 'all', // all | featured | unfeatured
       filterTimer: null,
@@ -115,65 +115,65 @@ export default {
   methods: {
     async loadPhotos() {
       this.loading = true
-      console.log('开始加载照片...')
+      console.log('Bắt đầu tải ảnh...')
       try {
         const res = await this.$api.photo.getList(this.currentPage, this.pageSize)
-        console.log('API响应:', res)
+        console.log('Phản hồi API:', res)
         this.totalCount = res.pagination.totalItemCount
         this.allPhotos = res.data.map(item => ({
           ...item,
           url: `${baseUrl}/media/photography/${item.id}.jpg`,
           isFeatured: false,
-          // 为瀑布流添加默认尺寸，实际会根据图片自适应
+          // Thêm kích thước mặc định cho masonry, thực tế sẽ tự thích ứng theo ảnh
           width: 260,
-          height: Math.floor(Math.random() * 200) + 200, // 随机高度200-400px
+          height: Math.floor(Math.random() * 200) + 200, // Chiều cao ngẫu nhiên 200-400px
         }))
-        console.log('处理后的照片数据:', this.allPhotos)
-        // 等待推荐状态同步完成后再应用筛选
+        console.log('Dữ liệu ảnh sau khi xử lý:', this.allPhotos)
+        // Chờ đồng bộ trạng thái đề xuất hoàn tất rồi mới áp dụng bộ lọc
         await this.syncFeatured()
         this.applyFilters()
-        console.log('最终显示的照片:', this.photos)
+        console.log('Ảnh hiển thị cuối cùng:', this.photos)
       } catch (err) {
-        console.error('加载图片失败:', err)
-        this.$message.error(`加载图片失败：${err.message || err}`)
+        console.error('Tải ảnh thất bại:', err)
+        this.$message.error(`Tải ảnh thất bại: ${err.message || err}`)
       } finally {
         this.loading = false
-        console.log('加载完成，loading状态:', this.loading)
+        console.log('Tải xong, trạng thái loading:', this.loading)
       }
     },
     async syncFeatured() {
-      console.log('开始同步推荐状态...')
+      console.log('Bắt đầu đồng bộ trạng thái đề xuất...')
       try {
         const resFeatured = await this.$api.featuredPhoto.getAll()
-        console.log('推荐照片API响应:', resFeatured)
+        console.log('Phản hồi API ảnh đề xuất:', resFeatured)
         const ids = new Set((resFeatured.data || []).map(fp => fp.photo.id))
         this.featuredIdSet = ids
         this.allPhotos = this.allPhotos.map(p => ({ ...p, isFeatured: ids.has(p.id) }))
-        console.log('同步推荐状态后的照片:', this.allPhotos)
+        console.log('Ảnh sau khi đồng bộ trạng thái đề xuất:', this.allPhotos)
       } catch (err) {
-        console.error('获取推荐状态失败:', err)
-        // 非关键失败，提示但不中断
-        this.$message.warning(`获取推荐状态失败：${err.message || err}`)
+        console.error('Lấy trạng thái đề xuất thất bại:', err)
+        // Lỗi không nghiêm trọng, chỉ thông báo và không làm gián đoạn
+        this.$message.warning(`Lấy trạng thái đề xuất thất bại: ${err.message || err}`)
       }
     },
     applyFilters() {
-      console.log('应用筛选，当前条件:', { searchKeyword: this.searchKeyword, featuredFilter: this.featuredFilter })
+      console.log('Áp dụng bộ lọc, điều kiện hiện tại:', { searchKeyword: this.searchKeyword, featuredFilter: this.featuredFilter })
       const kw = (this.searchKeyword || '').trim().toLowerCase()
       let list = this.allPhotos.slice()
-      console.log('筛选前的照片数量:', list.length)
+      console.log('Số lượng ảnh trước khi lọc:', list.length)
       if (kw) {
         list = list.filter(p => (p.title || '').toLowerCase().includes(kw) || (p.location || '').toLowerCase().includes(kw))
-        console.log('搜索筛选后的照片数量:', list.length)
+        console.log('Số lượng ảnh sau khi tìm kiếm và lọc:', list.length)
       }
       if (this.featuredFilter === 'featured') {
         list = list.filter(p => p.isFeatured)
-        console.log('推荐筛选后的照片数量:', list.length)
+        console.log('Số lượng ảnh đề xuất sau khi lọc:', list.length)
       } else if (this.featuredFilter === 'unfeatured') {
         list = list.filter(p => !p.isFeatured)
-        console.log('未推荐筛选后的照片数量:', list.length)
+        console.log('Số lượng ảnh chưa đề xuất sau khi lọc:', list.length)
       }
       this.photos = list
-      console.log('最终筛选结果:', this.photos)
+      console.log('Kết quả lọc cuối cùng:', this.photos)
     },
     onFilterInput() {
       clearTimeout(this.filterTimer)
@@ -184,7 +184,7 @@ export default {
       this.featuredFilter = 'all'
       this.applyFilters()
     },
-    // 选择模式
+    // Chế độ chọn
     toggleSelectionMode() {
       this.selectionMode = !this.selectionMode
       if (!this.selectionMode) {
@@ -203,40 +203,40 @@ export default {
         this.applyFilters()
       }
     },
-    // 批量操作
+    // Thao tác hàng loạt
     async handleBatchDelete() {
       if (this.selectedIds.length === 0) return
       try {
-        await this.$confirm(`将删除选中的 ${this.selectedIds.length} 张图片，是否继续？`, '确认', { type: 'warning' })
+        await this.$confirm(`Sẽ xóa ${this.selectedIds.length} ảnh đã chọn, bạn có muốn tiếp tục không?`, 'Xác nhận', { type: 'warning' })
         await Promise.all(this.selectedIds.map(id => this.$api.photo.deleteItem(id)))
-        this.$message.success('批量删除成功')
+        this.$message.success('Xóa hàng loạt thành công')
         this.selectedIds = []
         await this.loadPhotos()
       } catch (err) {
-        if (err !== 'cancel') this.$message.error(`批量删除失败：${err.message || err}`)
+        if (err !== 'cancel') this.$message.error(`Xóa hàng loạt thất bại: ${err.message || err}`)
       }
     },
     async handleBatchSetFeatured() {
       if (this.selectedIds.length === 0) return
       try {
         await Promise.all(this.selectedIds.map(id => this.$api.photo.setFeatured(id)))
-        this.$message.success('批量设为推荐成功')
+        this.$message.success('Đặt làm đề xuất hàng loạt thành công')
         await this.loadPhotos()
       } catch (err) {
-        this.$message.error(`批量设置失败：${err.message || err}`)
+        this.$message.error(`Thiết lập hàng loạt thất bại: ${err.message || err}`)
       }
     },
     async handleBatchCancelFeatured() {
       if (this.selectedIds.length === 0) return
       try {
         await Promise.all(this.selectedIds.map(id => this.$api.photo.cancelFeatured(id)))
-        this.$message.success('批量取消推荐成功')
+        this.$message.success('Bỏ đề xuất hàng loạt thành công')
         await this.loadPhotos()
       } catch (err) {
-        this.$message.error(`批量取消失败：${err.message || err}`)
+        this.$message.error(`Hủy hàng loạt thất bại: ${err.message || err}`)
       }
     },
-    // 分页
+    // Phân trang
     handlePageSizeChange(pageSize) {
       this.pageSize = pageSize
       this.loadPhotos()
@@ -246,14 +246,14 @@ export default {
       this.loadPhotos()
     },
     onAddPhotoSucceed() {
-      this.$message.success('添加成功')
+      this.$message.success('Thêm thành công')
       this.loadPhotos()
     },
     openEditDialog(photo) {
       this.$refs.editPhotoDialog.show(photo)
     },
     onEditSucceed() {
-      this.$message.success('更新成功')
+      this.$message.success('Cập nhật thành công')
       this.loadPhotos()
     }
   }

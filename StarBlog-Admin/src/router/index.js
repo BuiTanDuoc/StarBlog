@@ -40,30 +40,30 @@ const router = new Router({
       children: [
         {
           path: '',
-          name: '系统主页',
+          name: 'Trang chủ hệ thống',
           component: Home,
           meta: {
             icon: 'fa fa-home fa-lg',
             index: 0
           }
         },
-        {path: 'category/list', name: '分类列表', component: Categories},
-        {path: 'category/tree', name: '分类树', component: CategoriesTree},
-        {path: 'category/detail/:id', name: '分类详情', component: CategoryDetail},
-        {path: 'category/featured', name: '推荐分类', component: FeaturedCategories},
-        {path: 'comment/list', name: '审核评论', component: Comments},
-        {path: 'post/list', name: '文章列表', component: Posts},
-        {path: 'post/featured', name: '推荐文章', component: FeaturedPosts},
-        {path: 'post/top', name: '置顶文章', component: TopPost},
-        {path: 'post/edit/:id', name: '编辑文章', component: EditPost},
-        {path: 'post/new', name: '新增文章', component: EditPost},
-        {path: 'post/upload', name: '上传文章', component: UploadPost},
-        {path: 'photo/list', name: '图片列表', component: Photos},
-        {path: 'photo/featured', name: '推荐图片', component: FeaturedPhotos},
-        {path: 'visit_record/list', name: '访问记录', component: VisitRecordList},
-        {path: 'config/list', name: '配置中心', component: ConfigList},
-        {path: 'link/list', name: '友情链接管理', component: LinkList},
-        {path: 'link_exchange/list', name: '友链申请', component: LinkExchangeList},
+        {path: 'category/list', name: 'Danh sách danh mục', component: Categories},
+        {path: 'category/tree', name: 'Cây danh mục', component: CategoriesTree},
+        {path: 'category/detail/:id', name: 'Chi tiết danh mục', component: CategoryDetail},
+        {path: 'category/featured', name: 'Danh mục đề xuất', component: FeaturedCategories},
+        {path: 'comment/list', name: 'Duyệt bình luận', component: Comments},
+        {path: 'post/list', name: 'Danh sách bài viết', component: Posts},
+        {path: 'post/featured', name: 'Bài viết đề xuất', component: FeaturedPosts},
+        {path: 'post/top', name: 'Bài viết được ghim', component: TopPost},
+        {path: 'post/edit/:id', name: 'Sửa bài viết', component: EditPost},
+        {path: 'post/new', name: 'Thêm bài viết mới', component: EditPost},
+        {path: 'post/upload', name: 'Tải bài viết lên', component: UploadPost},
+        {path: 'photo/list', name: 'Danh sách ảnh', component: Photos},
+        {path: 'photo/featured', name: 'Ảnh đề xuất', component: FeaturedPhotos},
+        {path: 'visit_record/list', name: 'Lịch sử truy cập', component: VisitRecordList},
+        {path: 'config/list', name: 'Trung tâm cấu hình', component: ConfigList},
+        {path: 'link/list', name: 'Quản lý liên kết bạn bè', component: LinkList},
+        {path: 'link_exchange/list', name: 'Yêu cầu trao đổi liên kết', component: LinkExchangeList},
       ]
     },
     {path: '/Login', name: 'Login', component: Login},
@@ -71,7 +71,7 @@ const router = new Router({
   ]
 })
 
-// 路由守卫
+// Route guard
 router.beforeEach((to, from, next) => {
   if (auth.isExpired()) {
     auth.logout()
@@ -79,12 +79,12 @@ router.beforeEach((to, from, next) => {
   }
 
   if (to.path === '/login') {
-    // 访问登录界面，如果已登录，跳转到主页
+    // Truy cập trang đăng nhập, nếu đã đăng nhập thì chuyển đến trang chủ
     if (auth.isLogin()) next({path: '/'})
     else next()
   } else {
     if (!auth.isLogin()) {
-      // 如果访问非登录界面，且户会话信息不存在，代表未登录，则跳转到登录界面
+      // Nếu truy cập trang không phải đăng nhập mà không có thông tin phiên người dùng, nghĩa là chưa đăng nhập, thì chuyển đến trang đăng nhập
       next({path: '/login'})
     }
     next()

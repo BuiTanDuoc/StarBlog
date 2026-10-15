@@ -1,16 +1,16 @@
 <template>
   <div class="category-tree-panel">
     <div class="panel-header">
-      <h2 class="panel-title">分类管理</h2>
+      <h2 class="panel-title">Quản lý danh mục</h2>
       <el-button type="primary" size="small" @click="handleAdd">
-        <i class="el-icon-plus"></i> 添加分类
+        <i class="el-icon-plus"></i> Thêm danh mục
       </el-button>
     </div>
 
     <div class="search-section">
       <el-input
         v-model="searchText"
-        placeholder="搜索分类..."
+        placeholder="Tìm danh mục..."
         prefix-icon="el-icon-search"
         size="small"
         clearable
@@ -20,10 +20,10 @@
     <div class="tree-actions">
       <el-button-group size="mini">
         <el-button @click="expandAll">
-          <i class="el-icon-arrow-down"></i> 展开全部
+          <i class="el-icon-arrow-down"></i> Mở rộng tất cả
         </el-button>
         <el-button @click="collapseAll">
-          <i class="el-icon-arrow-up"></i> 折叠全部
+          <i class="el-icon-arrow-up"></i> Thu gọn tất cả
         </el-button>
       </el-button-group>
     </div>
@@ -49,40 +49,40 @@
             <i class="node-icon el-icon-folder" v-if="hasChildren(data)"></i>
             <i class="node-icon el-icon-price-tag" v-else></i>
             <span class="node-label">{{ node.label }}</span>
-            <span class="node-count" v-if="getCategoryPostsCount(data)">({{ getCategoryPostsCount(data) }}篇)</span>
+            <span class="node-count" v-if="getCategoryPostsCount(data)">({{ getCategoryPostsCount(data) }} bài)</span>
             <span class="sub-category-count" v-if="hasChildren(data)">
-              ({{ getChildrenCount(data) }}个子分类)
+              ({{ getChildrenCount(data) }} danh mục con)
             </span>
           </div>
 
-          <!-- 操作按钮 -->
+          <!-- Nút thao tác -->
           <div class="action-buttons">
             <el-button
               type="text"
               size="mini"
               icon="el-icon-plus"
-              title="添加子分类"
+              title="Thêm danh mục con"
               @click.stop="handleMenuCommand({ action: 'addSubCategory', data })"
             ></el-button>
             <el-button
               type="text"
               size="mini"
               icon="el-icon-document"
-              title="查看文章"
+              title="Xem bài viết"
               @click.stop="handleMenuCommand({ action: 'viewPosts', data })"
             ></el-button>
             <el-button
               type="text"
               size="mini"
               icon="el-icon-edit"
-              title="编辑分类"
+              title="Sửa danh mục"
               @click.stop="handleMenuCommand({ action: 'editCategory', data })"
             ></el-button>
             <el-button
               type="text"
               size="mini"
               icon="el-icon-delete"
-              title="删除分类"
+              title="Xóa danh mục"
               class="danger-item"
               @click.stop="handleMenuCommand({ action: 'deleteCategory', data })"
             ></el-button>
@@ -92,7 +92,7 @@
 
       <div v-if="!loading && treeData.length === 0" class="empty-state">
         <i class="el-icon-folder-opened"></i>
-        <p>暂无分类数据</p>
+        <p>Chưa có dữ liệu danh mục</p>
       </div>
     </div>
   </div>
@@ -137,18 +137,18 @@ export default {
     }
   },
   methods: {
-    // 节点过滤
+    // Lọc nút
     filterNode(value, data) {
       if (!value) return true;
       return data.text.indexOf(value) !== -1;
     },
 
-    // 展开所有节点
+    // Mở rộng tất cả các nút
     expandAll() {
       this.$nextTick(() => {
         const tree = this.$refs.categoryTree;
         if (tree && this.treeData.length > 0) {
-          // 递归展开所有节点
+          // Đệ quy mở rộng tất cả các nút
           const expandAllNodes = (nodes) => {
             nodes.forEach(nodeData => {
               const node = tree.getNode(nodeData);
@@ -168,12 +168,12 @@ export default {
       });
     },
 
-    // 折叠所有节点
+    // Thu gọn tất cả các nút
     collapseAll() {
       this.$nextTick(() => {
         const tree = this.$refs.categoryTree;
         if (tree) {
-          // 递归折叠所有节点
+          // Đệ quy thu gọn tất cả các nút
           const collapseAllNodes = (nodes) => {
             nodes.forEach(nodeData => {
               const node = tree.getNode(nodeData);
@@ -193,27 +193,27 @@ export default {
       });
     },
 
-    // 节点点击事件
+    // Sự kiện nhấp vào nút
     handleNodeClick(data) {
       this.$emit('node-click', data);
     },
 
-    // 菜单命令处理
+    // Xử lý lệnh menu
     handleMenuCommand(command) {
       this.$emit('menu-command', command);
     },
 
-    // 添加分类
+    // Thêm danh mục
     handleAdd() {
       this.$emit('add-category');
     },
 
-    // 检查节点是否有子节点
+    // Kiểm tra nút có nút con hay không
     hasChildren(data) {
       return data.nodes && data.nodes.length > 0;
     },
 
-    // 获取子分类数量
+    // Lấy số lượng danh mục con
     getChildrenCount(data) {
       return data.nodes ? data.nodes.length : 0;
     },
@@ -274,7 +274,7 @@ export default {
   height: 100%;
 }
 
-/* 树节点样式 */
+/* Kiểu dáng nút cây */
 .tree-node {
   position: relative;
   display: flex;
@@ -331,7 +331,7 @@ export default {
   margin-left: 4px;
 }
 
-/* 操作按钮样式 */
+/* Kiểu dáng nút thao tác */
 .action-buttons {
   display: flex;
   align-items: center;
@@ -358,7 +358,7 @@ export default {
   color: #f89898;
 }
 
-/* 空状态样式 */
+/* Kiểu dáng trạng thái trống */
 .empty-state {
   display: flex;
   flex-direction: column;
@@ -379,7 +379,7 @@ export default {
   margin: 0;
 }
 
-/* Element UI 树组件自定义样式 */
+/* Element UI Kiểu dáng tùy chỉnh cho thành phần cây */
 ::v-deep .el-tree {
   background: transparent;
 }
@@ -413,12 +413,12 @@ export default {
   cursor: default;
 }
 
-/* 展开/折叠动画 */
+/* Hiệu ứng mở rộng/thu gọn */
 ::v-deep .el-tree-node__children {
   transition: all 0.3s ease;
 }
 
-/* 响应式设计 */
+/* Thiết kế responsive */
 @media (max-width: 768px) {
   .panel-header {
     padding: 12px;

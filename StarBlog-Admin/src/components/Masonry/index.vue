@@ -25,11 +25,11 @@ export default {
 
 <style scoped>
 .masonry {
-  /* 浏览器根据 column-width 自动计算列数 */
+  /* Trình duyệt tự động tính số cột theo column-width */
   column-fill: balance;
 }
 
-/* 让每个子元素在列中避免被拆分，并撑满列宽 */
+/* Giúp mỗi phần tử con trong cột không bị ngắt, và lấp đầy chiều rộng cột */
 .masonry > * {
   break-inside: avoid;
   -webkit-column-break-inside: avoid;

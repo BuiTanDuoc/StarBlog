@@ -1,10 +1,10 @@
 /**
- * 全局常量、方法封装模块
- * 通过原型挂载到Vue属性
- * 通过 this.Global 调用
+ * Module đóng gói hằng số và phương thức toàn cục
+ * Gắn vào thuộc tính Vue thông qua prototype
+ * Gọi qua this.Global
  */
 
-// 后台管理系统服务器地址
+// Địa chỉ máy chủ hệ thống quản trị
 export const baseUrl = process.env.BASE_URL
 
 export default {

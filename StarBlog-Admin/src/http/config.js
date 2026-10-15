@@ -2,18 +2,18 @@ import {baseUrl} from '@/utils/global'
 
 export default {
   method: 'get',
-  // 基础url前缀
+  // Tiền tố url cơ sở
   baseUrl: `${baseUrl}/Api`,
-  // 请求头信息
+  // Thông tin header của yêu cầu
   headers: {
     'Content-Type': 'application/json;charset=UTF-8'
   },
-  // 参数
+  // Tham số
   data: {},
-  // 设置超时时间
+  // Đặt thời gian chờ (timeout)
   timeout: 990000,
-  // 携带凭证
+  // Mang theo thông tin xác thực
   withCredentials: true,
-  // 返回数据类型
+  // Kiểu dữ liệu trả về
   responseType: 'json'
 }

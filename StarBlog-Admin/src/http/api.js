@@ -1,4 +1,4 @@
-// 接口统一集成模块
+// Module tích hợp thống nhất các API
 import * as auth from './modules/auth'
 import * as blog from './modules/blog'
 import * as blogPost from './modules/blogPost'
@@ -13,7 +13,7 @@ import * as linkExchange from './modules/linkExchange'
 import * as photo from './modules/photo'
 import * as visitRecord from './modules/visitRecord'
 
-// 默认全部导出
+// Mặc định xuất tất cả
 export default {
   auth,
   blog,

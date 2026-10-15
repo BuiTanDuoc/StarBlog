@@ -1,6 +1,6 @@
 <template>
   <div class="notice-panel">
-    <div class="header">您有 {{ data.length }} 条通知</div>
+    <div class="header">Bạn có {{ data.length }} thông báo</div>
     <div class="notice-content">
       <div v-for="item in data" :key="item.key" class="notice-item">
         <span class="notice-icon">
@@ -11,7 +11,7 @@
         </span>
       </div>
     </div>
-    <div class="notice-footer">查看所有通知</div>
+    <div class="notice-footer">Xem tất cả thông báo</div>
   </div>
 </template>
 
@@ -25,22 +25,22 @@ export default {
         {
           key: "1",
           icon: 'fa fa-envelope-o',
-          content: '你修改了用户密码'
+          content: 'Bạn đã đổi mật khẩu'
         },
         {
           key: "2",
           icon: 'fa fa-music',
-          content: '你修改了用户头像'
+          content: 'Bạn đã thay đổi ảnh đại diện'
         },
         {
           key: "3",
           icon: 'fa fa-edit',
-          content: '今日25名新成员加入'
+          content: 'Hôm nay có 25 thành viên mới tham gia'
         },
         {
           key: "4",
           icon: 'fa fa-edit',
-          content: '您发表了一篇新随笔'
+          content: 'Bạn đã đăng một bài viết ngắn mới'
         }]
     }
   },
@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     handleClick: function () {
-      // 按钮操作处理函数
+      // Hàm xử lý thao tác nút
       this.$emit('click', {})
     }
   },

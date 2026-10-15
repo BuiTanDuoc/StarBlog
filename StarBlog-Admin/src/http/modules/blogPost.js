@@ -1,7 +1,7 @@
 import axios from '../axios'
 
 /**
- * 获取博客列表
+ * Lấy danh sách blog
  * @param isPublish
  * @param status
  * @param categoryId
@@ -27,7 +27,7 @@ export const getList = (
   })
 }
 
-// 获取指定博客文章
+// Lấy bài viết blog được chỉ định
 export const get = itemId => {
   return axios({
     url: `BlogPost/${itemId}/`,
@@ -35,7 +35,7 @@ export const get = itemId => {
   })
 }
 
-// 删除指定博客
+// Xóa blog được chỉ định
 export const deleteItem = itemId => {
   return axios({
     url: `BlogPost/${itemId}/`,
@@ -43,7 +43,7 @@ export const deleteItem = itemId => {
   })
 }
 
-// 添加博客
+// Thêm blog
 export const add = data => {
   return axios({
     url: `BlogPost`,
@@ -52,7 +52,7 @@ export const add = data => {
   })
 }
 
-// 更新博客文章
+// Cập nhật bài viết blog
 export const update = data => {
   return axios({
     url: `BlogPost/${data.id}/`,
@@ -62,9 +62,9 @@ export const update = data => {
 }
 
 /**
- * 上传图片
- * @param itemId 文章ID
- * @param file 图片文件
+ * Tải ảnh lên
+ * @param itemId ID bài viết
+ * @param file Tệp ảnh
  * @returns {*}
  */
 export const uploadImage = (itemId, file) => {
@@ -79,7 +79,7 @@ export const uploadImage = (itemId, file) => {
   })
 }
 
-// 获取文章里的图片
+// Lấy các ảnh trong bài viết
 export const getImages = itemId => {
   return axios({
     url: `BlogPost/${itemId}/Images`,
@@ -87,7 +87,7 @@ export const getImages = itemId => {
   })
 }
 
-// 设置推荐博客
+// Đặt blog đề xuất
 export const setFeatured = itemId => {
   return axios({
     url: `BlogPost/${itemId}/SetFeatured`,
@@ -95,7 +95,7 @@ export const setFeatured = itemId => {
   })
 }
 
-// 取消推荐博客
+// Bỏ đề xuất blog
 export const cancelFeatured = itemId => {
   return axios({
     url: `BlogPost/${itemId}/CancelFeatured`,
@@ -103,7 +103,7 @@ export const cancelFeatured = itemId => {
   })
 }
 
-// 设置置顶
+// Đặt ghim
 export const setTop = itemId => {
   return axios({
     url: `BlogPost/${itemId}/SetTop`,

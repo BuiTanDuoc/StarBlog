@@ -1,53 +1,53 @@
 <template>
   <div class="login-page">
-    <!-- 背景装饰 -->
+    <!-- Trang trí nền -->
     <div class="background-decoration">
       <div class="circle circle-1"></div>
       <div class="circle circle-2"></div>
       <div class="circle circle-3"></div>
     </div>
 
-    <!-- 登录卡片 -->
+    <!-- Thẻ đăng nhập -->
     <div class="login-card">
-      <!-- 头部logo和标题 -->
+      <!-- Logo và tiêu đề phần đầu -->
       <div class="login-header">
         <div class="logo">
           <i class="el-icon-star-on"></i>
         </div>
         <h1 class="title">StarBlog</h1>
-        <p class="subtitle">管理后台登录</p>
+        <p class="subtitle">Đăng nhập trang quản trị</p>
       </div>
 
-      <!-- 登录表单 -->
+      <!-- Biểu mẫu đăng nhập -->
       <el-form :model="loginForm" :rules="fieldRules" ref="loginForm" class="login-form" @keyup.enter.native="login">
         <el-form-item prop="username">
           <div class="input-wrapper">
             <i class="el-icon-user input-icon"></i>
-            <el-input type="text" v-model="loginForm.username" auto-complete="off" placeholder="请输入用户名"
+            <el-input type="text" v-model="loginForm.username" auto-complete="off" placeholder="Vui lòng nhập tên người dùng"
               class="custom-input"></el-input>
           </div>
         </el-form-item>
 
         <el-form-item prop="password">
           <div class="input-wrapper">
-            <el-input type="password" v-model="loginForm.password" auto-complete="off" placeholder="请输入密码"
+            <el-input type="password" v-model="loginForm.password" auto-complete="off" placeholder="Vui lòng nhập mật khẩu"
               class="custom-input" show-password></el-input>
           </div>
         </el-form-item>
 
         <el-form-item class="button-group">
           <el-button type="primary" class="login-btn" @click="login" :loading="loading" size="large">
-            <span v-if="!loading">登 录</span>
-            <span v-else>登录中...</span>
+            <span v-if="!loading">Đăng nhập</span>
+            <span v-else>Đang đăng nhập...</span>
           </el-button>
 
           <el-button type="text" class="reset-btn" @click="reset">
-            重置表单
+            Đặt lại biểu mẫu
           </el-button>
         </el-form-item>
       </el-form>
 
-      <!-- 底部信息 -->
+      <!-- Thông tin phần chân -->
       <div class="login-footer">
         <p>© 2024 StarBlog. All rights reserved.</p>
       </div>
@@ -68,8 +68,8 @@ export default {
         password: '',
       },
       fieldRules: {
-        username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
-        password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
+        username: [{ required: true, message: 'Vui lòng nhập tên người dùng', trigger: 'blur' }],
+        password: [{ required: true, message: 'Vui lòng nhập mật khẩu', trigger: 'blur' }]
       },
     }
   },
@@ -77,15 +77,15 @@ export default {
     login() {
       this.loading = true
       this.$api.auth.login(this.loginForm)
-        .then(res => {  // 调用登录接口
-          // 保存登录信息
+        .then(res => {  // Gọi API đăng nhập
+          // Lưu thông tin đăng nhập
           auth.login(res.data.token, this.loginForm.username, res.data.expiration)
 
-          // 登录成功，跳转到主页
-          this.$message.success('登录成功')
+          // Đăng nhập thành công, chuyển đến trang chủ
+          this.$message.success('Đăng nhập thành công')
           this.$router.push('/')
         })
-        .catch(err => this.$message.error(`登录失败：${err.message}`))
+        .catch(err => this.$message.error(`Đăng nhập thất bại: ${err.message}`))
         .finally(() => this.loading = false)
     },
     reset() {
@@ -105,7 +105,7 @@ export default {
   position: relative;
   overflow: hidden;
 
-  // 背景装饰圆圈
+  // Vòng tròn trang trí nền
   .background-decoration {
     position: absolute;
     top: 0;
@@ -294,7 +294,7 @@ export default {
   }
 }
 
-// 动画效果
+// Hiệu ứng động
 @keyframes float {
 
   0%,
@@ -319,7 +319,7 @@ export default {
   }
 }
 
-// 响应式设计
+// Thiết kế responsive
 @media (max-width: 768px) {
   .login-card {
     margin: 20px;

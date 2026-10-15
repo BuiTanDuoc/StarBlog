@@ -1,6 +1,6 @@
 <template>
   <el-dialog 
-    :title="mode === 'add' ? '添加分类' : '编辑分类'" 
+    :title="mode === 'add' ? 'Thêm danh mục' : 'Sửa danh mục'" 
     :visible.sync="dialogFormVisible" 
     width="480px"
     :close-on-click-modal="false"
@@ -8,16 +8,16 @@
     class="modern-dialog"
     @close="handleDialogClose">
     
-    <!-- 对话框头部 -->
+    <!-- Phần đầu hộp thoại -->
     <div slot="title" class="dialog-header">
       <div class="header-content">
         <i class="el-icon-folder-add header-icon" v-if="mode === 'add'"></i>
         <i class="el-icon-edit header-icon" v-else></i>
-        <span class="header-title">{{ mode === 'add' ? '添加分类' : '编辑分类' }}</span>
+        <span class="header-title">{{ mode === 'add' ? 'Thêm danh mục' : 'Sửa danh mục' }}</span>
       </div>
     </div>
 
-    <!-- 表单内容 -->
+    <!-- Nội dung biểu mẫu -->
     <div class="dialog-body">
       <el-form 
         ref="uploadForm" 
@@ -27,20 +27,20 @@
         label-position="top"
         class="modern-form">
         
-        <!-- 分类名称 -->
-        <el-form-item label="分类名称" prop="name" class="form-item">
+        <!-- Tên danh mục -->
+        <el-form-item label="Tên danh mục" prop="name" class="form-item">
           <el-input 
             v-model="form.name" 
-            placeholder="请输入分类名称"
+            placeholder="Vui lòng nhập tên danh mục"
             autocomplete="off"
             class="modern-input"
             :prefix-icon="'el-icon-edit-outline'">
           </el-input>
         </el-form-item>
 
-        <!-- 父级分类 -->
-        <el-form-item label="父级分类" prop="parentId" class="form-item">
-          <!-- 子分类模式：显示只读的父分类信息 -->
+        <!-- Danh mục cha -->
+        <el-form-item label="Danh mục cha" prop="parentId" class="form-item">
+          <!-- Chế độ danh mục con: hiển thị thông tin danh mục cha ở dạng chỉ đọc -->
           <div v-if="isSubCategoryMode && presetParentCategory" class="preset-parent-info">
             <el-input 
               :value="presetParentCategory.name"
@@ -49,21 +49,21 @@
               :prefix-icon="'el-icon-folder'"
             >
               <template slot="suffix">
-                <span class="readonly-label">已锁定</span>
+                <span class="readonly-label">Đã khóa</span>
               </template>
             </el-input>
             <div class="preset-parent-desc">
               <i class="el-icon-info"></i>
-              <span>将在"{{ presetParentCategory.name }}"分类下创建子分类</span>
+              <span>Sẽ tạo danh mục con trong danh mục "{{ presetParentCategory.name }}"</span>
             </div>
           </div>
           
-          <!-- 普通模式：可选择父分类 -->
+          <!-- Chế độ thường: có thể chọn danh mục cha -->
           <el-cascader 
             v-else
             v-model="form.parentId" 
             :options="categoriesTree" 
-            placeholder="请选择父级分类（留空为顶级分类）"
+            placeholder="Vui lòng chọn danh mục cha (để trống là danh mục gốc)"
             filterable 
             clearable
             class="modern-cascader"
@@ -87,13 +87,13 @@
           </el-cascader>
         </el-form-item>
 
-        <!-- 可见性设置 -->
-        <el-form-item label="可见性" prop="visible" class="form-item">
+        <!-- Thiết lập khả năng hiển thị -->
+        <el-form-item label="Khả năng hiển thị" prop="visible" class="form-item">
           <div class="visibility-control">
             <el-switch 
               v-model="form.visible"
-              active-text="公开显示"
-              inactive-text="隐藏分类"
+              active-text="Hiển thị công khai"
+              inactive-text="Ẩn danh mục"
               active-color="#13ce66"
               inactive-color="#ff4949"
               class="modern-switch">
@@ -101,11 +101,11 @@
             <div class="visibility-desc">
               <span v-if="form.visible" class="desc-text success">
                 <i class="el-icon-view"></i>
-                该分类将在前台显示
+                Danh mục này sẽ hiển thị ở trang web chính
               </span>
               <span v-else class="desc-text warning">
                 <i class="el-icon-view"></i>
-                该分类将被隐藏
+                Danh mục này sẽ bị ẩn
               </span>
             </div>
           </div>
@@ -114,7 +114,7 @@
       </el-form>
     </div>
 
-    <!-- 对话框底部 -->
+    <!-- Phần chân hộp thoại -->
     <div slot="footer" class="dialog-footer">
       <div class="footer-buttons">
         <el-button 
@@ -122,7 +122,7 @@
           class="cancel-btn"
           size="medium">
           <i class="el-icon-close"></i>
-          取消
+          Hủy
         </el-button>
         <el-button 
           type="primary" 
@@ -131,7 +131,7 @@
           class="submit-btn"
           size="medium">
           <i class="el-icon-check" v-if="!submitLoading"></i>
-          {{ mode === 'add' ? '添加分类' : '保存修改' }}
+          {{ mode === 'add' ? 'Thêm danh mục' : 'Lưu thay đổi' }}
         </el-button>
       </div>
     </div>
@@ -158,8 +158,8 @@ export default {
       categories: [],
       categoriesTree: [],
       submitLoading: false,
-      isSubCategoryMode: false, // 是否为添加子分类模式
-      presetParentCategory: null, // 预设的父分类信息
+      isSubCategoryMode: false, // Có phải chế độ thêm danh mục con hay không
+      presetParentCategory: null, // Thông tin danh mục cha được đặt sẵn
       form: {
         name: '',
         url: '',
@@ -169,11 +169,11 @@ export default {
       },
       formRules: {
         name: [
-          {required: true, message: '请输入分类名称', trigger: 'blur'},
-          {min: 1, max: 50, message: '分类名称长度在 1 到 50 个字符', trigger: 'blur'}
+          {required: true, message: 'Vui lòng nhập tên danh mục', trigger: 'blur'},
+          {min: 1, max: 50, message: 'Độ dài từ 1 đến 50 ký tự', trigger: 'blur'}
         ],
         visible: [
-          {required: true, message: '请选择可见性', trigger: 'change'}
+          {required: true, message: 'Vui lòng chọn khả năng hiển thị', trigger: 'change'}
         ],
       }
     }
@@ -183,7 +183,7 @@ export default {
   },
   methods: {
     /**
-     * 将分类数据转换为树形结构
+     * Chuyển dữ liệu danh mục sang cấu trúc cây
      */
     mapCategoriesToTree(categories) {
       const mapNodes = (nodes) => {
@@ -192,10 +192,10 @@ export default {
         for (const node of nodes) {
           items.push({
             id: node.id,
-            name: node.text,  // API返回的是text字段，不是name
-            label: node.text, // 显示标签使用text
+            name: node.text,  // API trả về trường text, không phải name
+            label: node.text, // Dùng text để hiển thị nhãn
             value: node.id,
-            count: node.tags ? parseInt(node.tags[0]) : 0, // tags数组第一个元素是文章数量
+            count: node.tags ? parseInt(node.tags[0]) : 0, // Phần tử đầu tiên của mảng tags là số lượng bài viết
             children: mapNodes(node.nodes)
           })
         }
@@ -205,7 +205,7 @@ export default {
     },
 
     /**
-     * 重置表单
+     * Đặt lại biểu mẫu
      */
     resetForm() {
       if (this.$refs.uploadForm) {
@@ -220,27 +220,27 @@ export default {
         parentId: null
       }
       this.submitLoading = false
-      // 重置子分类模式相关状态
+      // Đặt lại các trạng thái liên quan đến chế độ danh mục con
       this.isSubCategoryMode = false
       this.presetParentCategory = null
     },
 
     /**
-     * 显示对话框
+     * Hiển thị hộp thoại
      */
     show() {
       this.dialogFormVisible = true
     },
 
     /**
-     * 隐藏对话框
+     * Ẩn hộp thoại
      */
     hide() {
       this.dialogFormVisible = false
     },
 
     /**
-     * 关闭对话框
+     * Đóng hộp thoại
      */
     close() {
       this.resetForm()
@@ -248,14 +248,14 @@ export default {
     },
 
     /**
-     * 处理对话框关闭事件
+     * Xử lý sự kiện đóng hộp thoại
      */
     handleDialogClose() {
       this.resetForm()
     },
 
     /**
-     * 添加分类
+     * Thêm danh mục
      */
     add() {
       this.mode = 'add'
@@ -264,13 +264,13 @@ export default {
     },
 
     /**
-     * 添加子分类
+     * Thêm danh mục con
      */
     addSubCategory(parentCategory) {
       this.mode = 'add'
       this.resetForm()
       
-      // 设置子分类模式
+      // Thiết lập chế độ danh mục con
       this.isSubCategoryMode = true
       this.presetParentCategory = parentCategory
       this.form.parentId = parentCategory.id
@@ -279,7 +279,7 @@ export default {
     },
 
     /**
-     * 编辑分类
+     * Sửa danh mục
      */
     edit(item) {
       this.mode = 'edit'
@@ -291,22 +291,22 @@ export default {
     },
 
     /**
-     * 加载分类列表
+     * Tải danh sách danh mục
      */
     loadCategories() {
       getNodes()
         .then(res => {
           this.categories = res.data
-          // 为树形组件准备数据
+          // Chuẩn bị dữ liệu cho thành phần cây
           this.categoriesTree = this.mapCategoriesToTree(res.data)
         })
         .catch(res => {
-          this.$message({message: `加载分类列表失败：${res.message}`, type: 'error'})
+          this.$message({message: `Tải danh sách danh mục thất bại: ${res.message}`, type: 'error'})
         })
     },
 
     /**
-     * 提交表单
+     * Gửi biểu mẫu
      */
     submitUpload() {
       this.$refs.uploadForm.validate((valid) => {
@@ -314,7 +314,7 @@ export default {
 
         this.submitLoading = true
 
-        // 处理parentId为null的情况
+        // Xử lý trường hợp parentId là null
         const formData = {
           ...this.form,
           parentId: this.form.parentId || 0
@@ -325,19 +325,19 @@ export default {
             .then(res => {
               if (res.successful) {
                 this.$message({
-                  message: '添加分类成功！', 
+                  message: 'Thêm danh mục thành công!', 
                   type: 'success',
                   duration: 3000
                 })
                 this.$emit('add-succeed')
                 this.close()
-                // 重新加载分类数据
+                // Tải lại dữ liệu danh mục
                 this.loadCategories()
               }
             })
             .catch(res => {
               this.$message({
-                message: `添加分类失败：${res.message}`, 
+                message: `Thêm danh mục thất bại: ${res.message}`, 
                 type: 'error',
                 duration: 5000
               })
@@ -352,19 +352,19 @@ export default {
             .then(res => {
               if (res.successful) {
                 this.$message({
-                  message: '修改分类成功！', 
+                  message: 'Sửa danh mục thành công!', 
                   type: 'success',
                   duration: 3000
                 })
                 this.$emit('update-succeed')
                 this.close()
-                // 重新加载分类数据
+                // Tải lại dữ liệu danh mục
                 this.loadCategories()
               }
             })
             .catch(res => {
               this.$message({
-                message: `修改分类失败：${res.message}`, 
+                message: `Sửa danh mục thất bại: ${res.message}`, 
                 type: 'error',
                 duration: 5000
               })
@@ -380,7 +380,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-// 主题色彩变量
+// Biến màu chủ đề
 $primary-color: #1993DFFF;
 $success-color: #13ce66;
 $warning-color: #ff9900;
@@ -392,7 +392,7 @@ $border-color: #dcdfe6;
 $border-light: #e4e7ed;
 $bg-color: #f5f7fa;
 
-// 现代化对话框样式
+// Kiểu dáng hộp thoại hiện đại
 .modern-dialog {
   ::v-deep .el-dialog {
     border-radius: 12px;
@@ -415,7 +415,7 @@ $bg-color: #f5f7fa;
   }
 }
 
-// 对话框头部样式
+// Kiểu dáng phần đầu hộp thoại
 .dialog-header {
   padding: 20px 24px;
   background: linear-gradient(135deg, $primary-color 0%, lighten($primary-color, 10%) 100%);
@@ -439,7 +439,7 @@ $bg-color: #f5f7fa;
   }
 }
 
-// 对话框主体样式
+// Kiểu dáng phần thân hộp thoại
 .dialog-body {
   padding: 32px 24px;
   background: #ffffff;
@@ -464,7 +464,7 @@ $bg-color: #f5f7fa;
   }
 }
 
-// 现代化输入框样式
+// Kiểu dáng ô nhập hiện đại
 .modern-input {
   ::v-deep .el-input__inner {
     border-radius: 8px;
@@ -489,7 +489,7 @@ $bg-color: #f5f7fa;
   }
 }
 
-// 现代化级联选择器样式
+// Kiểu dáng bộ chọn phân tầng hiện đại
 .modern-cascader {
   width: 100%;
   
@@ -514,7 +514,7 @@ $bg-color: #f5f7fa;
     }
   }
   
-  // 级联选择器节点样式
+  // Kiểu dáng nút của bộ chọn phân tầng
   .cascader-node {
     display: flex;
     align-items: center;
@@ -540,7 +540,7 @@ $bg-color: #f5f7fa;
   }
 }
 
-// 可见性控制样式
+// Kiểu dáng điều khiển khả năng hiển thị
 .visibility-control {
   display: flex;
   flex-direction: column;
@@ -585,7 +585,7 @@ $bg-color: #f5f7fa;
   }
 }
 
-// 对话框底部样式
+// Kiểu dáng phần chân hộp thoại
 .dialog-footer {
   padding: 20px 24px;
   background: $bg-color;
@@ -640,7 +640,7 @@ $bg-color: #f5f7fa;
   }
 }
 
-// 级联选择器下拉面板样式
+// Kiểu dáng bảng thả xuống của bộ chọn phân tầng
 ::v-deep .el-cascader-panel {
   .el-cascader-node {
     &:hover {
@@ -664,7 +664,7 @@ $bg-color: #f5f7fa;
   }
 }
 
-// 响应式设计
+// Thiết kế responsive
 @media (max-width: 768px) {
   .modern-dialog {
     ::v-deep .el-dialog {
@@ -692,7 +692,7 @@ $bg-color: #f5f7fa;
   }
 }
 
-// 动画效果
+// Hiệu ứng động
 .modern-dialog {
   ::v-deep .el-dialog {
     animation: dialogFadeIn 0.3s ease-out;
@@ -710,7 +710,7 @@ $bg-color: #f5f7fa;
   }
 }
 
-// 表单验证错误样式优化
+// Tối ưu kiểu hiển thị lỗi xác thực biểu mẫu
 ::v-deep .el-form-item.is-error {
   .el-input__inner,
   .el-cascader .el-input__inner {
@@ -726,7 +726,7 @@ $bg-color: #f5f7fa;
   }
 }
 
-// 加载状态样式
+// Kiểu dáng trạng thái tải
 ::v-deep .el-button.is-loading {
   pointer-events: none;
   
@@ -735,7 +735,7 @@ $bg-color: #f5f7fa;
   }
 }
 
-// 预设父分类信息样式
+// Kiểu dáng thông tin danh mục cha được đặt sẵn
 .preset-parent-info {
   .readonly-input {
     ::v-deep .el-input__inner {

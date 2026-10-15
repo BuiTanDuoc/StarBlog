@@ -4,8 +4,8 @@
       <el-card :body-style="{ padding: '0px' }">
         <el-image :src="fp.photo.url" class="image" alt="" :preview-src-list="[fp.photo.url]"></el-image>
         <div style="padding: 14px;">
-          <div>图片标题：{{ fp.photo.title }}</div>
-          <div>拍摄地点：{{ fp.photo.location }}</div>
+          <div>Tiêu đề ảnh: {{ fp.photo.title }}</div>
+          <div>Địa điểm chụp: {{ fp.photo.location }}</div>
           <div style="margin-top: 3px;">
             <time class="time">{{ fp.photo.dateTimeStr }}</time>
           </div>
@@ -20,7 +20,7 @@
       </el-card>
     </el-col>
   </el-row>
-  <el-empty v-else description="推荐图片"></el-empty>
+  <el-empty v-else description="Ảnh đề xuất"></el-empty>
 </template>
 
 <script>
@@ -51,17 +51,17 @@ export default {
       })
     },
     notImpl() {
-      this.$message('还没实现哦~')
+      this.$message('Chưa triển khai đâu nhé~')
     },
     deleteItem(featuredPhoto) {
-      this.$confirm('此操作将删除这个推荐图片, 是否继续?', '提示', {type: 'warning'})
+      this.$confirm('Thao tác này sẽ xóa ảnh đề xuất này, bạn có muốn tiếp tục không?', 'Thông báo', {type: 'warning'})
         .then(() => {
           this.$api.featuredPhoto.deleteItem(featuredPhoto.id)
-            .then(res => this.$message.success(`删除成功。${res.message}`))
-            .catch(res => this.$message.error(`操作失败。${res.message}`))
+            .then(res => this.$message.success(`Xóa thành công. ${res.message}`))
+            .catch(res => this.$message.error(`Thao tác thất bại. ${res.message}`))
             .finally(() => this.loadData())
         })
-        .catch(() => this.$message('已取消删除'))
+        .catch(() => this.$message('Đã hủy xóa'))
     }
   }
 }

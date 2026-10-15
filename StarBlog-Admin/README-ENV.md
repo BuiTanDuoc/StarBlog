@@ -1,27 +1,27 @@
-# 环境变量配置说明
+# Hướng dẫn cấu hình biến môi trường
 
-## 概述
+## Tổng quan
 
-为了提高安全性，避免将敏感配置信息（如API密钥、服务器地址等）硬编码到代码中，本项目已改为使用环境变量的方式进行配置。
+Để tăng cường bảo mật, tránh việc mã hóa cứng các thông tin cấu hình nhạy cảm (như khóa API, địa chỉ máy chủ...) vào mã nguồn, dự án này đã chuyển sang cấu hình bằng biến môi trường.
 
-## 配置步骤
+## Các bước cấu hình
 
-1. 复制 `.env.example` 文件并重命名为 `.env`
-2. 在 `.env` 文件中填入实际的配置值
+1. Sao chép tệp `.env.example` và đổi tên thành `.env`
+2. Điền giá trị cấu hình thực tế vào tệp `.env`
 
-## 环境变量说明
+## Giải thích biến môi trường
 
-| 变量名 | 说明 | 默认值 |
+| Tên biến | Mô tả | Giá trị mặc định |
 |--------|------|--------|
-| `BASE_URL` | 后端API基础URL | 开发环境: `http://localhost:5038`<br>生产环境: 空 |
-| `EXCEPTION_LESS_API_KEY` | Exceptionless API密钥 | 空 |
-| `EXCEPTION_LESS_SERVER_URL` | Exceptionless服务器URL | 开发环境: `http://localhost:5000`<br>生产环境: 空 |
+| `BASE_URL` | URL cơ sở của API backend | Môi trường phát triển: `http://localhost:5038`<br>Môi trường production: Trống |
+| `EXCEPTION_LESS_API_KEY` | Khóa API Exceptionless | Trống |
+| `EXCEPTION_LESS_SERVER_URL` | URL máy chủ Exceptionless | Môi trường phát triển: `http://localhost:5000`<br>Môi trường production: Trống |
 
-## 使用方式
+## Cách sử dụng
 
-### 开发环境
+### Môi trường phát triển
 
-在项目根目录创建 `.env` 文件：
+Tạo tệp `.env` trong thư mục gốc của dự án:
 
 ```bash
 BASE_URL=http://localhost:5038
@@ -29,9 +29,9 @@ EXCEPTION_LESS_API_KEY=your_development_api_key
 EXCEPTION_LESS_SERVER_URL=http://localhost:5000
 ```
 
-### 生产环境
+### Môi trường production
 
-在部署时设置环境变量，或创建 `.env` 文件：
+Khi triển khai, hãy đặt biến môi trường hoặc tạo tệp `.env`:
 
 ```bash
 BASE_URL=https://your-api-domain.com
@@ -39,9 +39,9 @@ EXCEPTION_LESS_API_KEY=your_production_api_key
 EXCEPTION_LESS_SERVER_URL=https://your-exceptionless-server.com
 ```
 
-## 注意事项
+## Lưu ý
 
-1. `.env` 文件已添加到 `.gitignore` 中，不会被提交到版本控制系统
-2. 请勿在代码中硬编码敏感信息
-3. 在团队协作时，请通过安全渠道分享环境变量的实际值
-4. 生产环境建议使用更安全的密钥管理方案
+1. Tệp `.env` đã được thêm vào `.gitignore`, sẽ không bị commit lên hệ thống quản lý phiên bản
+2. Không mã hóa cứng thông tin nhạy cảm trong mã nguồn
+3. Khi làm việc nhóm, hãy chia sẻ giá trị thực của biến môi trường qua kênh an toàn
+4. Môi trường production nên dùng giải pháp quản lý khóa bí mật an toàn hơn

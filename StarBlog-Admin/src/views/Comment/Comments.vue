@@ -15,7 +15,7 @@
         label="id"
         :show-overflow-tooltip="true"/>
       <el-table-column
-        label="用户信息"
+        label="Thông tin người dùng"
         :show-overflow-tooltip="true"
       >
         <template v-slot="scope">
@@ -23,7 +23,7 @@
         </template>
       </el-table-column>
       <el-table-column
-        label="文章"
+        label="Bài viết"
         :show-overflow-tooltip="true"
       >
         <template v-slot="scope">
@@ -35,48 +35,48 @@
       </el-table-column>
       <el-table-column
         prop="createdTime"
-        label="评论时间"
+        label="Thời gian bình luận"
         :show-overflow-tooltip="true"
       />
       <el-table-column
         prop="content"
-        label="评论内容"
+        label="Nội dung bình luận"
         :show-overflow-tooltip="true"
       />
       <el-table-column
         prop="reason"
-        label="补充原因"
+        label="Lý do bổ sung"
         :show-overflow-tooltip="true"/>
       <el-table-column
         prop="visible"
-        label="是否展示"
+        label="Có hiển thị hay không"
       >
         <template v-slot="scope">
-          <el-tag size="medium" v-if="scope.row.visible">是</el-tag>
-          <el-tag size="medium" v-else type="danger">否</el-tag>
+          <el-tag size="medium" v-if="scope.row.visible">Có</el-tag>
+          <el-tag size="medium" v-else type="danger">Không</el-tag>
         </template>
       </el-table-column>
       <el-table-column
         prop="isNeedAudit"
-        label="需要审核"
+        label="Cần duyệt"
       >
         <template v-slot="scope">
-          <el-tag size="medium" v-if="scope.row.isNeedAudit">是</el-tag>
-          <el-tag size="medium" v-else type="danger">否</el-tag>
+          <el-tag size="medium" v-if="scope.row.isNeedAudit">Có</el-tag>
+          <el-tag size="medium" v-else type="danger">Không</el-tag>
         </template>
       </el-table-column>
       <el-table-column
         align="right">
         <template slot="header" slot-scope="scope">
-          <el-button @click="handleRefresh" :loading="isRefreshLoading" type="primary" size="mini">刷新</el-button>
+          <el-button @click="handleRefresh" :loading="isRefreshLoading" type="primary" size="mini">Làm mới</el-button>
         </template>
         <template slot-scope="scope">
-          <el-link type="primary" @click="handleAccept(scope.row)">通过</el-link>
-          <el-link type="danger" @click="handleReject(scope.row)">拒绝</el-link>
+          <el-link type="primary" @click="handleAccept(scope.row)">Duyệt</el-link>
+          <el-link type="danger" @click="handleReject(scope.row)">Từ chối</el-link>
         </template>
       </el-table-column>
     </el-table>
-    <!-- 分页 -->
+    <!-- Phân trang -->
     <el-pagination
       class="py-3 text-center"
       @size-change="handlePageSizeChange"
@@ -137,7 +137,7 @@ export default {
             resolve(res.data)
           })
           .catch(res => {
-            this.$message.error(`获取列表出错：${res.message}`)
+            this.$message.error(`Lỗi khi lấy danh sách: ${res.message}`)
             reject(res)
           })
           .finally(() => this.loading = false)
@@ -149,50 +149,50 @@ export default {
       this.isRefreshLoading = false
     },
     handleAccept(item) {
-      this.$prompt('请输入原因', '审核评论 - 补充原因', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$prompt('Vui lòng nhập lý do', 'Duyệt bình luận - bổ sung lý do', {
+        confirmButtonText: 'Xác nhận',
+        cancelButtonText: 'Hủy',
       }).then(({value}) => {
         this.$api.comment.accept(item.id, value)
           .then(res => {
-            this.$message.success('操作成功！')
+            this.$message.success('Thao tác thành công!')
           })
           .catch(res => {
             console.error(res)
-            this.$message.warning(`操作失败！${res.message}`)
+            this.$message.warning(`Thao tác thất bại! ${res.message}`)
           })
           .finally(() => this.loadData())
       }).catch(() => {
       })
     },
     handleReject(item) {
-      this.$prompt('请输入原因', '审核评论 - 补充原因', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$prompt('Vui lòng nhập lý do', 'Duyệt bình luận - bổ sung lý do', {
+        confirmButtonText: 'Xác nhận',
+        cancelButtonText: 'Hủy',
       }).then(({value}) => {
         this.$api.comment.reject(item.id, value)
           .then(res => {
-            this.$message.success('操作成功！')
+            this.$message.success('Thao tác thành công!')
           })
           .catch(res => {
             console.error(res)
-            this.$message.warning(`操作失败！${res.message}`)
+            this.$message.warning(`Thao tác thất bại! ${res.message}`)
           })
           .finally(() => this.loadData())
       }).catch(() => {
       })
     },
     onItemDeleteClick(item) {
-      this.$confirm('此操作将删除该链接, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm('Thao tác này sẽ xóa liên kết này, bạn có muốn tiếp tục không?', 'Thông báo', {
+        confirmButtonText: 'Xác nhận',
+        cancelButtonText: 'Hủy',
         type: 'warning'
       }).then(() => {
         this.$api.link.deleteItem(item.id)
-          .then(res => this.$message.success(`删除成功。${res.message}`))
-          .catch(res => this.$message.error(`操作失败。${res.message}`))
+          .then(res => this.$message.success(`Xóa thành công. ${res.message}`))
+          .catch(res => this.$message.error(`Thao tác thất bại. ${res.message}`))
           .finally(() => this.loadData())
-      }).catch(() => this.$message('已取消删除'))
+      }).catch(() => this.$message('Đã hủy xóa'))
     },
     handlePageSizeChange(pageSize) {
       this.pagination.pageSize = pageSize
@@ -206,15 +206,15 @@ export default {
       let user = comment.anonymousUser
       const h = this.$createElement;
       this.$msgbox({
-        title: '用户信息',
+        title: 'Thông tin người dùng',
         message: h('div', null, [
           h('p', null, `ID: ${user.id}`),
-          h('p', null, `用户名: ${user.name}`),
-          h('p', null, `邮箱: ${user.email}`),
-          h('p', null, `网址: ${user.url}`),
-          h('p', null, `IP地址: ${user.ip}`),
-          h('p', null, `创建时间: ${dateTimeBeautify(user.createdTime)}`),
-          h('p', null, `UA标识: ${comment.userAgent}`),
+          h('p', null, `Tên người dùng: ${user.name}`),
+          h('p', null, `Email: ${user.email}`),
+          h('p', null, `Địa chỉ web: ${user.url}`),
+          h('p', null, `Địa chỉ IP: ${user.ip}`),
+          h('p', null, `Thời gian tạo: ${dateTimeBeautify(user.createdTime)}`),
+          h('p', null, `Định danh UA: ${comment.userAgent}`),
         ]),
         showCancelButton: false,
         showConfirmButton: false,

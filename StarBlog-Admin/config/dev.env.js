@@ -3,8 +3,8 @@ const merge = require('webpack-merge')
 const prodEnv = require('./prod.env')
 
 /**
- * 开发环境配置
- * 从环境变量中读取敏感配置信息，避免硬编码到代码中
+ * Cấu hình môi trường phát triển
+ * Đọc thông tin cấu hình nhạy cảm từ biến môi trường, tránh mã hóa cứng vào mã nguồn
  */
 module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
