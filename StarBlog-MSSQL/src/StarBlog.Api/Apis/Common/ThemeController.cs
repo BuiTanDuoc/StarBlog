@@ -5,7 +5,7 @@ using StarBlog.Application.Services;
 namespace StarBlog.Api.Apis.Common; 
 
 /// <summary>
-/// 页面主题
+/// Giao diện trang
 /// </summary>
 [ApiController]
 [Route("Api/[controller]")]

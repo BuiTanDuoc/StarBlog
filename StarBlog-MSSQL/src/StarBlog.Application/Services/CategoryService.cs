@@ -23,7 +23,7 @@ public class CategoryService {
     }
 
     /// <summary>
-    /// 生成文章分类树
+    /// Sinh cây danh mục bài viết
     /// </summary>
     public List<CategoryNode>? GetNodes(List<Category> categoryList, int parentId = 0) {
         var categories = categoryList
@@ -35,7 +35,7 @@ public class CategoryService {
         var nodes = new List<CategoryNode>();
         foreach (var category in categories) {
             var childNodes = GetNodes(categoryList, category.Id);
-            // 计算当前分类及其所有子分类的文章总数
+            // Tính tổng số bài viết của danh mục hiện tại và tất cả danh mục con
             var totalPostsCount = category.Posts.Count + (childNodes?.Sum(n => int.Parse(n.tags[0])) ?? 0);
 
             nodes.Add(new CategoryNode {
@@ -76,7 +76,7 @@ public class CategoryService {
     }
 
     /// <summary>
-    /// 生成分类词云数据
+    /// Sinh dữ liệu đám mây từ khóa của danh mục
     /// </summary>
     /// <returns></returns>
     public async Task<List<object>> GetWordCloud() {
@@ -95,7 +95,7 @@ public class CategoryService {
     }
 
     /// <summary>
-    /// 递归计算分类及其所有子分类的文章总数
+    /// Tính đệ quy tổng số bài viết của danh mục và tất cả danh mục con
     /// </summary>
     private int GetTotalPostCount(List<Category> allCategories, Category currentCategory) {
         var count = currentCategory.Posts.Count;
@@ -151,8 +151,8 @@ public class CategoryService {
     }
 
     /// <summary>
-    /// 获取指定分类的层级结构
-    /// <para>形式：1,3,5,7,9</para>
+    /// Lấy cấu trúc phân cấp của danh mục chỉ định
+    /// <para>Dạng: 1,3,5,7,9</para>
     /// </summary>
     public string GetCategoryBreadcrumb(Category item) {
         var categories = new List<Category> { item };

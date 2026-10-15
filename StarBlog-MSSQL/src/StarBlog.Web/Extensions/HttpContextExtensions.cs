@@ -4,7 +4,7 @@ namespace StarBlog.Web.Extensions;
 
 public static class HttpContextExtensions {
     /// <summary>
-    /// 获取IP地址
+    /// Lấy địa chỉ IP
     /// <para>https://gist.github.com/jjxtra/3b240b31a1ed3ad783a7dcdb6df12c36</para>
     /// </summary>
     /// <param name="context"></param>

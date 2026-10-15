@@ -6,8 +6,8 @@ using StarBlog.Data.Models;
 namespace StarBlog.Web.Services.OutboxServices;
 
 /// <summary>
-/// Outbox 入队服务
-/// <para>负责把“需要异步处理的任务”写入主库的 outbox_message 表。</para>
+/// Outbox Dịch vụ đưa vào hàng đợi
+/// <para>Chịu trách nhiệm ghi các "tác vụ cần xử lý bất đồng bộ" vào bảng outbox_message của cơ sở dữ liệu chính.</para>
 /// </summary>
 public class OutboxService {
     private readonly ILogger<OutboxService> _logger;
@@ -21,8 +21,8 @@ public class OutboxService {
     }
 
     /// <summary>
-    /// 入队一条通用 Outbox 任务
-    /// <para>payloadJson 建议为 JSON 字符串，便于后续扩展与排查。</para>
+    /// Đưa một tác vụ Outbox chung vào hàng đợi
+    /// <para>payloadJson Nên là chuỗi JSON, thuận tiện cho việc mở rộng và điều tra sau này.</para>
     /// </summary>
     public async Task<long> EnqueueAsync(
         string type,
@@ -45,13 +45,13 @@ public class OutboxService {
         };
 
         await _outboxRepo.InsertAsync(entity);
-        _logger.LogInformation("Outbox 入队：{Type} #{Id}，DedupKey：{DedupKey}", entity.Type, entity.Id, entity.DedupKey);
+        _logger.LogInformation("Outbox Đưa vào hàng đợi: {Type} #{Id}, DedupKey: {DedupKey}", entity.Type, entity.Id, entity.DedupKey);
         return entity.Id;
     }
 
     /// <summary>
-    /// 入队一条“发送邮件”任务
-    /// <para>注意：该方法只负责入库，不负责立即发送。</para>
+    /// Đưa một tác vụ "gửi email" vào hàng đợi
+    /// <para>Lưu ý: Phương thức này chỉ chịu trách nhiệm lưu vào cơ sở dữ liệu, không chịu trách nhiệm gửi ngay lập tức.</para>
     /// </summary>
     public async Task<long> EnqueueEmailAsync(
         string subject,

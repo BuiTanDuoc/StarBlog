@@ -55,14 +55,14 @@ public class PostService {
     }
 
     /// <summary>
-    /// 检查 slug 是否可用
+    /// Kiểm tra slug có dùng được hay không
     /// </summary>
     public async Task<bool> CheckSlugAvailable(string slug) {
         return !await _postRepo.Select.AnyAsync(a => a.Slug == slug);
     }
 
     public async Task<Post?> GetById(string id) {
-        // 获取文章的时候对markdown中的图片地址解析，加上完整地址返回给前端
+        // Khi lấy bài viết, phân tích địa chỉ hình ảnh trong markdown, thêm địa chỉ đầy đủ rồi trả về cho frontend
         var post = await _postRepo.Where(a => a.Id == id).Include(a => a.Category).FirstAsync();
         if (post != null) post.Content = MdImageLinkConvert(post, true);
 
@@ -76,13 +76,13 @@ public class PostService {
     }
 
     public async Task<int> Delete(string id) {
-        // todo 删除文章的时候顺便删除对应的图片资源
+        // todo Khi xóa bài viết, tiện thể xóa luôn tài nguyên hình ảnh tương ứng
         return await _postRepo.DeleteAsync(a => a.Id == id);
     }
 
     public async Task<Post> InsertOrUpdateAsync(Post post) {
         var postId = post.Id;
-        // 是新文章的话，先保存到数据库
+        // Nếu là bài viết mới thì lưu vào cơ sở dữ liệu trước
         if (await _postRepo.Where(a => a.Id == postId).CountAsync() == 0) {
             post = await _postRepo.InsertAsync(post);
         }
@@ -96,12 +96,12 @@ public class PostService {
             });
         }
 
-        // 修改文章时，将markdown中的本站图片地址替换成相对路径再保存
+        // Khi sửa bài viết, thay địa chỉ hình ảnh của site này trong markdown thành đường dẫn tương đối rồi mới lưu
         post.Content = MdImageLinkConvert(post, false);
-        // todo 修改文章时，要同时重新生成分类层级
+        // todo Khi sửa bài viết, đồng thời phải sinh lại cấu trúc phân cấp danh mục
 
 
-        // 处理完内容再更新一次
+        // Xử lý xong nội dung thì cập nhật thêm một lần
         await _postRepo.UpdateAsync(post);
         return post;
     }
@@ -123,12 +123,12 @@ public class PostService {
     }
 
     /// <summary>
-    /// 指定文章上传图片
+    /// Tải ảnh lên cho bài viết chỉ định
     /// </summary>
     public async Task<string> UploadImage(Post post, IFormFile file) {
         InitPostMediaDir(post);
 
-        // 直接生成唯一文件名，不保留原始文件名了。——2023-6-5 21:21:46
+        // Sinh trực tiếp tên tệp duy nhất, không giữ lại tên tệp gốc nữa.——2023-6-5 21:21:46
         var filename = GuidUtils.GuidTo16String() + Path.GetExtension(file.FileName);
         var fileRelativePath = Path.Combine("media",          "blog", post.Id, filename);
         var savePath = Path.Combine(_environment.WebRootPath, fileRelativePath);
@@ -141,7 +141,7 @@ public class PostService {
     }
 
     /// <summary>
-    /// 获取指定文章的图片资源
+    /// Lấy tài nguyên hình ảnh của bài viết chỉ định
     /// </summary>
     public List<string> GetImages(Post post) {
         var data = new List<string>();
@@ -156,8 +156,8 @@ public class PostService {
     public async Task<IPagedList<Post>> GetPagedList(PostQueryParameters param, bool adminMode = false) {
         var querySet = _postRepo.Select;
 
-        // 筛选发布状态
-        // 仅管理员能筛选发布状态
+        // Lọc theo trạng thái xuất bản
+        // Chỉ quản trị viên mới được lọc theo trạng thái xuất bản
         if (param.IsPublish != null && adminMode) {
             querySet = querySet.Where(a => a.IsPublish == param.IsPublish);
         }
@@ -166,16 +166,16 @@ public class PostService {
             querySet = querySet.Where(a => a.IsPublish);
         }
 
-        // 状态过滤
+        // Lọc theo trạng thái
         if (!string.IsNullOrWhiteSpace(param.Status)) {
             querySet = querySet.Where(a => a.Status == param.Status);
         }
 
-        // 分类过滤
-        // 支持包含子分类递归过滤
+        // Lọc theo danh mục
+        // Hỗ trợ lọc đệ quy bao gồm cả danh mục con
         if (param.CategoryId != 0) {
             if (param.IncludeSubCategory) {
-                // 使用 FreeSql 的 AsTreeCte 递归获取所有子分类 ID（包括当前分类）
+                // Dùng AsTreeCte của FreeSql để lấy đệ quy ID của tất cả danh mục con (bao gồm danh mục hiện tại)
                 var targetCategoryIds = await _categoryRepo.Select
                     .Where(a => a.Id == param.CategoryId)
                     .AsTreeCte()
@@ -187,14 +187,14 @@ public class PostService {
             }
         }
 
-        // 关键词过滤
+        // Lọc theo từ khóa
         if (!string.IsNullOrWhiteSpace(param.Search)) {
             querySet = querySet.Where(a => a.Title.Contains(param.Search));
         }
 
-        // 排序
+        // Sắp xếp
         if (!string.IsNullOrWhiteSpace(param.SortBy)) {
-            // 是否升序
+            // Có sắp xếp tăng dần hay không
             var isAscending = !param.SortBy.StartsWith("-");
             var orderByProperty = param.SortBy.Trim('-');
 
@@ -209,14 +209,14 @@ public class PostService {
     }
 
     /// <summary>
-    /// 将 Post 对象转换为 PostViewModel 对象
+    /// Chuyển đối tượng Post thành đối tượng PostViewModel
     /// </summary>
     public async Task<PostViewModel> GetPostViewModel(Post post, bool md2Html = true) {
         var model = new PostViewModel {
             Id = post.Id,
             Title = post.Title,
-            Summary = post.Summary ?? "（没有介绍）",
-            Content = post.Content ?? "（没有内容）",
+            Summary = post.Summary ?? "(Không có mô tả)",
+            Content = post.Content ?? "(Không có nội dung)",
             Path = post.Path ?? string.Empty,
             Url = _generator.GetUriByAction(
                 _accessor.HttpContext!,
@@ -240,7 +240,7 @@ public class PostService {
 
         if (md2Html) {
             model.ContentHtml = GetContentHtml(post);
-            // 优化HTML中的图片SEO
+            // Tối ưu SEO cho hình ảnh trong HTML
             model.ContentHtml = _imageSeoService.OptimizeImagesInHtml(model.ContentHtml, post.Title);
         }
 
@@ -255,9 +255,9 @@ public class PostService {
     }
 
     public static string GetContentHtml(Post post) {
-        // todo 研究一下后端渲染Markdown (PS: 虽然前端渲染轮子更多、效果更好，但后端渲染不会有割裂感）
-        // 这部分一些参考资料：
-        // - 关于前端渲染 MarkDown 样式：https://blog.csdn.net/sprintline/article/details/122849907
+        // todo Nghiên cứu render Markdown ở backend (PS: tuy render ở frontend có nhiều thư viện hơn, hiệu ứng tốt hơn, nhưng render ở backend sẽ không có cảm giác đứt gãy)
+        // Một số tài liệu tham khảo cho phần này:
+        // - Về kiểu dáng render MarkDown ở frontend: https://blog.csdn.net/sprintline/article/details/122849907
         // - https://github.com/showdownjs/showdown
         var pipeline = new MarkdownPipelineBuilder()
                        .UseAdvancedExtensions()
@@ -267,7 +267,7 @@ public class PostService {
     }
 
     /// <summary>
-    /// 将 Markdown 内容转换为 HTML（支持翻译内容）
+    /// Chuyển nội dung Markdown thành HTML (hỗ trợ nội dung đã dịch)
     /// </summary>
     public static string GetContentHtml(PostTranslation translation) {
         var pipeline = new MarkdownPipelineBuilder()
@@ -278,7 +278,7 @@ public class PostService {
     }
 
     /// <summary>
-    /// 初始化博客文章的资源目录
+    /// Khởi tạo thư mục tài nguyên của bài viết blog
     /// </summary>
     /// <param name="post"></param>
     /// <returns></returns>
@@ -292,11 +292,11 @@ public class PostService {
     }
 
     /// <summary>
-    /// Markdown中的图片链接转换
-    /// <para>支持添加或去除Markdown中的图片URL前缀</para>
+    /// Chuyển đổi liên kết hình ảnh trong Markdown
+    /// <para>Hỗ trợ thêm hoặc bỏ tiền tố URL của hình ảnh trong Markdown</para>
     /// </summary>
     /// <param name="post"></param>
-    /// <param name="isAddPrefix">是否添加本站的完整URL前缀</param>
+    /// <param name="isAddPrefix">Có thêm tiền tố URL đầy đủ của site này hay không</param>
     /// <returns></returns>
     private string MdImageLinkConvert(Post post, bool isAddPrefix = true) {
         if (post.Content == null) return string.Empty;
@@ -310,15 +310,15 @@ public class PostService {
                 var imgUrl = linkInline.Url;
                 if (imgUrl == null) continue;
 
-                // 已有Host前缀，跳过
+                // Đã có tiền tố Host, bỏ qua
                 if (isAddPrefix && imgUrl.StartsWith(Host)) continue;
 
-                // 设置完整链接
+                // Đặt liên kết đầy đủ
                 if (isAddPrefix) {
                     if (imgUrl.StartsWith("http")) continue;
                     linkInline.Url = $"{Host}/media/blog/{post.Id}/{imgUrl}";
                 }
-                // 设置成相对链接
+                // Đặt thành liên kết tương đối
                 else {
                     if (imgUrl.StartsWith(Host)) {
                         linkInline.Url = Path.GetFileName(imgUrl);
@@ -356,15 +356,15 @@ public class PostService {
     }
 
     /// <summary>
-    /// Markdown中外部图片下载
-    /// <para>如果Markdown中包含外部图片URL，则下载到本地且进行URL替换</para>
+    /// Tải xuống hình ảnh bên ngoài trong Markdown
+    /// <para>Nếu Markdown chứa URL hình ảnh bên ngoài thì tải về cục bộ và thay thế URL</para>
     /// </summary>
     /// <param name="post"></param>
     /// <returns></returns>
     private async Task<string> MdExternalUrlDownloadAsync(Post post) {
         if (post.Content == null) return string.Empty;
 
-        // 得先初始化目录
+        // Phải khởi tạo thư mục trước
         InitPostMediaDir(post);
 
         var document = Markdown.Parse(post.Content);
@@ -374,17 +374,17 @@ public class PostService {
                 if (inline is not LinkInline { IsImage: true } linkInline) continue;
 
                 var imgUrl = linkInline.Url;
-                // 跳过空链接
+                // Bỏ qua liên kết rỗng
                 if (imgUrl == null) continue;
-                // 跳过本站地址的图片
+                // Bỏ qua hình ảnh có địa chỉ của site này
                 if (imgUrl.StartsWith(Host)) continue;
-                // 跳过相对路径和本地路径
+                // Bỏ qua đường dẫn tương đối và đường dẫn cục bộ
                 if (imgUrl.StartsWith("./") || imgUrl.StartsWith("../") || imgUrl.StartsWith("/")) continue;
-                // 跳过非HTTP协议的链接（如file://等）
+                // Bỏ qua liên kết không dùng giao thức HTTP (như file:// v.v.)
                 if (!imgUrl.StartsWith("http://") && !imgUrl.StartsWith("https://")) continue;
 
-                // 下载图片
-                _logger.LogDebug("文章：{Title}，下载图片：{Url}", post.Title, imgUrl);
+                // Tải xuống hình ảnh
+                _logger.LogDebug("Bài viết: {Title}, tải xuống hình ảnh: {Url}", post.Title, imgUrl);
                 var savePath = Path.Combine(_environment.WebRootPath, "media", "blog", post.Id!);
                 var fileName = await _commonService.DownloadFileAsync(imgUrl, savePath);
                 linkInline.Url = fileName;
@@ -398,18 +398,18 @@ public class PostService {
     }
 
     /// <summary>
-    /// 获取相关文章推荐（随机顺序）
+    /// Lấy đề xuất bài viết liên quan (thứ tự ngẫu nhiên)
     /// </summary>
     public async Task<List<Post>> GetRelatedPosts(Post currentPost, int count = 5) {
         var relatedPosts = new List<Post>();
 
-        // 1. 优先推荐同分类的文章（随机顺序）
+        // 1. Ưu tiên đề xuất bài viết cùng danh mục (thứ tự ngẫu nhiên)
         if (currentPost.CategoryId > 0) {
             var sameCategoryPosts = await _postRepo
                                           .Where(p => p.IsPublish && p.Id != currentPost.Id && p.CategoryId == currentPost.CategoryId)
                                           .ToListAsync();
 
-            // 随机打乱同分类文章
+            // Xáo trộn ngẫu nhiên các bài viết cùng danh mục
             var randomSameCategoryPosts = sameCategoryPosts
                                           .OrderBy(x => Random.Shared.Next())
                                           .Take(count)
@@ -417,17 +417,17 @@ public class PostService {
             relatedPosts.AddRange(randomSameCategoryPosts);
         }
 
-        // 2. 如果同分类文章不够，从其他分类补充（随机顺序）
+        // 2. Nếu bài viết cùng danh mục không đủ, bổ sung từ các danh mục khác (thứ tự ngẫu nhiên)
         if (relatedPosts.Count < count) {
             var remainingCount = count - relatedPosts.Count;
             var excludeIds = relatedPosts.Select(r => r.Id).ToList();
-            excludeIds.Add(currentPost.Id); // 排除当前文章
+            excludeIds.Add(currentPost.Id); // Loại trừ bài viết hiện tại
 
             var otherPosts = await _postRepo
                                    .Where(p => p.IsPublish && !excludeIds.Contains(p.Id))
                                    .ToListAsync();
 
-            // 随机打乱其他文章
+            // Xáo trộn ngẫu nhiên các bài viết khác
             var randomOtherPosts = otherPosts
                                    .OrderBy(x => Random.Shared.Next())
                                    .Take(remainingCount)
@@ -439,7 +439,7 @@ public class PostService {
     }
 
     /// <summary>
-    /// 获取热门文章
+    /// Lấy bài viết phổ biến
     /// </summary>
     public async Task<List<Post>> GetPopularPosts(int count = 10) {
         return await _postRepo
@@ -450,7 +450,7 @@ public class PostService {
     }
 
     /// <summary>
-    /// 获取最新文章
+    /// Lấy bài viết mới nhất
     /// </summary>
     public async Task<List<Post>> GetLatestPosts(int count = 10) {
         return await _postRepo

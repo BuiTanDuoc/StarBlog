@@ -1,20 +1,20 @@
 @{
-    ViewData["Title"] = "SEO功能测试";
+    ViewData["Title"] = "Kiểm thử chức năng SEO";
 }
 
 <div class="container py-5">
     <div class="row">
         <div class="col-lg-8 mx-auto">
-            <h1 class="mb-4">SEO功能测试</h1>
+            <h1 class="mb-4">Kiểm thử chức năng SEO</h1>
             
             <div class="alert alert-info">
-                <h5>测试说明</h5>
-                <p>此页面用于测试StarBlog的SEO优化功能是否正常工作。</p>
+                <h5>Giải thích kiểm thử</h5>
+                <p>Trang này dùng để kiểm tra xem chức năng tối ưu SEO của StarBlog có hoạt động bình thường hay không.</p>
             </div>
 
             <div class="card">
                 <div class="card-header">
-                    <h5>测试结果</h5>
+                    <h5>Kết quả kiểm thử</h5>
                 </div>
                 <div class="card-body">
                     @if (ViewBag.TestResults != null) {
@@ -38,56 +38,56 @@
             </div>
 
             <div class="mt-4">
-                <h5>其他测试页面</h5>
+                <h5>Các trang kiểm thử khác</h5>
                 <div class="list-group">
                     <a href="/seo-test/sitemap" class="list-group-item list-group-item-action">
-                        <strong>Sitemap测试</strong>
-                        <small class="d-block text-muted">测试XML sitemap生成功能</small>
+                        <strong>Kiểm thử Sitemap</strong>
+                        <small class="d-block text-muted">Kiểm tra chức năng tạo XML sitemap</small>
                     </a>
                     <a href="/seo-test/meta" class="list-group-item list-group-item-action">
-                        <strong>Meta标签测试</strong>
-                        <small class="d-block text-muted">测试页面meta标签和结构化数据</small>
+                        <strong>Kiểm thử thẻ Meta</strong>
+                        <small class="d-block text-muted">Kiểm tra thẻ meta và dữ liệu có cấu trúc của trang</small>
                     </a>
                     <a href="/sitemap.xml" class="list-group-item list-group-item-action" target="_blank">
-                        <strong>查看主Sitemap</strong>
-                        <small class="d-block text-muted">在新窗口中查看生成的sitemap.xml</small>
+                        <strong>Xem Sitemap chính</strong>
+                        <small class="d-block text-muted">Xem sitemap.xml đã tạo trong cửa sổ mới</small>
                     </a>
                     <a href="/sitemap-images.xml" class="list-group-item list-group-item-action" target="_blank">
-                        <strong>查看图片Sitemap</strong>
-                        <small class="d-block text-muted">在新窗口中查看生成的图片sitemap</small>
+                        <strong>Xem Sitemap hình ảnh</strong>
+                        <small class="d-block text-muted">Xem sitemap hình ảnh đã tạo trong cửa sổ mới</small>
                     </a>
                     <a href="/robots.txt" class="list-group-item list-group-item-action" target="_blank">
-                        <strong>查看Robots.txt</strong>
-                        <small class="d-block text-muted">在新窗口中查看robots.txt文件</small>
+                        <strong>Xem Robots.txt</strong>
+                        <small class="d-block text-muted">Xem tệp robots.txt trong cửa sổ mới</small>
                     </a>
                 </div>
             </div>
 
             <div class="mt-4">
-                <h5>SEO检查清单</h5>
+                <h5>Danh sách kiểm tra SEO</h5>
                 <div class="row">
                     <div class="col-md-6">
-                        <h6>技术SEO</h6>
+                        <h6>SEO kỹ thuật</h6>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">✅ XML Sitemap</li>
-                            <li class="list-group-item">✅ 图片Sitemap</li>
+                            <li class="list-group-item">✅ Sitemap hình ảnh</li>
                             <li class="list-group-item">✅ Robots.txt</li>
-                            <li class="list-group-item">✅ 响应式设计</li>
-                            <li class="list-group-item">✅ 页面压缩</li>
-                            <li class="list-group-item">✅ 缓存策略</li>
+                            <li class="list-group-item">✅ Thiết kế responsive</li>
+                            <li class="list-group-item">✅ Nén trang</li>
+                            <li class="list-group-item">✅ Chiến lược cache</li>
                         </ul>
                     </div>
                     <div class="col-md-6">
-                        <h6>内容SEO</h6>
+                        <h6>SEO nội dung</h6>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">✅ 页面标题优化</li>
-                            <li class="list-group-item">✅ Meta描述</li>
-                            <li class="list-group-item">✅ 结构化数据</li>
-                            <li class="list-group-item">✅ Open Graph标签</li>
+                            <li class="list-group-item">✅ Tối ưu tiêu đề trang</li>
+                            <li class="list-group-item">✅ Mô tả Meta</li>
+                            <li class="list-group-item">✅ Dữ liệu có cấu trúc</li>
+                            <li class="list-group-item">✅ Open Graph tag</li>
                             <li class="list-group-item">✅ Twitter Card</li>
-                            <li class="list-group-item">✅ 图片Alt属性</li>
-                            <li class="list-group-item">✅ 内链建设</li>
-                            <li class="list-group-item">✅ 面包屑导航</li>
+                            <li class="list-group-item">✅ Thuộc tính Alt của hình ảnh</li>
+                            <li class="list-group-item">✅ Xây dựng liên kết nội bộ</li>
+                            <li class="list-group-item">✅ Breadcrumb (điều hướng)</li>
                         </ul>
                     </div>
                 </div>

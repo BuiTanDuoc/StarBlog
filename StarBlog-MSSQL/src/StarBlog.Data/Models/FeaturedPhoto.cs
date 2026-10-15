@@ -3,7 +3,7 @@
 namespace StarBlog.Data.Models;
 
 /// <summary>
-/// 推荐图片
+/// Ảnh nổi bật
 /// </summary>
 [Table(Name = "featured_photo", OldName = "FeaturedPhoto")]
 public class FeaturedPhoto {

@@ -3,8 +3,8 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 namespace StarBlog.Api.HealthChecks;
 
 /// <summary>
-/// 存活探针：只要进程能响应 HTTP，就返回 Healthy。
-/// 适合容器/负载均衡用于判断服务是否需要重启（不依赖数据库/缓存等外部资源）。
+/// Probe còn sống: chỉ cần tiến trình phản hồi được HTTP thì trả về Healthy.
+/// Phù hợp để container/load balancer xác định dịch vụ có cần khởi động lại không (không phụ thuộc cơ sở dữ liệu/cache và các tài nguyên bên ngoài khác).
 /// </summary>
 public sealed class LiveHealthCheck : IHealthCheck {
     public Task<HealthCheckResult> CheckHealthAsync(

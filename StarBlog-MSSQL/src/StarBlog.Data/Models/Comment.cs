@@ -3,7 +3,7 @@
 namespace StarBlog.Data.Models;
 
 /// <summary>
-/// 文章评论
+/// Bình luận bài viết
 /// </summary>
 public class Comment : ModelBase {
     [Column(IsIdentity = false, IsPrimary = true)]
@@ -27,13 +27,13 @@ public class Comment : ModelBase {
     public bool Visible { get; set; }
 
     /// <summary>
-    /// 是否需要审核
+    /// Có cần kiểm duyệt hay không
     /// </summary>
     public bool IsNeedAudit { get; set; } = false;
 
     /// <summary>
-    /// 原因
-    /// <para>如果验证不通过的话，可能会附上原因</para>
+    /// Lý do
+    /// <para>Nếu xác thực không đạt, có thể kèm theo lý do</para>
     /// </summary>
     public string? Reason { get; set; }
 }

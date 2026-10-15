@@ -11,12 +11,12 @@ public class ImageSeoService {
     }
 
     /// <summary>
-    /// 为Markdown内容中的图片添加SEO优化的alt属性
+    /// Thêm thuộc tính alt tối ưu SEO cho hình ảnh trong nội dung Markdown
     /// </summary>
     public string OptimizeImagesInMarkdown(string content, string postTitle) {
         if (string.IsNullOrEmpty(content)) return content;
 
-        // 匹配Markdown图片语法: ![alt](url "title")
+        // Khớp cú pháp hình ảnh của Markdown: ![alt](url "title")
         var imagePattern = @"!\[([^\]]*)\]\(([^)]+)(?:\s+""([^""]*)"")?\)";
         
         return Regex.Replace(content, imagePattern, match => {
@@ -24,12 +24,12 @@ public class ImageSeoService {
             var imageUrl = match.Groups[2].Value;
             var title = match.Groups[3].Value;
 
-            // 如果没有alt文本，生成一个SEO友好的alt
+            // Nếu chưa có văn bản alt, tạo một alt thân thiện với SEO
             if (string.IsNullOrEmpty(altText)) {
                 altText = GenerateAltText(imageUrl, postTitle);
             }
 
-            // 如果没有title，使用alt作为title
+            // Nếu chưa có title thì dùng alt làm title
             if (string.IsNullOrEmpty(title)) {
                 title = altText;
             }
@@ -39,19 +39,19 @@ public class ImageSeoService {
     }
 
     /// <summary>
-    /// 为HTML内容中的图片添加SEO优化
+    /// Thêm tối ưu SEO cho hình ảnh trong nội dung HTML
     /// </summary>
     public string OptimizeImagesInHtml(string htmlContent, string postTitle) {
         if (string.IsNullOrEmpty(htmlContent)) return htmlContent;
 
-        // 匹配HTML img标签
+        // Khớp thẻ img của HTML
         var imgPattern = @"<img\s+([^>]*?)>";
         
         return Regex.Replace(htmlContent, imgPattern, match => {
             var imgTag = match.Value;
             var attributes = match.Groups[1].Value;
 
-            // 检查是否已有alt属性
+            // Kiểm tra xem đã có thuộc tính alt hay chưa
             if (!attributes.Contains("alt=")) {
                 var srcMatch = Regex.Match(attributes, @"src=[""']([^""']+)[""']");
                 if (srcMatch.Success) {
@@ -61,12 +61,12 @@ public class ImageSeoService {
                 }
             }
 
-            // 添加loading="lazy"以提升性能
+            // Thêm loading="lazy" để tăng hiệu năng
             if (!attributes.Contains("loading=")) {
                 attributes += " loading=\"lazy\"";
             }
 
-            // 添加decoding="async"以提升性能
+            // Thêm decoding="async" để tăng hiệu năng
             if (!attributes.Contains("decoding=")) {
                 attributes += " decoding=\"async\"";
             }
@@ -76,32 +76,32 @@ public class ImageSeoService {
     }
 
     /// <summary>
-    /// 生成SEO友好的alt文本
+    /// Tạo văn bản alt thân thiện với SEO
     /// </summary>
     private string GenerateAltText(string imageUrl, string postTitle) {
-        // 从URL中提取文件名
+        // Trích xuất tên tệp từ URL
         var fileName = Path.GetFileNameWithoutExtension(imageUrl);
         
-        // 清理文件名，移除特殊字符
+        // Làm sạch tên tệp, loại bỏ ký tự đặc biệt
         fileName = Regex.Replace(fileName, @"[^a-zA-Z0-9\u4e00-\u9fa5\s-]", "");
         
-        // 如果文件名有意义，使用它；否则使用文章标题
+        // Nếu tên tệp có ý nghĩa thì dùng nó; nếu không thì dùng tiêu đề bài viết
         if (!string.IsNullOrEmpty(fileName) && fileName.Length > 3 && !IsGuidLike(fileName)) {
             return $"{fileName} - {postTitle}";
         }
 
-        return $"{postTitle} 相关图片";
+        return $"{postTitle} hình ảnh liên quan";
     }
 
     /// <summary>
-    /// 检查字符串是否像GUID
+    /// Kiểm tra chuỗi có giống GUID hay không
     /// </summary>
     private bool IsGuidLike(string str) {
         return str.Length >= 16 && Regex.IsMatch(str, @"^[a-fA-F0-9-]+$");
     }
 
     /// <summary>
-    /// 获取文章中的所有图片URL
+    /// Lấy tất cả URL hình ảnh trong bài viết
     /// </summary>
     public List<string> ExtractImageUrls(Post post) {
         var imageUrls = new List<string>();
@@ -109,14 +109,14 @@ public class ImageSeoService {
 
         if (string.IsNullOrEmpty(post.Content)) return imageUrls;
 
-        // 从Markdown内容中提取图片
+        // Trích xuất hình ảnh từ nội dung Markdown
         var imagePattern = @"!\[([^\]]*)\]\(([^)]+)(?:\s+""([^""]*)"")?\)";
         var matches = Regex.Matches(post.Content, imagePattern);
 
         foreach (Match match in matches) {
             var imageUrl = match.Groups[2].Value;
             
-            // 转换为绝对URL
+            // Chuyển thành URL tuyệt đối
             if (!imageUrl.StartsWith("http")) {
                 if (imageUrl.StartsWith("/")) {
                     imageUrl = baseUrl + imageUrl;

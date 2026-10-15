@@ -2,7 +2,7 @@ namespace StarBlog.Application.ViewModels.LinkExchange;
 
 public class LinkExchangeVerityDto {
     /// <summary>
-    /// 处理原因
+    /// Lý do xử lý
     /// </summary>
     public string? Reason { get; set; }
 }

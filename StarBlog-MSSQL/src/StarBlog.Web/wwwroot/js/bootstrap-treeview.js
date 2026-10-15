@@ -51,7 +51,7 @@
         searchResultBackColor: undefined, //'#FFFFFF',
 
         enableLinks: false,
-        enableIndent: true, // 添加了控制是否启用缩进的开关
+        enableIndent: true, // Đã thêm công tắc điều khiển việc có bật thụt lề hay không
         highlightSelected: true,
         highlightSearchResults: true,
         showBorder: true,
@@ -505,7 +505,7 @@
         let _this = this;
         $.each(nodes, function addNodes(id, node) {
 
-            // 最外层包装
+            // Lớp bọc ngoài cùng
             let treeItem = $(_this.template.itemWrapper)
                 .addClass('node-' + _this.elementId)
                 .addClass(node.state.checked ? 'node-checked' : '')
@@ -515,14 +515,14 @@
                 .attr('data-nodeid', node.nodeId)
                 .attr('style', _this.buildStyleOverride(node));
 
-            // item 内分成两个元素，用flex布局分布在左右两边
+            // item Bên trong chia thành hai phần tử, dùng flex layout để phân bố ở hai bên trái phải
             let treeItemLeft = $(_this.template.itemLeftElem)
             let treeItemRight = $(_this.template.itemRightElem)
             treeItem.append(treeItemLeft)
             treeItem.append(treeItemRight)
 
             // Add indent/spacer to mimic tree structure
-            // 添加了控制是否启用缩进的开关
+            // Đã thêm công tắc điều khiển việc có bật thụt lề hay không
             if (_this.options.enableIndent) {
                 for (let i = 0; i < (level - 1); i++) {
                     treeItemLeft.append(_this.template.indent);

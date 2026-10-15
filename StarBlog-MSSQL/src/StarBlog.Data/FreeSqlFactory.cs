@@ -9,20 +9,20 @@ public class FreeSqlFactory {
         var fsql = new FreeSql.FreeSqlBuilder()
             .UseConnectionString(dataType, connectionString)
             .UseNameConvert(NameConvertType.PascalCaseToUnderscoreWithLower)
-            .UseAutoSyncStructure(true) //自动同步实体结构到数据库
+            .UseAutoSyncStructure(true) //Tự động đồng bộ cấu trúc entity vào cơ sở dữ liệu
             .UseMonitorCommand(cmd => Trace.WriteLine(cmd.CommandText))
-            .Build(); //请务必定义成 Singleton 单例模式
+            .Build(); //Nhất định phải định nghĩa dưới dạng Singleton
 
-        // FreeSql 对未指定长度的 string 属性默认生成 nvarchar(255)。
-        // SQLite 不校验长度所以一直没问题，但 SQL Server 会在内容超长时报错（String or binary data would be truncated）。
-        // 这里让「非主键 / 非外键（名称不以 Id 结尾）且没显式指定长度」的 string 列使用 nvarchar(max)，
-        // 主键与外键列保持默认长度，保证可以建索引、关联查询效率不受影响。
+        // FreeSql Với thuộc tính string chưa chỉ định độ dài, mặc định sinh nvarchar(255).
+        // SQLite không kiểm tra độ dài nên trước giờ không sao, nhưng SQL Server sẽ báo lỗi khi nội dung quá dài (String or binary data would be truncated).
+        // Ở đây cho các cột string "không phải khóa chính / không phải khóa ngoại (tên không kết thúc bằng Id) và chưa chỉ định độ dài rõ ràng" dùng nvarchar(max),
+        // Cột khóa chính và khóa ngoại giữ độ dài mặc định, đảm bảo có thể tạo chỉ mục và hiệu quả truy vấn liên kết không bị ảnh hưởng.
         if (dataType == DataType.SqlServer) {
             fsql.Aop.ConfigEntityProperty += (_, e) => {
                 if (e.Property.PropertyType != typeof(string)) return;
                 if (e.ModifyResult.IsPrimary) return;
                 if (e.Property.Name.EndsWith("Id", StringComparison.Ordinal)) return;
-                if (e.ModifyResult.StringLength != 0) return; // 已显式指定长度（包括 -1）
+                if (e.ModifyResult.StringLength != 0) return; // Đã chỉ định độ dài rõ ràng (bao gồm -1)
                 e.ModifyResult.StringLength = -1;
             };
         }
@@ -31,7 +31,7 @@ public class FreeSqlFactory {
     }
 
     /// <summary>
-    /// 默认使用 SQL Server
+    /// Mặc định dùng SQL Server
     /// </summary>
     public static IFreeSql Create(string connectionString) {
         return CreateSqlServer(connectionString);

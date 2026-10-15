@@ -10,7 +10,7 @@ using StarBlog.Web.ViewModels.Links;
 namespace StarBlog.Web.Apis.Links;
 
 /// <summary>
-/// 友情链接
+/// Liên kết bạn bè
 /// </summary>
 [Authorize]
 [ApiController]

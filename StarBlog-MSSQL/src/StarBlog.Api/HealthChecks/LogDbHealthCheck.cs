@@ -4,7 +4,7 @@ using StarBlog.Data;
 namespace StarBlog.Api.HealthChecks;
 
 /// <summary>
-/// Readiness：检查 EF Core 的 SqlServer-Log（访问统计库）是否可连接。
+/// Readiness: kiểm tra SqlServer-Log của EF Core (cơ sở dữ liệu thống kê truy cập) có kết nối được không.
 /// </summary>
 public sealed class LogDbHealthCheck : IHealthCheck {
     private readonly AppDbContext _dbContext;

@@ -3,29 +3,29 @@
 namespace StarBlog.Data.Models;
 
 /// <summary>
-/// 友情链接
+/// Liên kết bạn bè
 /// </summary>
 public class Link {
     [Column(IsIdentity = true, IsPrimary = true)]
     public int Id { get; set; }
 
     /// <summary>
-    /// 网站名称
+    /// Tên website
     /// </summary>
     public string Name { get; set; }
 
     /// <summary>
-    /// 介绍
+    /// Giới thiệu
     /// </summary>
     public string? Description { get; set; }
 
     /// <summary>
-    /// 网址
+    /// URL
     /// </summary>
     public string Url { get; set; }
 
     /// <summary>
-    /// 是否显示
+    /// Có hiển thị hay không
     /// </summary>
     public bool Visible { get; set; }
 }

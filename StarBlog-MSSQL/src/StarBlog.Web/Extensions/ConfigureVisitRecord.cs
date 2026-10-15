@@ -14,8 +14,8 @@ public static class ConfigureVisitRecord {
         var dbPath = Path.Combine(Environment.CurrentDirectory, "ip2region.xdb");
         if (File.Exists(dbPath)) {
             services.AddSingleton<ISearcher>(new Searcher(
-                // 这里选择整个数据文件都缓存到内存里，性能更高，也能实现线程安全
-                // 事实上 C# 版实现不缓存也是线程安全的（作者说的）
+                // Ở đây chọn cache toàn bộ tệp dữ liệu vào bộ nhớ, hiệu năng cao hơn và cũng đảm bảo thread-safe
+                // Thực tế bản triển khai C# không cache cũng thread-safe (theo lời tác giả)
                 CachePolicy.Content, dbPath
             ));
         }

@@ -19,23 +19,23 @@ public static class ApiGroups {
 
 public static class ConfigureSwagger {
     public static readonly List<SwaggerGroup> Groups = new() {
-        new SwaggerGroup(ApiGroups.Admin, "Admin APIs", "管理员相关接口"),
-        new SwaggerGroup(ApiGroups.Auth, "Auth APIs", "授权接口"),
-        new SwaggerGroup(ApiGroups.Blog, "Blog APIs", "博客管理接口"),
-        new SwaggerGroup(ApiGroups.Comment, "Comment APIs", "评论接口"),
-        new SwaggerGroup(ApiGroups.Common, "Common APIs", "通用公共接口"),
-        new SwaggerGroup(ApiGroups.Link, "Link APIs", "友情链接接口"),
-        new SwaggerGroup(ApiGroups.Photo, "Photo APIs", "图片管理接口"),
-        new SwaggerGroup(ApiGroups.Test, "Test APIs", "测试接口")
+        new SwaggerGroup(ApiGroups.Admin, "Admin APIs", "Các API liên quan đến quản trị viên"),
+        new SwaggerGroup(ApiGroups.Auth, "Auth APIs", "API xác thực"),
+        new SwaggerGroup(ApiGroups.Blog, "Blog APIs", "API quản lý blog"),
+        new SwaggerGroup(ApiGroups.Comment, "Comment APIs", "API bình luận"),
+        new SwaggerGroup(ApiGroups.Common, "Common APIs", "API công khai dùng chung"),
+        new SwaggerGroup(ApiGroups.Link, "Link APIs", "API liên kết bạn bè"),
+        new SwaggerGroup(ApiGroups.Photo, "Photo APIs", "API quản lý hình ảnh"),
+        new SwaggerGroup(ApiGroups.Test, "Test APIs", "API thử nghiệm")
     };
 
     public static void AddSwagger(this IServiceCollection services) {
         services.AddSwaggerGen(options => {
             Groups.ForEach(group => options.SwaggerDoc(group.Name, group.ToOpenApiInfo()));
 
-            // 开启小绿锁
+            // Bật biểu tượng ổ khóa xanh
             var security = new OpenApiSecurityScheme {
-                Description = "JWT模式授权，请输入 \"Bearer {Token}\" 进行身份验证",
+                Description = "Xác thực kiểu JWT, vui lòng nhập \"Bearer {Token}\" để xác thực danh tính",
                 Name = "Authorization",
                 In = ParameterLocation.Header,
                 Type = SecuritySchemeType.ApiKey
@@ -49,19 +49,19 @@ public static class ConfigureSwagger {
             options.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
             options.OperationFilter<SecurityRequirementsOperationFilter>();
 
-            // XML注释
+            // Chú thích XML
             var filePath = Path.Combine(AppContext.BaseDirectory, $"{typeof(Program).Assembly.GetName().Name}.xml");
             options.IncludeXmlComments(filePath, true);
         });
     }
 
     /// <summary>
-    /// 配置Swagger中间件
+    /// Cấu hình middleware Swagger
     /// </summary>
-    /// <param name="app">应用程序构建器</param>
-    /// <param name="requireAuth">是否需要授权访问，默认为true</param>
+    /// <param name="app">Application builder</param>
+    /// <param name="requireAuth">Có cần xác thực để truy cập hay không, mặc định là true</param>
     public static void UseSwaggerPkg(this IApplicationBuilder app, bool requireAuth = true) {
-        // 如果需要授权，则添加Swagger授权中间件
+        // Nếu cần xác thực thì thêm middleware xác thực Swagger
         if (requireAuth) {
             app.UseSwaggerAuth();
         }
@@ -69,12 +69,12 @@ public static class ConfigureSwagger {
         app.UseSwagger();
         app.UseSwaggerUI(opt => {
             opt.RoutePrefix = "api-docs/swagger";
-            // 模型的默认扩展深度，设置为 -1 完全隐藏模型
+            // Độ sâu mở rộng mặc định của model, đặt -1 để ẩn hoàn toàn model
             opt.DefaultModelsExpandDepth(-1);
-            // API文档仅展开标记
+            // Tài liệu API chỉ mở rộng tag
             opt.DocExpansion(DocExpansion.List);
             opt.DocumentTitle = "StarBlog APIs";
-            // 分组
+            // Nhóm
             Groups.ForEach(group => opt.SwaggerEndpoint($"/swagger/{group.Name}/swagger.json", group.Name));
         });
     }

@@ -10,7 +10,7 @@ using StarBlog.Web.ViewModels.Auth;
 namespace StarBlog.Web.Apis;
 
 /// <summary>
-/// 认证
+/// Xác thực
 /// </summary>
 [ApiController]
 [Route("Api/[controller]")]
@@ -23,7 +23,7 @@ public class AuthController : ControllerBase {
     }
 
     /// <summary>
-    /// 登录
+    /// Đăng nhập
     /// </summary>
     /// <param name="loginUser"></param>
     /// <returns></returns>
@@ -33,13 +33,13 @@ public class AuthController : ControllerBase {
     [ProducesResponseType(typeof(ApiResponse<LoginToken>), StatusCodes.Status200OK)]
     public async Task<ApiResponse> Login(LoginUser loginUser) {
         var user = await _authService.GetUserByName(loginUser.Username);
-        if (user == null) return ApiResponse.Unauthorized("用户名或密码错误");
-        if (loginUser.Password.ToSHA256() != user.Password) return ApiResponse.Unauthorized("用户名或密码错误");
+        if (user == null) return ApiResponse.Unauthorized("Tên đăng nhập hoặc mật khẩu không đúng");
+        if (loginUser.Password.ToSHA256() != user.Password) return ApiResponse.Unauthorized("Tên đăng nhập hoặc mật khẩu không đúng");
         return ApiResponse.Ok(_authService.GenerateLoginToken(user));
     }
 
     /// <summary>
-    /// 获取当前用户信息
+    /// Lấy thông tin người dùng hiện tại
     /// </summary>
     /// <returns></returns>
     [Authorize]
@@ -48,7 +48,7 @@ public class AuthController : ControllerBase {
     [Route("[action]")]
     public ApiResponse<User> GetUser() {
         var user = _authService.GetUser(User);
-        if (user == null) return ApiResponse.NotFound("找不到用户资料");
+        if (user == null) return ApiResponse.NotFound("Không tìm thấy hồ sơ người dùng");
         return new ApiResponse<User>(user);
     }
 }

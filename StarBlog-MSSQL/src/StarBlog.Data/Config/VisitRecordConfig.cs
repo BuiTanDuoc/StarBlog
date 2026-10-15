@@ -10,7 +10,7 @@ public class VisitRecordConfig : IEntityTypeConfiguration<VisitRecord> {
     public void Configure(EntityTypeBuilder<VisitRecord> builder) {
         builder.ToTable("visit_record");
 
-        // 主键 + 自增
+        // Khóa chính + tự tăng
         builder.HasKey(e => e.Id);
         builder.Property(e => e.Id)
             .ValueGeneratedOnAdd();
@@ -74,15 +74,15 @@ public class VisitRecordConfig : IEntityTypeConfiguration<VisitRecord> {
         builder.Property(e => e.Referrer)
             .HasMaxLength(2048);
 
-        // 索引
+        // Chỉ mục
         builder.HasIndex(e => e.Time).HasDatabaseName("idx_visit_time");
-        // 注意：SQL Server 非聚集索引键最大 1700 字节，RequestPath 为 nvarchar(2048)（4096 字节），
-        // 建索引后遇到较长的路径会插入失败，因此不再对 RequestPath 单独建索引。
+        // Lưu ý: khóa chỉ mục non-clustered của SQL Server tối đa 1700 byte, RequestPath là nvarchar(2048) (4096 byte),
+        // Sau khi tạo chỉ mục, gặp đường dẫn dài sẽ bị lỗi khi chèn, vì vậy không tạo chỉ mục riêng cho RequestPath nữa.
         // builder.HasIndex(e => e.RequestPath).HasDatabaseName("idx_visit_path");
         builder.HasIndex(e => e.StatusCode).HasDatabaseName("idx_visit_status");
 
         // builder.HasMultipleNestedOwnedIndexes(
-        //     e => e.IpInfo, // 指定值对象 IpInfo
+        //     e => e.IpInfo, // Chỉ định value object IpInfo
         //     new List<(Expression<Func<IpInfo, object>>, string)> {
         //         (ip => ip.RegionCode, "idx_visit_ip_info_region_code"),
         //         (ip => ip.Country, "idx_visit_ip_info_country"),
@@ -92,7 +92,7 @@ public class VisitRecordConfig : IEntityTypeConfiguration<VisitRecord> {
         //     });
 
 
-        // 复合索引，按日期+状态码查询
+        // Chỉ mục kết hợp, truy vấn theo ngày + mã trạng thái
         builder.HasIndex(e => new { e.Time, e.StatusCode })
             .HasDatabaseName("idx_visit_time_status");
     }

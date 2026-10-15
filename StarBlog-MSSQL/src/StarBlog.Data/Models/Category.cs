@@ -15,7 +15,7 @@ public class Category {
     public List<Category> Children { get; set; }
 
     /// <summary>
-    /// 分类是否可见
+    /// Danh mục có hiển thị hay không
     /// </summary>
     public bool Visible { get; set; } = true;
 

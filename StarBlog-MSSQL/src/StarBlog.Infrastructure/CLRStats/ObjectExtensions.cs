@@ -8,7 +8,7 @@ using System.Text;
 namespace StarBlog.Infrastructure.CLRStats;
 
 /// <summary>
-/// 根据原来代码的基础魔改了一下，By DealiAxy，2022-6-11
+/// Chỉnh sửa lại dựa trên mã gốc, By DealiAxy, 2022-6-11
 /// https://github.com/zanders3/json/blob/master/src/JSONWriter.cs
 /// </summary>
 internal static class ObjectExtensions {

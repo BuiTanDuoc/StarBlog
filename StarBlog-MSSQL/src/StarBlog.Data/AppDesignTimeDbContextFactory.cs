@@ -7,7 +7,7 @@ public class AppDesignTimeDbContextFactory : IDesignTimeDbContextFactory<AppDbCo
     public AppDbContext CreateDbContext(string[] args) {
         var builder = new DbContextOptionsBuilder<AppDbContext>();
 
-        // 通过环境变量 CONNECTION_STRING 指定连接字符串，未设置时使用本机 SQL Server 默认值
+        // Chỉ định chuỗi kết nối qua biến môi trường CONNECTION_STRING, nếu chưa đặt thì dùng giá trị mặc định của SQL Server trên máy cục bộ
         var connStr = Environment.GetEnvironmentVariable("CONNECTION_STRING")
                       ?? "Server=localhost;Database=StarBlog;Trusted_Connection=True;TrustServerCertificate=True;";
 

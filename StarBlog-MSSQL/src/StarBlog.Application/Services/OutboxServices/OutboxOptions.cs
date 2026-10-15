@@ -1,37 +1,37 @@
 namespace StarBlog.Application.Services.OutboxServices;
 
 /// <summary>
-/// Outbox 运行参数
-/// <para>先提供默认值，后续可通过 appsettings.json 的 Outbox 节进行覆盖。</para>
+/// Outbox Tham số vận hành
+/// <para>Cung cấp giá trị mặc định trước, sau đó có thể ghi đè qua mục Outbox trong appsettings.json.</para>
 /// </summary>
 public sealed class OutboxOptions {
     /// <summary>
-    /// 每轮最多领取的任务数
+    /// Số tác vụ tối đa nhận mỗi vòng
     /// </summary>
     public int BatchSize { get; set; } = 20;
 
     /// <summary>
-    /// 队列空闲时的轮询间隔
+    /// Khoảng thời gian polling khi hàng đợi rảnh
     /// </summary>
     public TimeSpan PollInterval { get; set; } = TimeSpan.FromMilliseconds(500);
 
     /// <summary>
-    /// 租约时长（领取任务后锁定多久）
+    /// Thời lượng lease (khóa trong bao lâu sau khi nhận tác vụ)
     /// </summary>
     public TimeSpan LeaseDuration { get; set; } = TimeSpan.FromSeconds(60);
 
     /// <summary>
-    /// 最大退避时长（指数退避上限）
+    /// Thời lượng backoff tối đa (giới hạn trên của exponential backoff)
     /// </summary>
     public TimeSpan MaxBackoff { get; set; } = TimeSpan.FromMinutes(10);
 
     /// <summary>
-    /// 退避随机抖动（避免多实例同时重试形成“惊群”）
+    /// Jitter ngẫu nhiên của backoff (tránh nhiều instance cùng thử lại gây ra hiệu ứng "thundering herd")
     /// </summary>
     public TimeSpan BackoffJitter { get; set; } = TimeSpan.FromMilliseconds(500);
 
     /// <summary>
-    /// 默认最大重试次数（入队未指定时使用）
+    /// Số lần thử lại tối đa mặc định (dùng khi lúc đưa vào hàng đợi không chỉ định)
     /// </summary>
     public int DefaultMaxAttempts { get; set; } = 5;
 }

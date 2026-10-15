@@ -7,32 +7,32 @@ public class Photo {
     public string Id { get; set; }
 
     /// <summary>
-    /// 作品标题
+    /// Tiêu đề tác phẩm
     /// </summary>
     public string Title { get; set; }
 
     /// <summary>
-    /// 拍摄地点
+    /// Địa điểm chụp
     /// </summary>
     public string Location { get; set; }
 
     /// <summary>
-    /// 文件存储位置
+    /// Vị trí lưu trữ tệp
     /// </summary>
     public string FilePath { get; set; }
 
     /// <summary>
-    /// 高度
+    /// Chiều cao
     /// </summary>
     public long Height { get; set; }
 
     /// <summary>
-    /// 宽度
+    /// Chiều rộng
     /// </summary>
     public long Width { get; set; }
 
     /// <summary>
-    /// 创建时间
+    /// Thời gian tạo
     /// </summary>
     public DateTime CreateTime { get; set; }
 }

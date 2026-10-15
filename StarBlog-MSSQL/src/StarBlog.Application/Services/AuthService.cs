@@ -29,7 +29,7 @@ public class AuthService {
             new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()), // JWT ID
         };
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_auth.Jwt.Key));
-        // todo 使用非对称加密 jwt (RSA)
+        // todo Sử dụng mã hóa bất đối xứng jwt (RSA)
         var signCredential = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
         var jwtToken = new JwtSecurityToken(
             issuer: _auth.Jwt.Issuer,
@@ -39,7 +39,7 @@ public class AuthService {
             signingCredentials: signCredential
         );
 
-        // todo 尝试使用 jose-jwt 生成 jwt
+        // todo Thử dùng jose-jwt để sinh jwt
         return new LoginToken {
             Token = new JwtSecurityTokenHandler().WriteToken(jwtToken),
             Expiration = TimeZoneInfo.ConvertTimeFromUtc(jwtToken.ValidTo, TimeZoneInfo.Local)

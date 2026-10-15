@@ -1,9 +1,9 @@
 namespace StarBlog.Infrastructure.CLRStats;
 
 /// <summary>
-/// 获取一个统计 .NET 应用资源使用情况的插件，包含：CPU 使用率、GC、线程情况，支持通过 Web 请求获取状态信息（可以自定义访问路径和身份验证），数据将以 JSON 格式返回。
+/// Plugin thống kê tình hình sử dụng tài nguyên của ứng dụng .NET, gồm: mức sử dụng CPU, GC, tình trạng thread, hỗ trợ lấy thông tin trạng thái qua Web request (có thể tùy chỉnh đường dẫn truy cập và xác thực danh tính), dữ liệu sẽ được trả về ở định dạng JSON.
 /// <para></para>
-/// <para>原项目地址：https://github.com/itsvse/CLRStats</para>
+/// <para>Địa chỉ dự án gốc: https://github.com/itsvse/CLRStats</para>
 /// </summary>
 public static class CLRStatsUtils {
     private static readonly CLRStatsModel CLrStatsModel = new CLRStatsModel();

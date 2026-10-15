@@ -5,7 +5,7 @@ using StarBlog.Data.Models;
 namespace StarBlog.Web.Services.OutboxServices;
 
 /// <summary>
-/// Outbox 处理器（领取 + 执行 + 重试）
+/// Outbox Bộ xử lý (nhận + thực thi + thử lại)
 /// </summary>
 public class OutboxProcessor {
     private readonly ILogger<OutboxProcessor> _logger;
@@ -81,14 +81,14 @@ public class OutboxProcessor {
 
     private async Task<bool> ProcessMessageAsync(string workerId, OutboxMessage message, CancellationToken cancellationToken) {
         if (!_handlersByType.TryGetValue(message.Type, out var handler)) {
-            await MarkDeadAsync(workerId, message.Id, $"未找到任务处理器：{message.Type}");
+            await MarkDeadAsync(workerId, message.Id, $"Không tìm thấy bộ xử lý tác vụ: {message.Type}");
             return false;
         }
 
         try {
             await handler.HandleAsync(message, cancellationToken);
             await MarkSucceededAsync(workerId, message.Id);
-            _logger.LogInformation("Outbox 执行成功：{Type} #{Id}", message.Type, message.Id);
+            _logger.LogInformation("Outbox Thực thi thành công: {Type} #{Id}", message.Type, message.Id);
             return true;
         }
         catch (Exception ex) {
@@ -126,7 +126,7 @@ public class OutboxProcessor {
         var error = TrimError(exception.ToString());
 
         if (nextAttempt >= message.MaxAttempts) {
-            _logger.LogError(exception, "Outbox 执行失败（放弃）：{Type} #{Id}，已尝试：{Attempt}", message.Type, message.Id, nextAttempt);
+            _logger.LogError(exception, "Outbox Thực thi thất bại (từ bỏ): {Type} #{Id}, đã thử: {Attempt}", message.Type, message.Id, nextAttempt);
             await _fsql.Update<OutboxMessage>()
                 .Set(a => a.Status, OutboxStatus.Dead)
                 .Set(a => a.Attempt, nextAttempt)
@@ -141,7 +141,7 @@ public class OutboxProcessor {
 
         var delay = GetBackoffDelay(nextAttempt);
         var nextAt = NormalizeTime(now.Add(delay));
-        _logger.LogWarning(exception, "Outbox 执行失败，将在 {Delay} 后重试：{Type} #{Id}，下一次尝试：{Attempt}",
+        _logger.LogWarning(exception, "Outbox Thực thi thất bại, sẽ thử lại sau {Delay}: {Type} #{Id}, lần thử tiếp theo: {Attempt}",
             delay, message.Type, message.Id, nextAttempt + 1);
 
         await _fsql.Update<OutboxMessage>()

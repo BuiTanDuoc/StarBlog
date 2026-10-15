@@ -3,7 +3,7 @@
 namespace StarBlog.Data.Models;
 
 /// <summary>
-/// 推荐文章
+/// Bài viết nổi bật
 /// </summary>
 [Table(Name = "featured_post", OldName = "FeaturedPost")]
 public class FeaturedPost {

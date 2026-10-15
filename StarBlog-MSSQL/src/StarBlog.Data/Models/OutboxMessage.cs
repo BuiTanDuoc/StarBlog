@@ -10,68 +10,68 @@ public enum OutboxStatus {
 }
 
 /// <summary>
-/// Outbox 消息（可靠异步任务）
-/// <para>存放于主库（SQL Server），由 FreeSQL CodeFirst 自动建表/同步结构。</para>
+/// Outbox Thông điệp (tác vụ bất đồng bộ đáng tin cậy)
+/// <para>Lưu trong cơ sở dữ liệu chính (SQL Server), do FreeSQL CodeFirst tự động tạo bảng/đồng bộ cấu trúc.</para>
 /// </summary>
 [Table(Name = "outbox_message")]
 public class OutboxMessage {
     /// <summary>
-    /// 自增主键（用于顺序分页拉取/排队） 
+    /// Khóa chính tự tăng (dùng để lấy theo trang tuần tự/xếp hàng) 
     /// </summary>
     [Column(IsIdentity = true, IsPrimary = true)]
     public long Id { get; set; }
 
     /// <summary>
-    /// 任务类型
-    /// <para>示例：email.send</para>
+    /// Loại tác vụ
+    /// <para>Ví dụ: email.send</para>
     /// </summary>
     public string Type { get; set; } = null!;
 
     /// <summary>
-    /// 幂等键（可选）
-    /// <para>用于避免同一业务事件重复入队（例如：reply:{replyId}）。</para>
+    /// Khóa idempotent (tùy chọn)
+    /// <para>Dùng để tránh cùng một sự kiện nghiệp vụ bị đưa vào hàng đợi lặp lại (ví dụ: reply:{replyId}).</para>
     /// </summary>
     public string? DedupKey { get; set; }
 
     /// <summary>
-    /// 任务载荷（JSON 字符串） 
+    /// Payload tác vụ (chuỗi JSON) 
     /// </summary>
     [Column(StringLength = -1)]
     public string Payload { get; set; } = null!;
 
     /// <summary>
-    /// 当前状态
+    /// Trạng thái hiện tại
     /// </summary>
     public OutboxStatus Status { get; set; } = OutboxStatus.Pending;
 
     /// <summary>
-    /// 已尝试次数
+    /// Số lần đã thử
     /// </summary>
     public int Attempt { get; set; } = 0;
 
     /// <summary>
-    /// 最大尝试次数
-    /// <para>超过该次数将标记为 Dead。</para>
+    /// Số lần thử tối đa
+    /// <para>Vượt quá số lần này sẽ bị đánh dấu là Dead.</para>
     /// </summary>
     public int MaxAttempts { get; set; } = 5;
 
     /// <summary>
-    /// 下次可执行时间（用于退避重试）
+    /// Thời điểm có thể thực thi lần tới (dùng cho thử lại có backoff)
     /// </summary>
     public DateTime NextAttemptAt { get; set; } = DateTime.Now;
 
     /// <summary>
-    /// 租约锁：锁过期时间（多实例/并发 Worker 下避免重复处理）
+    /// Khóa lease: thời điểm khóa hết hạn (tránh xử lý trùng khi nhiều instance/Worker đồng thời)
     /// </summary>
     public DateTime? LockedUntil { get; set; }
 
     /// <summary>
-    /// 租约锁：持有者标识（可用于排查与追踪）
+    /// Khóa lease: định danh bên giữ khóa (có thể dùng để điều tra và truy vết)
     /// </summary>
     public string? LockedBy { get; set; }
 
     /// <summary>
-    /// 最后一次失败原因（可截断）
+    /// Lý do thất bại lần cuối (có thể cắt bớt)
     /// </summary>
     [Column(StringLength = 4000)]
     public string? LastError { get; set; }

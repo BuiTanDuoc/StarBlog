@@ -32,7 +32,7 @@ public class SearchController : Controller {
             .OrderByDescending(x => x.Score)
             .ToList();
 
-        // 实现搜索结果高亮
+        // Hiện thực hóa việc làm nổi bật kết quả tìm kiếm
         var regex = new Regex(Regex.Escape(keyword), RegexOptions.IgnoreCase);
         foreach (var item in searchPosts) {
             item.HighlightedTitle = regex.Replace(item.Post.Title, m => $"<mark>{m.Value}</mark>");
@@ -53,22 +53,22 @@ public class SearchController : Controller {
         var match = regex.Match(content);
 
         if (!match.Success) {
-            // 没匹配到，直接取前 snippetLength*2 个字符作为摘要
+            // Không khớp, lấy trực tiếp snippetLength*2 ký tự đầu làm đoạn tóm tắt
             return content.Length > snippetLength * 2
                 ? content.Substring(0, snippetLength * 2) + "..."
                 : content;
         }
 
-        // 计算截取范围（匹配位置前后各 snippetLength）
+        // Tính phạm vi cắt (mỗi bên của vị trí khớp lấy snippetLength)
         int start = Math.Max(0, match.Index - snippetLength);
         int length = Math.Min(content.Length - start, match.Length + snippetLength * 2);
 
         string snippet = content.Substring(start, length);
 
-        // 高亮处理
+        // Xử lý làm nổi bật
         snippet = regex.Replace(snippet, m => $"<mark>{m.Value}</mark>");
 
-        // 前后补省略号（如果不是全文开头或结尾）
+        // Thêm dấu ba chấm ở hai đầu (nếu không phải đầu hoặc cuối toàn văn)
         if (start > 0) snippet = "..." + snippet;
         if (start + length < content.Length) snippet += "...";
 

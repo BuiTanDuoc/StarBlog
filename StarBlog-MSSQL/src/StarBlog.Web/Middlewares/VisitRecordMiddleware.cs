@@ -15,10 +15,10 @@ public class VisitRecordMiddleware {
     public async Task Invoke(HttpContext context, VisitRecordQueueService logQueue) {
         var request = context.Request;
 
-        // 记录开始时间
+        // Ghi lại thời điểm bắt đầu
         var stopwatch = Stopwatch.StartNew();
 
-        // 先构造一个空对象，后面填充
+        // Tạo trước một đối tượng rỗng, điền dữ liệu sau
         var record = new VisitRecord {
             Ip = context.GetRemoteIpAddress()?.ToString(),
             RequestPath = request.Path,
@@ -26,24 +26,24 @@ public class VisitRecordMiddleware {
             RequestMethod = request.Method,
             UserAgent = request.Headers.UserAgent,
             Time = DateTime.Now,
-            Referrer = request.Headers.Referer, // 来源页面
+            Referrer = request.Headers.Referer, // Trang nguồn
         };
 
-        // 在响应真正开始写到客户端前，补齐状态码和耗时
+        // Trước khi phản hồi thực sự bắt đầu ghi tới client, bổ sung mã trạng thái và thời gian xử lý
         context.Response.OnStarting(state => {
             var (rec, sw, queue) = (Tuple<VisitRecord, Stopwatch, VisitRecordQueueService>)state;
-            // 结束计时
+            // Kết thúc bấm giờ
             sw.Stop();
 
             rec.StatusCode = context.Response.StatusCode;
             rec.ResponseTimeMs = (int)sw.ElapsedMilliseconds;
 
-            // 入队
+            // Đưa vào hàng đợi
             queue.EnqueueLog(rec);
             return Task.CompletedTask;
         }, Tuple.Create(record, stopwatch, logQueue));
 
-        // 执行后续管道
+        // Thực thi các middleware tiếp theo trong pipeline
         await _next(context);
     }
 }

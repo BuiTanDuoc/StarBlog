@@ -10,7 +10,7 @@ using StarBlog.Application.ViewModels.Links;
 namespace StarBlog.Api.Apis.Links;
 
 /// <summary>
-/// 友情链接
+/// Liên kết bạn bè
 /// </summary>
 [Authorize]
 [ApiController]
@@ -26,7 +26,7 @@ public class LinkController : ControllerBase {
     }
 
     /// <summary>
-    /// 前台展示用：仅返回可见友情链接（匿名可访问）
+    /// Dùng để hiển thị ở frontend: chỉ trả về các liên kết bạn bè đang hiển thị (truy cập ẩn danh được)
     /// </summary>
     [AllowAnonymous]
     [HttpGet("Public")]

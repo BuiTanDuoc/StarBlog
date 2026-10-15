@@ -3,40 +3,40 @@ using StarBlog.Api.Middlewares;
 namespace StarBlog.Api.Extensions;
 
 /// <summary>
-/// Swagger授权配置选项
+/// Tùy chọn cấu hình xác thực Swagger
 /// </summary>
 public class SwaggerAuthOptions {
     /// <summary>
-    /// 是否启用Swagger访问授权，默认为true
+    /// Có bật xác thực truy cập Swagger hay không, mặc định là true
     /// </summary>
     public bool RequireAuthentication { get; set; } = true;
 
     /// <summary>
-    /// 是否仅在生产环境启用授权，默认为false（所有环境都启用）
+    /// Có chỉ bật xác thực ở môi trường production hay không, mặc định là false (bật ở mọi môi trường)
     /// </summary>
     public bool OnlyInProduction { get; set; } = false;
 
     /// <summary>
-    /// 允许的角色列表，为空则只要求认证即可
+    /// Danh sách vai trò được phép, để trống thì chỉ cần đã xác thực
     /// </summary>
     public string[] AllowedRoles { get; set; } = Array.Empty<string>();
 
     /// <summary>
-    /// 自定义未授权响应消息
+    /// Thông báo phản hồi tùy chỉnh khi chưa xác thực
     /// </summary>
     public string? UnauthorizedMessage { get; set; }
 }
 
 /// <summary>
-/// Swagger授权配置扩展方法
+/// Extension method cấu hình xác thực Swagger
 /// </summary>
 public static class SwaggerAuthConfigExtensions {
     /// <summary>
-    /// 配置Swagger授权选项
+    /// Cấu hình tùy chọn xác thực Swagger
     /// </summary>
-    /// <param name="services">服务集合</param>
-    /// <param name="configureOptions">配置选项的委托</param>
-    /// <returns>服务集合</returns>
+    /// <param name="services">Service collection</param>
+    /// <param name="configureOptions">Delegate cấu hình tùy chọn</param>
+    /// <returns>Service collection</returns>
     public static IServiceCollection ConfigureSwaggerAuth(this IServiceCollection services,
         Action<SwaggerAuthOptions> configureOptions) {
         services.Configure(configureOptions);
@@ -44,14 +44,14 @@ public static class SwaggerAuthConfigExtensions {
     }
 
     /// <summary>
-    /// 使用Swagger授权中间件（带配置选项）
+    /// Dùng middleware xác thực Swagger (kèm tùy chọn cấu hình)
     /// </summary>
-    /// <param name="app">应用程序构建器</param>
-    /// <param name="options">授权选项</param>
-    /// <returns>应用程序构建器</returns>
+    /// <param name="app">Application builder</param>
+    /// <param name="options">Tùy chọn xác thực</param>
+    /// <returns>Application builder</returns>
     public static IApplicationBuilder UseSwaggerAuth(this IApplicationBuilder app, SwaggerAuthOptions? options = null) {
         if (options != null) {
-            // 如果设置了仅在生产环境启用，且当前不是生产环境，则跳过授权
+            // Nếu đã đặt chỉ bật ở production mà môi trường hiện tại không phải production thì bỏ qua xác thực
             if (options.OnlyInProduction) {
                 var env = app.ApplicationServices.GetRequiredService<IWebHostEnvironment>();
                 if (!env.IsProduction()) {
@@ -59,7 +59,7 @@ public static class SwaggerAuthConfigExtensions {
                 }
             }
 
-            // 如果禁用了认证，则跳过授权
+            // Nếu đã tắt xác thực thì bỏ qua xác thực
             if (!options.RequireAuthentication) {
                 return app;
             }

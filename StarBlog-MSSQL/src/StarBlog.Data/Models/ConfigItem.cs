@@ -3,7 +3,7 @@
 namespace StarBlog.Data.Models;
 
 /// <summary>
-/// 配置项目
+/// Mục cấu hình
 /// </summary>
 [Table(Name = "config", OldName = "ConfigItem")]
 public class ConfigItem {

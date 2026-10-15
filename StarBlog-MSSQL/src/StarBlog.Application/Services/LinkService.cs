@@ -4,7 +4,7 @@ using StarBlog.Data.Models;
 namespace StarBlog.Application.Services;
 
 /// <summary>
-/// 友情链接
+/// Liên kết bạn bè
 /// </summary>
 public class LinkService {
     private IBaseRepository<Link> _repo;
@@ -14,9 +14,9 @@ public class LinkService {
     }
 
     /// <summary>
-    /// 获取全部友情链接
+    /// Lấy toàn bộ liên kết bạn bè
     /// </summary>
-    /// <param name="onlyVisible">只获取显示的链接</param>
+    /// <param name="onlyVisible">Chỉ lấy các liên kết đang hiển thị</param>
     public async Task<List<Link>> GetAll(bool onlyVisible = true) {
         return onlyVisible
             ? await _repo.Where(a => a.Visible).ToListAsync()
@@ -32,7 +32,7 @@ public class LinkService {
     }
 
     /// <summary>
-    /// 查询 id 是否存在
+    /// Kiểm tra id có tồn tại hay không
     /// </summary>
     public async Task<bool> HasId(int id) {
         return await _repo.Where(a => a.Id == id).AnyAsync();

@@ -16,7 +16,7 @@ public class VisitRecordQueueService {
     private readonly Parser _uaParser = Parser.GetDefault();
 
     /// <summary>
-    /// 批量大小
+    /// Kích thước lô
     /// </summary>
     private const int BatchSize = 10;
 
@@ -28,21 +28,21 @@ public class VisitRecordQueueService {
         _mapper = mapper;
     }
 
-    // 将日志加入队列
+    // Đưa nhật ký vào hàng đợi
     public void EnqueueLog(VisitRecord log) {
         _logQueue.Enqueue(log);
     }
 
-    // 定期批量写入数据库的方法
+    // Phương thức ghi hàng loạt vào cơ sở dữ liệu theo định kỳ
     public async Task WriteLogsToDatabaseAsync(CancellationToken cancellationToken) {
         if (_logQueue.IsEmpty) {
-            // 暂时等待，避免高频次无意义的检查
+            // Tạm thời chờ, tránh các lần kiểm tra vô nghĩa với tần suất cao
             await Task.Delay(1000, cancellationToken);
             return;
         }
 
         var batch = new List<VisitRecord>();
-        // 从队列中取出一批日志
+        // Lấy một lô nhật ký từ hàng đợi
         while (_logQueue.TryDequeue(out var log) && batch.Count < BatchSize) {
             log = InflateIpRegion(log);
             log = InflateUA(log);
@@ -57,16 +57,16 @@ public class VisitRecordQueueService {
                 dbCtx.VisitRecords.AddRange(batch);
                 await dbCtx.SaveChangesAsync(cancellationToken);
                 await transaction.CommitAsync(cancellationToken);
-                _logger.LogInformation("访问日志 Successfully wrote {BatchCount} logs to the database", batch.Count);
+                _logger.LogInformation("Nhật ký truy cập Successfully wrote {BatchCount} logs to the database", batch.Count);
             }
             catch (Exception) {
                 await transaction.RollbackAsync(cancellationToken);
-                // 重新抛出异常，确保外部捕获
+                // Ném lại ngoại lệ để đảm bảo bên ngoài bắt được
                 throw;
             }
         }
         catch (Exception ex) {
-            _logger.LogError(ex, "访问日志 Error writing logs to the database: {ExMessage}", ex.Message);
+            _logger.LogError(ex, "Nhật ký truy cập Error writing logs to the database: {ExMessage}", ex.Message);
         }
     }
 
@@ -89,14 +89,14 @@ public class VisitRecordQueueService {
     }
 
     /// <summary>
-    /// 解析用户代理信息
+    /// Phân tích thông tin user agent
     /// </summary>
-    /// <param name="log">访问记录</param>
-    /// <returns>填充了用户代理信息的访问记录</returns>
+    /// <param name="log">Bản ghi truy cập</param>
+    /// <returns>Bản ghi truy cập đã được điền thông tin user agent</returns>
     private VisitRecord InflateUA(VisitRecord log) {
-        // 检查UserAgent是否为null或空字符串，避免UAParser抛出ArgumentNullException
+        // Kiểm tra UserAgent có phải null hoặc chuỗi rỗng không, tránh UAParser ném ArgumentNullException
         if (string.IsNullOrWhiteSpace(log.UserAgent)) {
-            // 如果UserAgent为空，设置UserAgentInfo为默认值
+            // Nếu UserAgent rỗng, đặt UserAgentInfo về giá trị mặc định
             log.UserAgentInfo = new UserAgentInfo();
             return log;
         }

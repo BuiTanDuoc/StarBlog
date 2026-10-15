@@ -9,7 +9,7 @@ using StarBlog.Application.Services;
 namespace StarBlog.Api.Apis.Blog;
 
 /// <summary>
-/// 推荐图片
+/// Ảnh nổi bật
 /// </summary>
 [Authorize]
 [ApiController]
@@ -37,7 +37,7 @@ public class FeaturedPhotoController : ControllerBase {
     public async Task<ApiResponse<FeaturedPhoto>> Get(int id) {
         var item = await _fpRepo.Where(a => a.Id == id).FirstAsync();
         return item == null
-            ? ApiResponse.NotFound($"推荐图片记录 {id} 不存在")
+            ? ApiResponse.NotFound($"Bản ghi ảnh nổi bật {id} không tồn tại")
             : new ApiResponse<FeaturedPhoto>(item);
     }
 
@@ -45,14 +45,14 @@ public class FeaturedPhotoController : ControllerBase {
     public async Task<ApiResponse<FeaturedPhoto>> Add(string photoId) {
         var photo = await _photoService.GetById(photoId);
         return photo == null
-            ? ApiResponse.NotFound($"图片 {photoId} 不存在")
+            ? ApiResponse.NotFound($"Hình ảnh {photoId} không tồn tại")
             : new ApiResponse<FeaturedPhoto>(await _photoService.AddFeaturedPhoto(photo));
     }
 
     [HttpDelete("{id:int}")]
     public async Task<ApiResponse> Delete(int id) {
         var item = await _fpRepo.Where(a => a.Id == id).FirstAsync();
-        if (item == null) return ApiResponse.NotFound($"推荐图片记录 {id} 不存在");
+        if (item == null) return ApiResponse.NotFound($"Bản ghi ảnh nổi bật {id} không tồn tại");
         var rows = await _fpRepo.DeleteAsync(item);
         return ApiResponse.Ok($"deleted {rows} rows.");
     }

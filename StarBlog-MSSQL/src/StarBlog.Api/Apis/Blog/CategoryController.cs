@@ -12,7 +12,7 @@ using StarBlog.Application.ViewModels.Categories;
 namespace StarBlog.Api.Apis.Blog;
 
 /// <summary>
-/// 文章分类
+/// Danh mục bài viết
 /// </summary>
 [Authorize]
 [ApiController]
@@ -30,7 +30,7 @@ public class CategoryController : ControllerBase {
     }
 
     /// <summary>
-    /// 获取分录目录树
+    /// Lấy cây thư mục danh mục
     /// </summary>
     [AllowAnonymous]
     [HttpGet("Nodes")]
@@ -82,15 +82,15 @@ public class CategoryController : ControllerBase {
         if (item == null) return ApiResponse.NotFound();
 
         if (await _postRepo.Where(a => a.CategoryId == id).AnyAsync())
-            return ApiResponse.BadRequest("所选分类下有文章，不能删除！");
+            return ApiResponse.BadRequest("Danh mục đã chọn còn bài viết, không thể xóa!");
 
         var rows = await _cService.Delete(item);
-        return ApiResponse.Ok($"已删除 {rows} 数据");
+        return ApiResponse.Ok($"Đã xóa {rows} bản ghi");
     }
 
 
     /// <summary>
-    /// 分类词云
+    /// Đám mây từ khóa danh mục
     /// </summary>
     /// <returns></returns>
     [AllowAnonymous]
@@ -100,55 +100,55 @@ public class CategoryController : ControllerBase {
     }
 
     /// <summary>
-    /// 设置为推荐分类
+    /// Đặt làm danh mục nổi bật
     /// </summary>
-    /// <seealso href="https://fontawesome.com/search?m=free">FontAwesome图标库</seealso>
+    /// <seealso href="https://fontawesome.com/search?m=free">Thư viện biểu tượng FontAwesome</seealso>
     /// <param name="id"></param>
-    /// <param name="dto">推荐信息 <see cref="FeaturedCategoryCreationDto"/></param>
+    /// <param name="dto">Thông tin nổi bật <see cref="FeaturedCategoryCreationDto"/></param>
     /// <returns></returns>
     [HttpPost("{id:int}/[action]")]
     public async Task<ApiResponse<FeaturedCategory>> SetFeatured(int id, [FromBody] FeaturedCategoryCreationDto dto) {
         var item = await _cService.GetById(id);
         return item == null
-            ? ApiResponse.NotFound($"分类 {id} 不存在")
+            ? ApiResponse.NotFound($"Danh mục {id} không tồn tại")
             : new ApiResponse<FeaturedCategory>(await _cService.AddOrUpdateFeaturedCategory(item, dto));
     }
 
     /// <summary>
-    /// 取消推荐分类
+    /// Hủy danh mục nổi bật
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpPost("{id:int}/[action]")]
     public async Task<ApiResponse> CancelFeatured(int id) {
         var item = await _cService.GetById(id);
-        if (item == null) return ApiResponse.NotFound($"分类 {id} 不存在");
+        if (item == null) return ApiResponse.NotFound($"Danh mục {id} không tồn tại");
         var rows = await _cService.DeleteFeaturedCategory(item);
         return ApiResponse.Ok($"delete {rows} rows.");
     }
 
     /// <summary>
-    /// 设置分类可见
+    /// Đặt danh mục hiển thị
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpPost("{id:int}/[action]")]
     public async Task<ApiResponse> SetVisible(int id) {
         var item = await _cService.GetById(id);
-        if (item == null) return ApiResponse.NotFound($"分类 {id} 不存在");
+        if (item == null) return ApiResponse.NotFound($"Danh mục {id} không tồn tại");
         var rows = _cService.SetVisibility(item, true);
         return ApiResponse.Ok($"affect {rows} rows.");
     }
 
     /// <summary>
-    /// 设置分类不可见
+    /// Đặt danh mục ẩn
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpPost("{id:int}/[action]")]
     public async Task<ApiResponse> SetInvisible(int id) {
         var item = await _cService.GetById(id);
-        if (item == null) return ApiResponse.NotFound($"分类 {id} 不存在");
+        if (item == null) return ApiResponse.NotFound($"Danh mục {id} không tồn tại");
         var rows = await _cService.SetVisibility(item, false);
         return ApiResponse.Ok($"affect {rows} rows.");
     }

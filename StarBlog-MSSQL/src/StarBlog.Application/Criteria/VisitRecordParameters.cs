@@ -5,17 +5,17 @@ namespace StarBlog.Application.Criteria;
 
 public class VisitRecordParameters : QueryParameters {
     /// <summary>
-    /// 排序字段
+    /// Trường sắp xếp
     /// </summary>
     public new string? SortBy { get; set; } = "-Time";
 
     /// <summary>
-    /// 排除 API 接口
+    /// Loại trừ API
     /// </summary>
     public bool? ExcludeApi { get; set; } = false;
 
     /// <summary>
-    /// 排除内网IP
+    /// Loại trừ IP mạng nội bộ
     /// </summary>
     public bool? ExcludeIntranetIp { get; set; }
 
@@ -24,34 +24,34 @@ public class VisitRecordParameters : QueryParameters {
     public DateTime? To { get; set; }
 
     /// <summary>
-    /// 国家
+    /// Quốc gia
     /// </summary>
     public string? Country { get; set; }
 
     /// <summary>
-    /// 省份
+    /// Tỉnh/bang
     /// </summary>
     public string? Province { get; set; }
 
     /// <summary>
-    /// 城市
+    /// Thành phố
     /// </summary>
     public string? City { get; set; }
 
     /// <summary>
-    /// 运营商
+    /// Nhà mạng (ISP)
     /// </summary>
     public string? Isp { get; set; }
 
     /// <summary>
-    /// 操作系统
+    /// Hệ điều hành
     /// </summary>
     [JsonPropertyName("os")]
     [JsonProperty("os")]
     public string? OS { get; set; }
 
     /// <summary>
-    /// 设备
+    /// Thiết bị
     /// </summary>
     public string? Device { get; set; }
 
@@ -61,7 +61,7 @@ public class VisitRecordParameters : QueryParameters {
     public string? UserAgent { get; set; }
 
     /// <summary>
-    /// 是否爬虫
+    /// Có phải crawler hay không
     /// </summary>
     public bool? IsSpider { get; set; }
 }

@@ -9,7 +9,7 @@ using StarBlog.Application.ViewModels.Categories;
 namespace StarBlog.Api.Apis.Blog;
 
 /// <summary>
-/// 推荐分类
+/// Danh mục nổi bật
 /// </summary>
 [Authorize]
 [ApiController]
@@ -33,14 +33,14 @@ public class FeaturedCategoryController : ControllerBase {
     public async Task<ApiResponse<FeaturedCategory>> Get(int id) {
         var item = await _categoryService.GetFeaturedCategoryById(id);
         return item == null
-            ? ApiResponse.NotFound($"推荐分类记录 {id} 不存在")
+            ? ApiResponse.NotFound($"Bản ghi danh mục nổi bật {id} không tồn tại")
             : new ApiResponse<FeaturedCategory>(item);
     }
 
     [HttpPost]
     public async Task<ApiResponse<FeaturedCategory>> Add(FeaturedCategoryCreationDto2 dto2) {
         var category = await _categoryService.GetById(dto2.CategoryId);
-        if (category == null) return ApiResponse.NotFound($"分类 {dto2.CategoryId} 不存在");
+        if (category == null) return ApiResponse.NotFound($"Danh mục {dto2.CategoryId} không tồn tại");
         var item = await _categoryService.AddOrUpdateFeaturedCategory(category, new FeaturedCategoryCreationDto {
             Name = dto2.Name, Description = dto2.Description, IconCssClass = dto2.IconCssClass
         });
@@ -50,7 +50,7 @@ public class FeaturedCategoryController : ControllerBase {
     [HttpDelete("{id:int}")]
     public ApiResponse Delete(int id) {
         var item = _categoryService.GetFeaturedCategoryById(id);
-        if (item == null) return ApiResponse.NotFound($"推荐分类记录 {id} 不存在");
+        if (item == null) return ApiResponse.NotFound($"Bản ghi danh mục nổi bật {id} không tồn tại");
         var rows = _categoryService.DeleteFeaturedCategoryById(id);
         return ApiResponse.Ok($"deleted {rows} rows.");
     }

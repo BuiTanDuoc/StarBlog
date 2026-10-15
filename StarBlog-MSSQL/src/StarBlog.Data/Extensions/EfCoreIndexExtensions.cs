@@ -7,7 +7,7 @@ namespace StarBlog.Data.Extensions;
 
 public static class EfCoreIndexExtensions {
     /// <summary>
-    /// 嵌套值对象的索引
+    /// Chỉ mục của value object lồng nhau
     /// </summary>
     /// <param name="builder"></param>
     /// <param name="ownedNavigation"></param>
@@ -38,7 +38,7 @@ public static class EfCoreIndexExtensions {
     }
 
     /// <summary>
-    /// 批量配置多个嵌套值对象的索引
+    /// Cấu hình hàng loạt chỉ mục cho nhiều value object lồng nhau
     /// </summary>
     /// <param name="builder"></param>
     /// <param name="ownedNavigation"></param>
@@ -64,7 +64,7 @@ public static class EfCoreIndexExtensions {
 
     private static string GetPropertyName(LambdaExpression expression) {
         if (expression.Body is MemberExpression memberExpression) {
-            // 转换为 snake_case 格式
+            // Chuyển sang định dạng snake_case
             var name = memberExpression.Member.Name;
             return name.ToSnakeCase();
         }
@@ -73,7 +73,7 @@ public static class EfCoreIndexExtensions {
     }
 
     /// <summary>
-    /// 将 CamelCase 转换为 snake_case
+    /// Chuyển CamelCase sang snake_case
     /// </summary>
     private static string ToSnakeCase(this string input) {
         if (string.IsNullOrEmpty(input)) {

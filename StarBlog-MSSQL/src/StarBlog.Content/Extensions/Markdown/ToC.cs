@@ -44,8 +44,8 @@ public static class ToC {
 
         var document = Markdig.Markdown.Parse(post.Content, pipeline);
 
-        // Markdig 中获取标题 ID 的正确方式是通过 GetAttributes() 方法，但需要在渲染完成后才能获取。
-        // 因为 ID 的生成是在 HeadingBlock_ProcessInlinesEnd 阶段完成的 (参考源码: src\\Markdig\\Extensions\\AutoIdentifiers\\AutoIdentifierExtension.cs)
+        // Markdig thì cách đúng để lấy ID của tiêu đề là qua phương thức GetAttributes(), nhưng chỉ lấy được sau khi render xong.
+        // Vì việc sinh ID được thực hiện ở giai đoạn HeadingBlock_ProcessInlinesEnd (tham khảo mã nguồn: src\\Markdig\\Extensions\\AutoIdentifiers\\AutoIdentifierExtension.cs)
         _ = document.ToHtml(pipeline);
 
         var headings = document.Descendants<HeadingBlock>()

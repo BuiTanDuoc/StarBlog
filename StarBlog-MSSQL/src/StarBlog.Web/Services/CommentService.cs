@@ -78,9 +78,9 @@ public class CommentService {
             querySet = querySet.Where(a => a.Content.Contains(param.Search));
         }
 
-        // 排序
+        // Sắp xếp
         if (!string.IsNullOrEmpty(param.SortBy)) {
-            // 是否升序
+            // Có sắp xếp tăng dần hay không
             var isAscending = !param.SortBy.StartsWith("-");
             var orderByProperty = param.SortBy.Trim('-');
 
@@ -140,7 +140,7 @@ public class CommentService {
     }
 
     /// <summary>
-    /// 检查邮箱地址是否有效
+    /// Kiểm tra địa chỉ email có hợp lệ hay không
     /// </summary>
     public static bool IsValidEmail(string email) {
         if (string.IsNullOrEmpty(email) || email.Length < 7) {
@@ -153,7 +153,7 @@ public class CommentService {
     }
 
     /// <summary>
-    /// 生成邮箱验证码，发送验证码邮件
+    /// Sinh mã xác thực email và gửi email chứa mã xác thực
     /// </summary>
     public async Task<(bool, string?)> GenerateOtp(string email, bool mock = false) {
         var cacheKey = $"comment-otp-{email}";
@@ -169,9 +169,9 @@ public class CommentService {
     }
 
     /// <summary>
-    /// 验证一次性密码
+    /// Xác thực mật khẩu dùng một lần (OTP)
     /// </summary>
-    /// <param name="clear">验证通过后是否清除</param>
+    /// <param name="clear">Có xóa sau khi xác thực thành công hay không</param>
     public bool VerifyOtp(string email, string otp, bool clear = true) {
         var cacheKey = $"comment-otp-{email}";
         _memoryCache.TryGetValue<string>(cacheKey, out var value);
@@ -218,12 +218,12 @@ public class CommentService {
         var safeReplierName = HtmlEncoder.Default.Encode(replier.Name);
         var safeReplyContent = HtmlEncoder.Default.Encode(replyComment.Content).Replace("\n", "<br>");
 
-        var subject = $"[StarBlog]你在《{safePostTitle}》下的评论收到了回复";
+        var subject = $"[StarBlog] Bình luận của bạn dưới bài viết '{safePostTitle}' đã nhận được phản hồi";
         var body = new StringBuilder();
-        body.AppendLine($"<p>你好，{HtmlEncoder.Default.Encode(parent.AnonymousUser.Name)}：</p>");
-        body.AppendLine($"<p>你的评论收到了 <b>{safeReplierName}</b> 的回复：</p>");
+        body.AppendLine($"<p>Xin chào, {HtmlEncoder.Default.Encode(parent.AnonymousUser.Name)}:</p>");
+        body.AppendLine($"<p>Bình luận của bạn đã nhận được phản hồi từ <b>{safeReplierName}</b>:</p>");
         body.AppendLine($"<blockquote style=\"margin:12px 0;padding:10px 12px;border-left:4px solid #ddd;background:#fafafa;\">{safeReplyContent}</blockquote>");
-        body.AppendLine($"<p>点击查看：<a href=\"{HtmlEncoder.Default.Encode(postUrl)}\">{HtmlEncoder.Default.Encode(postUrl)}</a></p>");
+        body.AppendLine($"<p>Nhấp để xem:<a href=\"{HtmlEncoder.Default.Encode(postUrl)}\">{HtmlEncoder.Default.Encode(postUrl)}</a></p>");
 
         await _outboxService.EnqueueEmailAsync(
             subject,

@@ -4,8 +4,8 @@ using System.Net;
 namespace StarBlog.Api.Middlewares;
 
 /// <summary>
-/// Swagger访问授权中间件
-/// 提供对Swagger UI和API文档的访问控制
+/// Middleware xác thực truy cập Swagger
+/// Cung cấp kiểm soát truy cập cho Swagger UI và tài liệu API
 /// </summary>
 public class SwaggerAuthMiddleware
 {
@@ -19,28 +19,28 @@ public class SwaggerAuthMiddleware
     }
 
     /// <summary>
-    /// 处理HTTP请求，检查Swagger相关路径的访问权限
+    /// Xử lý HTTP request, kiểm tra quyền truy cập các đường dẫn liên quan đến Swagger
     /// </summary>
-    /// <param name="context">HTTP上下文</param>
-    /// <returns>异步任务</returns>
+    /// <param name="context">HTTP context</param>
+    /// <returns>Tác vụ bất đồng bộ</returns>
     public async Task InvokeAsync(HttpContext context)
     {
         var path = context.Request.Path.Value?.ToLower();
         
-        // 检查是否为Swagger相关路径
+        // Kiểm tra xem có phải đường dẫn liên quan đến Swagger không
         if (IsSwaggerPath(path))
         {
-            // 检查用户是否已通过JWT认证
+            // Kiểm tra người dùng đã được xác thực qua JWT chưa
             if (!context.User.Identity?.IsAuthenticated == true)
             {
-                _logger.LogWarning("未授权访问Swagger UI: {Path} from {RemoteIpAddress}", 
+                _logger.LogWarning("Truy cập trái phép vào Swagger UI: {Path} from {RemoteIpAddress}", 
                     context.Request.Path, context.Connection.RemoteIpAddress);
                 
                 await HandleUnauthorizedAccess(context);
                 return;
             }
             
-            _logger.LogInformation("已授权用户访问Swagger: {User} -> {Path}", 
+            _logger.LogInformation("Người dùng đã xác thực truy cập Swagger: {User} -> {Path}", 
                 context.User.Identity.Name, context.Request.Path);
         }
 
@@ -48,10 +48,10 @@ public class SwaggerAuthMiddleware
     }
 
     /// <summary>
-    /// 判断是否为Swagger相关路径
+    /// Xác định có phải đường dẫn liên quan đến Swagger không
     /// </summary>
-    /// <param name="path">请求路径</param>
-    /// <returns>是否为Swagger路径</returns>
+    /// <param name="path">Đường dẫn yêu cầu</param>
+    /// <returns>Có phải đường dẫn Swagger không</returns>
     private static bool IsSwaggerPath(string? path)
     {
         if (string.IsNullOrEmpty(path)) return false;
@@ -61,10 +61,10 @@ public class SwaggerAuthMiddleware
     }
 
     /// <summary>
-    /// 处理未授权访问
+    /// Xử lý truy cập trái phép
     /// </summary>
-    /// <param name="context">HTTP上下文</param>
-    /// <returns>异步任务</returns>
+    /// <param name="context">HTTP context</param>
+    /// <returns>Tác vụ bất đồng bộ</returns>
     private static async Task HandleUnauthorizedAccess(HttpContext context)
     {
         context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
@@ -73,8 +73,8 @@ public class SwaggerAuthMiddleware
         var response = new
         {
             error = "Unauthorized",
-            message = "访问Swagger UI需要有效的JWT令牌认证",
-            details = "请先通过 /Api/Auth/login 接口获取JWT令牌，然后在请求头中添加 'Authorization: Bearer {token}'",
+            message = "Truy cập Swagger UI cần xác thực bằng JWT token hợp lệ",
+            details = "Vui lòng lấy JWT token qua API /Api/Auth/login trước, sau đó thêm vào request header 'Authorization: Bearer {token}'",
             timestamp = DateTime.UtcNow
         };
         
@@ -83,15 +83,15 @@ public class SwaggerAuthMiddleware
 }
 
 /// <summary>
-/// Swagger授权中间件扩展方法
+/// Extension method của middleware xác thực Swagger
 /// </summary>
 public static class SwaggerAuthMiddlewareExtensions
 {
     /// <summary>
-    /// 添加Swagger授权中间件
+    /// Thêm middleware xác thực Swagger
     /// </summary>
-    /// <param name="builder">应用程序构建器</param>
-    /// <returns>应用程序构建器</returns>
+    /// <param name="builder">Application builder</param>
+    /// <returns>Application builder</returns>
     public static IApplicationBuilder UseSwaggerAuth(this IApplicationBuilder builder)
     {
         return builder.UseMiddleware<SwaggerAuthMiddleware>();

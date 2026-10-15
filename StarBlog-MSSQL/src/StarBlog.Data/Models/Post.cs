@@ -4,82 +4,82 @@ using FreeSql.DataAnnotations;
 namespace StarBlog.Data.Models;
 
 /// <summary>
-/// 博客文章
+/// Bài viết blog
 /// </summary>
 public class Post {
     [Column(IsIdentity = false, IsPrimary = true)]
     public string Id { get; set; }
 
     /// <summary>
-    /// 标题
+    /// Tiêu đề
     /// </summary>
     public string Title { get; set; }
 
     /// <summary>
-    /// 文章链接，设置后可以通过以下形式访问文章
+    /// Đường dẫn bài viết, sau khi thiết lập có thể truy cập bài viết theo dạng sau
     /// <para> http://starblog.com/p/post-slug1 </para>
     /// </summary>
     [MaxLength(150)]
     public string? Slug { get; set; }
     
     /// <summary>
-    /// 文章标记，提取原markdown文件的文件名前缀，用于区分文章状态，例子如下
-    /// <para>《（未完成）StarBlog博客开发笔记(3)：模型设计》</para>
-    /// <para>《（未发布）StarBlog博客开发笔记(3)：模型设计》</para>
+    /// Nhãn bài viết, trích xuất từ tiền tố tên tệp markdown gốc, dùng để phân biệt trạng thái bài viết, ví dụ như sau
+    /// <para>"(Chưa hoàn thành)Ghi chép phát triển blog StarBlog(3): Thiết kế mô hình"</para>
+    /// <para>"(Chưa xuất bản)Ghi chép phát triển blog StarBlog(3): Thiết kế mô hình"</para>
     /// </summary>
     public string? Status { get; set; }
     
-    // todo 新增 tag 功能
+    // todo Bổ sung chức năng tag
 
     /// <summary>
-    /// 是否发表（不发表的话就是草稿状态）
+    /// Có xuất bản hay không (nếu không xuất bản thì là trạng thái bản nháp)
     /// </summary>
     public bool IsPublish { get; set; }
 
     /// <summary>
-    /// 梗概
+    /// Tóm tắt
     /// </summary>
     public string? Summary { get; set; }
 
     /// <summary>
-    /// 内容（markdown格式）
+    /// Nội dung (định dạng markdown)
     /// </summary>
     [MaxLength(-1)]
     public string? Content { get; set; }
 
     /// <summary>
-    /// 博客在导入前的相对路径
-    /// <para>如："系列/AspNetCore开发笔记"</para>
+    /// Đường dẫn tương đối của blog trước khi nhập
+    /// <para>Ví dụ: "Series/Ghi chép phát triển AspNetCore"</para>
     /// </summary>
     public string? Path { get; set; }
 
     /// <summary>
-    /// 创建时间
+    /// Thời gian tạo
     /// </summary>
     public DateTime CreationTime { get; set; }
 
     /// <summary>
-    /// 上次更新时间
+    /// Thời gian cập nhật lần cuối
     /// </summary>
     public DateTime LastUpdateTime { get; set; }
 
     /// <summary>
-    /// 分类ID
+    /// ID danh mục
     /// </summary>
     public int CategoryId { get; set; }
 
     /// <summary>
-    /// 分类
+    /// Danh mục
     /// </summary>
     public Category? Category { get; set; }
 
     /// <summary>
-    /// 文章的分类层级, 其内容类似这样 `1,2,3` , 用逗号分隔开分类ID
+    /// Cấp bậc danh mục của bài viết, nội dung có dạng như `1,2,3`, dùng dấu phẩy ngăn cách các ID danh mục
     /// </summary>
     public string? Categories { get; set; }
 
     /// <summary>
-    /// 文章翻译列表
+    /// Danh sách bản dịch của bài viết
     /// </summary>
     public List<PostTranslation>? Translations { get; set; }
 }

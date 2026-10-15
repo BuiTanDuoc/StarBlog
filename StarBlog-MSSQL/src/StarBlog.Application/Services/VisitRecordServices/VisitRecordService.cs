@@ -33,7 +33,7 @@ public class VisitRecordAnalyticsService {
     }
 
     /// <summary>
-    /// 总览数据
+    /// Dữ liệu tổng quan
     /// </summary>
     /// <returns></returns>
     public async Task<VisitOverview> Overview(VisitRecordParameters p) {
@@ -57,16 +57,16 @@ public class VisitRecordAnalyticsService {
     }
 
     /// <summary>
-    /// 获取按天趋势数据 - 使用拆分查询避免复杂 LINQ 翻译问题
+    /// Lấy dữ liệu xu hướng theo ngày - dùng truy vấn tách nhỏ để tránh vấn đề dịch LINQ phức tạp
     /// </summary>
     /// <param name="p"></param>
-    /// <param name="days">查看最近几天的数据，默认7天</param>
+    /// <param name="days">Xem dữ liệu của vài ngày gần đây, mặc định 7 ngày</param>
     /// <returns></returns>
     public async Task<List<DailyTrend>> GetDailyTrend(VisitRecordParameters p, int days) {
         var qs = _dbContext.VisitRecords.ApplyFilters(p);
         var startDate = DateTime.Today.AddDays(-days).Date;
 
-        // 获取基础数据到内存中进行处理
+        // Lấy dữ liệu cơ bản vào bộ nhớ để xử lý
         var records = await qs.Where(e => e.Time.Date >= startDate)
             .Select(e => new {
                 e.Time.Date,
@@ -76,13 +76,13 @@ public class VisitRecordAnalyticsService {
             })
             .ToListAsync();
 
-        // 在内存中进行分组和统计
+        // Nhóm và thống kê trong bộ nhớ
         var data = records
             .GroupBy(e => e.Date)
             .Select(g => new DailyTrend {
                 Time = g.Key,
                 Date = $"{g.Key.Month}-{g.Key.Day}",
-                // 总访问量
+                // Tổng lượt truy cập
                 Total = g.Count(),
                 // page view (exclude api and spiders)
                 Pv = g.Count(e =>
@@ -105,13 +105,13 @@ public class VisitRecordAnalyticsService {
     }
 
     /// <summary>
-    /// 小时级趋势 - 使用拆分查询避免复杂 LINQ 翻译问题
-    /// <para>按小时查看访问量变化</para>
+    /// Xu hướng theo giờ - dùng truy vấn tách nhỏ để tránh vấn đề dịch LINQ phức tạp
+    /// <para>Xem biến động lượt truy cập theo giờ</para>
     /// </summary>
     public async Task<List<HourlyTrend>> GetHourlyTrend(VisitRecordParameters p) {
         var qs = _dbContext.VisitRecords.ApplyFilters(p);
         
-        // 获取基础数据到内存中进行处理
+        // Lấy dữ liệu cơ bản vào bộ nhớ để xử lý
         var records = await qs
             .Select(e => new {
                 e.Time.Hour,
@@ -121,12 +121,12 @@ public class VisitRecordAnalyticsService {
             })
             .ToListAsync();
 
-        // 在内存中进行分组和统计
+        // Nhóm và thống kê trong bộ nhớ
         var data = records
             .GroupBy(e => e.Hour)
             .Select(g => new HourlyTrend {
                 Hour = g.Key,
-                // 总访问量
+                // Tổng lượt truy cập
                 Total = g.Count(),
                 // page view (exclude api and spiders)
                 Pv = g.Count(e =>
@@ -149,7 +149,7 @@ public class VisitRecordAnalyticsService {
     }
 
     /// <summary>
-    /// 获取地理信息筛选参数
+    /// Lấy tham số lọc thông tin địa lý
     /// </summary>
     public async Task<List<string?>> GetGeoFilterParams(VisitRecordParameters p, string param = "country") {
         var qs = _dbContext.VisitRecords.ApplyFilters(p);
@@ -171,9 +171,9 @@ public class VisitRecordAnalyticsService {
     }
 
     /// <summary>
-    /// PV / UV 统计
-    /// <para>PV（Page Views）：总访问数</para>
-    /// <para>UV（Unique Visitors）：去重的 IP 数或去重的用户数</para>
+    /// PV / UV Thống kê
+    /// <para>PV (Page Views): Tổng số lượt truy cập</para>
+    /// <para>UV (Unique Visitors): Số IP đã loại trùng hoặc số người dùng đã loại trùng</para>
     /// </summary>
     public async Task<PvUv> GetPvUv(VisitRecordParameters p) {
         var qs = _dbContext.VisitRecords.ApplyFilters(p);
@@ -183,8 +183,8 @@ public class VisitRecordAnalyticsService {
     }
 
     /// <summary>
-    /// Top N 访问路径
-    /// <para>找出某天或某段时间最热的页面／接口</para>
+    /// Top N Đường dẫn truy cập
+    /// <para>Tìm các trang/API phổ biến nhất trong một ngày hoặc một khoảng thời gian</para>
     /// </summary>
     public async Task<List<TopPath>> GetTopPaths(VisitRecordParameters p, int top = 10) {
         var qs = _dbContext.VisitRecords.ApplyFilters(p);
@@ -196,8 +196,8 @@ public class VisitRecordAnalyticsService {
     }
 
     /// <summary>
-    /// 响应时间分布
-    /// <para>计算平均、最大、95 百分位等</para>
+    /// Phân bố thời gian phản hồi
+    /// <para>Tính trung bình, lớn nhất, phân vị thứ 95, v.v.</para>
     /// </summary>
     public async Task<object> GetResponseTimeStats(VisitRecordParameters p) {
         var q = _dbContext.VisitRecords.ApplyFilters(p);
@@ -212,8 +212,8 @@ public class VisitRecordAnalyticsService {
     }
 
     /// <summary>
-    /// 状态码分布
-    /// <para>统计各状态码的调用量</para>
+    /// Phân bố mã trạng thái
+    /// <para>Thống kê số lượt gọi của từng mã trạng thái</para>
     /// </summary>
     public async Task<List<StatusCodeDistribution>> GetStatusCodeDistribution(VisitRecordParameters p) {
         var qs = _dbContext.VisitRecords.ApplyFilters(p);
@@ -225,7 +225,7 @@ public class VisitRecordAnalyticsService {
     }
 
     /// <summary>
-    /// 地理位置分布统计
+    /// Thống kê phân bố vị trí địa lý
     /// </summary>
     public async Task<object> GetGeoDistribution(VisitRecordParameters p) {
         var qs = _dbContext.VisitRecords.ApplyFilters(p);
@@ -256,17 +256,17 @@ public class VisitRecordAnalyticsService {
     }
 
     /// <summary>
-    /// 来源域名分析
-    /// <para>统计访问来源的域名分布</para>
+    /// Phân tích tên miền nguồn
+    /// <para>Thống kê phân bố tên miền của nguồn truy cập</para>
     /// </summary>
     public async Task<List<ReferrerDomain>> GetReferrerDomains(VisitRecordParameters p, int top = 10) {
         var qs = _dbContext.VisitRecords.ApplyFilters(p);
-        // 先获取有效的引用记录
+        // Trước tiên lấy các bản ghi referrer hợp lệ
         var records = await qs.Where(e => !string.IsNullOrEmpty(e.Referrer))
             .Select(e => e.Referrer)
             .ToListAsync();
 
-        // 在内存中进行 Uri 解析和分组
+        // Phân tích Uri và nhóm trong bộ nhớ
         return records
             .Select(r => {
                 try {
@@ -274,7 +274,7 @@ public class VisitRecordAnalyticsService {
                 }
                 catch {
                     return r;
-                } // 处理无效的 URL
+                } // Xử lý trường hợp không hợp lệ của URL
             })
             .GroupBy(host => host)
             .Select(g => new ReferrerDomain { Domain = g.Key, Count = g.Count() })
@@ -284,8 +284,8 @@ public class VisitRecordAnalyticsService {
     }
 
     /// <summary>
-    /// 环比增长分析
-    /// <para>计算当前周期与上一周期的访问量对比</para>
+    /// Phân tích tăng trưởng so với kỳ trước
+    /// <para>So sánh lượt truy cập giữa chu kỳ hiện tại và chu kỳ trước</para>
     /// </summary>
     public async Task<GrowthRate> GetGrowthRate(VisitRecordParameters p, int days = 7) {
         var qs = _dbContext.VisitRecords.ApplyFilters(p);
@@ -312,13 +312,13 @@ public class VisitRecordAnalyticsService {
     }
 
     /// <summary>
-    /// 跳出率分析
-    /// <para>计算只访问一个页面就离开的会话比例</para>
+    /// Phân tích tỷ lệ thoát
+    /// <para>Tính tỷ lệ phiên chỉ truy cập một trang rồi rời đi</para>
     /// </summary>
     public async Task<BounceRateStats> GetBounceRate(VisitRecordParameters p) {
         var qs = _dbContext.VisitRecords.ApplyFilters(p);
 
-        // 按IP和会话时间分组，计算每个会话的页面访问数
+        // Nhóm theo IP và thời gian phiên, tính số trang được truy cập trong mỗi phiên
         var sessions = await qs
             .GroupBy(e => new { e.Ip, SessionTime = e.Time.Date.AddHours(e.Time.Hour) })
             .Select(g => new { g.Key.Ip, g.Key.SessionTime, PageViews = g.Count() })
@@ -336,31 +336,31 @@ public class VisitRecordAnalyticsService {
     }
 
     /// <summary>
-    /// 首次访问分析
-    /// <para>统计新访客与回访者的比例</para>
+    /// Phân tích lần truy cập đầu tiên
+    /// <para>Thống kê tỷ lệ khách mới và khách quay lại</para>
     /// </summary>
     public async Task<FirstVisitStats> GetFirstVisitStats(VisitRecordParameters p, int days) {
         var qs = _dbContext.VisitRecords.ApplyFilters(p);
 
-        // 获取所有IP的首次访问时间
+        // Lấy thời gian truy cập lần đầu của tất cả IP
         var firstVisits = await qs
             .GroupBy(e => e.Ip)
             .Select(g => new { Ip = g.Key, FirstVisit = g.Min(e => e.Time) })
             .ToListAsync();
 
-        // 当前时间范围内的访问记录
+        // Bản ghi truy cập trong khoảng thời gian hiện tại
         var periodStart = DateTime.Today.AddDays(-days);
         var currentPeriodVisits = await qs
             .Where(e => e.Time >= periodStart)
             .Select(e => new { e.Ip, e.Time })
             .ToListAsync();
 
-        // 计算新访客数量
+        // Tính số lượng khách mới
         var newVisitors = currentPeriodVisits
             .GroupBy(e => e.Ip)
             .Count(g => firstVisits.First(f => f.Ip == g.Key).FirstVisit >= periodStart);
 
-        // 计算回访者数量
+        // Tính số lượng khách quay lại
         var returningVisitors = currentPeriodVisits
             .Select(e => e.Ip)
             .Distinct()
@@ -375,8 +375,8 @@ public class VisitRecordAnalyticsService {
     }
 
     /// <summary>
-    /// 技术分布统计
-    /// <para>统计浏览器、设备、操作系统的分布情况</para>
+    /// Thống kê phân bố công nghệ
+    /// <para>Thống kê phân bố của trình duyệt, thiết bị, hệ điều hành</para>
     /// </summary>
     public async Task<TechDistribution> GetTechDistribution(VisitRecordParameters p) {
         var qs = _dbContext.VisitRecords.ApplyFilters(p);
@@ -410,8 +410,8 @@ public class VisitRecordAnalyticsService {
     }
 
     /// <summary>
-    /// 慢请求排行
-    /// <para>获取响应时间最长的请求列表</para>
+    /// Xếp hạng request chậm
+    /// <para>Lấy danh sách request có thời gian phản hồi lâu nhất</para>
     /// </summary>
     public async Task<List<SlowRequest>> GetSlowRequests(VisitRecordParameters p, int top = 10) {
         var qs = _dbContext.VisitRecords.ApplyFilters(p);
@@ -430,19 +430,19 @@ public class VisitRecordAnalyticsService {
     }
 
     /// <summary>
-    /// 转化行为分析
-    /// <para>分析用户从入口页到目标页面的转化路径</para>
+    /// Phân tích hành vi chuyển đổi
+    /// <para>Phân tích đường dẫn chuyển đổi của người dùng từ trang vào đến trang đích</para>
     /// </summary>
     public async Task<ConversionStats> GetConversionStats(VisitRecordParameters p, string targetPath) {
         var qs = _dbContext.VisitRecords.ApplyFilters(p);
 
-        // 先获取基础数据到内存
+        // Trước tiên lấy dữ liệu cơ bản vào bộ nhớ
         var records = await qs
             .Select(e => new { e.Ip, e.RequestPath, e.Time })
             .ToListAsync();
 
-        // 在内存中进行复杂处理
-        // 按IP和会话分组
+        // Xử lý phức tạp trong bộ nhớ
+        // Nhóm theo IP và phiên
         var sessions = records
             .GroupBy(e => e.Ip)
             .Select(g => new {
@@ -451,12 +451,12 @@ public class VisitRecordAnalyticsService {
             })
             .ToList();
 
-        // 计算转化率
+        // Tính tỷ lệ chuyển đổi
         var totalSessions = sessions.Count;
         var convertedSessions = sessions.Count(s => s.Paths.Contains(targetPath));
         var conversionRate = totalSessions == 0 ? 0 : (double)convertedSessions / totalSessions * 100;
 
-        // 计算顶部入口页面
+        // Tính các trang vào hàng đầu
         var topEntryPages = sessions
             .Where(s => s.Paths.Count > 0)
             .GroupBy(s => s.Paths.First())

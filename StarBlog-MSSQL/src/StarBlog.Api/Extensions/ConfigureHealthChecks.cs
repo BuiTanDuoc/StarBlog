@@ -7,9 +7,9 @@ namespace StarBlog.Api.Extensions;
 
 public static class ConfigureHealthChecks {
     /// <summary>
-    /// 为 StarBlog.Api 注册健康检查（Health Checks）。
-    /// - Liveness：仅用于判断进程是否还“活着”（不依赖外部资源）
-    /// - Readiness：用于判断服务是否“就绪”（会检查关键依赖是否可用，如数据库）
+    /// Đăng ký health check (Health Checks) cho StarBlog.Api.
+    /// - Liveness: chỉ dùng để xác định tiến trình còn "sống" hay không (không phụ thuộc tài nguyên bên ngoài)
+    /// - Readiness: dùng để xác định dịch vụ đã "sẵn sàng" chưa (sẽ kiểm tra các phụ thuộc quan trọng có khả dụng không, ví dụ cơ sở dữ liệu)
     /// </summary>
     public static void AddStarBlogHealthChecks(this IServiceCollection services) {
         services
@@ -29,13 +29,13 @@ public static class ConfigureHealthChecks {
     }
 
     /// <summary>
-    /// 映射健康检查端点：
-    /// - /health/live：存活探针
-    /// - /health/ready：就绪探针
-    /// - /health、/healthz：汇总探针（兼容别名）
+    /// Ánh xạ các endpoint health check:
+    /// - /health/live: probe còn sống
+    /// - /health/ready: probe sẵn sàng
+    /// - /health, /healthz: probe tổng hợp (alias tương thích)
     /// </summary>
     public static WebApplication MapStarBlogHealthChecks(this WebApplication app) {
-        // HealthChecks：最常见的三种探针（以及 /healthz 兼容别名）
+        // HealthChecks: ba loại probe phổ biến nhất (và alias tương thích /healthz)
         app.MapHealthChecks(
                 "/health/live",
                 CreateHealthCheckOptions(r => r.Tags.Contains(HealthCheckTags.Live))
@@ -64,7 +64,7 @@ public static class ConfigureHealthChecks {
     }
 
     /// <summary>
-    /// 统一的 HealthCheckOptions，输出 JSON，并按健康状态返回 HTTP 状态码。
+    /// HealthCheckOptions thống nhất, xuất JSON và trả về mã trạng thái HTTP theo tình trạng sức khỏe.
     /// </summary>
     public static HealthCheckOptions CreateHealthCheckOptions(Func<HealthCheckRegistration, bool> predicate) {
         return new HealthCheckOptions {

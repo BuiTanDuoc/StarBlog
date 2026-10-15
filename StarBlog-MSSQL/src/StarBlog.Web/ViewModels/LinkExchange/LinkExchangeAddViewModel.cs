@@ -4,38 +4,38 @@ namespace StarBlog.Web.ViewModels.LinkExchange;
 
 public class LinkExchangeAddViewModel {
     /// <summary>
-    /// 网站名称
+    /// Tên website
     /// </summary>
-    [Display(Name = "网站名称")]
-    [Required(ErrorMessage = "必须填写网站名称")]
+    [Display(Name = "Tên website")]
+    [Required(ErrorMessage = "Phải nhập tên website")]
     public string Name { get; set; }
 
     /// <summary>
-    /// 介绍
+    /// Giới thiệu
     /// </summary>
-    [Display(Name = "介绍")]
+    [Display(Name = "Giới thiệu")]
     public string? Description { get; set; }
 
     /// <summary>
-    /// 网址
+    /// URL
     /// </summary>
-    [Display(Name = "网址")]
-    [Required(ErrorMessage = "必须填写网址")]
+    [Display(Name = "URL")]
+    [Required(ErrorMessage = "Phải nhập URL")]
     [DataType(DataType.Url)]
     public string Url { get; set; }
 
     /// <summary>
-    /// 站长
+    /// Quản trị viên website
     /// </summary>
-    [Display(Name = "站长名称")]
-    [Required(ErrorMessage = "必须填写站长名称")]
+    [Display(Name = "Tên quản trị viên website")]
+    [Required(ErrorMessage = "Phải nhập tên quản trị viên website")]
     public string WebMaster { get; set; }
 
     /// <summary>
-    /// 联系邮箱
+    /// Email liên hệ
     /// </summary>
-    [Display(Name = "联系邮箱")]
-    [Required(ErrorMessage = "必须填写联系邮箱")]
+    [Display(Name = "Email liên hệ")]
+    [Required(ErrorMessage = "Phải nhập email liên hệ")]
     [DataType(DataType.EmailAddress)]
     public string Email { get; set; }
 }

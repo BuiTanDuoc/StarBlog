@@ -3,7 +3,7 @@
 @if (Model != null && Model.Any()) {
     <div class="related-posts mt-5">
         <h4 class="mb-4">
-            <i class="fas fa-link me-2"></i>相关文章
+            <i class="fas fa-link me-2"></i>Bài viết liên quan
         </h4>
         <div class="row">
             @foreach (var post in Model) {
@@ -16,7 +16,7 @@
                                     @post.Title
                                 </a>
                             </h6>
-                            @if (!string.IsNullOrEmpty(post.Summary) && post.Summary != "（没有介绍）") {
+                            @if (!string.IsNullOrEmpty(post.Summary) && post.Summary != "(Không có mô tả)") {
                                 <p class="card-text small text-muted">
                                     @(post.Summary.Length > 80 ? post.Summary.Substring(0, 77) + "..." : post.Summary)
                                 </p>

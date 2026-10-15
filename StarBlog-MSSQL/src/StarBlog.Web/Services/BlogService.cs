@@ -32,7 +32,7 @@ public class BlogService {
     }
 
     /// <summary>
-    /// 获取博客信息概况
+    /// Lấy tổng quan thông tin blog
     /// </summary>
     /// <returns></returns>
     public async Task<BlogOverview> Overview() {
@@ -51,10 +51,10 @@ public class BlogService {
     }
 
     /// <summary>
-    /// 获取推荐博客row，一行最多两个博客
+    /// Lấy các hàng (row) blog nổi bật, mỗi hàng tối đa hai blog
     /// </summary>
     /// <returns></returns>
-    [Obsolete("不需要分出来row了，直接使用 GetFeaturedPosts() 即可")]
+    [Obsolete("Không cần tách thành row nữa, dùng trực tiếp GetFeaturedPosts() là được")]
     public async Task<List<List<Post>>> GetFeaturedPostRows() {
         var data = new List<List<Post>>();
 
@@ -85,10 +85,10 @@ public class BlogService {
     }
 
     /// <summary>
-    /// 设置置顶博客
+    /// Đặt blog được ghim
     /// </summary>
     /// <param name="post"></param>
-    /// <returns>返回 <see cref="TopPost"/> 对象和删除原有置顶博客的行数</returns>
+    /// <returns>Trả về đối tượng <see cref="TopPost"/> và số dòng blog ghim cũ đã bị xóa</returns>
     public async Task<(TopPost, int)> SetTopPost(Post post) {
         var rows = await _topPostRepo.Select.ToDelete().ExecuteAffrowsAsync();
         var item = new TopPost {PostId = post.Id};
@@ -97,7 +97,7 @@ public class BlogService {
     }
 
     /// <summary>
-    /// 获取文章的状态列表
+    /// Lấy danh sách trạng thái của bài viết
     /// </summary>
     /// <returns></returns>
     public async Task<List<string?>> GetStatusList() {
@@ -106,8 +106,8 @@ public class BlogService {
     }
 
     /// <summary>
-    /// 上传博客
-    /// todo 初步完成了这个功能，但太多冗余代码了，需要优化
+    /// Tải lên blog
+    /// todo Đã hoàn thành sơ bộ chức năng này, nhưng còn quá nhiều mã thừa, cần tối ưu
     /// </summary>
     /// <returns></returns>
     public async Task<Post> Upload(PostCreationDto dto, IFormFile file) {
@@ -118,7 +118,7 @@ public class BlogService {
 
         var extractPath = Path.Combine(Path.GetTempPath(), "StarBlog", Guid.NewGuid().ToString());
 
-        // 使用指定编码解压，防止中文文件名乱码
+        // Giải nén bằng bảng mã chỉ định để tránh lỗi font tên tệp tiếng Trung
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         ZipFile.ExtractToDirectory(tempFile, extractPath, Encoding.GetEncoding(dto.ZipEncoding));
 
@@ -130,8 +130,8 @@ public class BlogService {
         var content = await reader.ReadToEndAsync();
         var post = new Post {
             Id = GuidUtils.GuidTo16String(),
-            Status = "已发布",
-            Title = dto.Title ?? $"{DateTime.Now.ToLongDateString()} 文章",
+            Status = "Đã xuất bản",
+            Title = dto.Title ?? $"{DateTime.Now.ToLongDateString()} Bài viết",
             Summary = dto.Summary,
             IsPublish = true,
             Content = content,
@@ -141,7 +141,7 @@ public class BlogService {
             CategoryId = dto.CategoryId,
         };
 
-        // 处理多级分类
+        // Xử lý danh mục nhiều cấp
         var category = await _categoryRepo.Where(a => a.Id == dto.CategoryId).FirstAsync();
         if (category == null) {
             post.Categories = "0";
@@ -161,17 +161,17 @@ public class BlogService {
         var assetsPath = Path.Combine(_environment.WebRootPath, "media", "blog");
         var processor = new PostProcessor(extractPath, assetsPath, post);
 
-        // 处理文章标题和状态
+        // Xử lý tiêu đề và trạng thái bài viết
         processor.InflateStatusTitle();
 
-        // 处理文章正文内容
-        // 导入文章的时候一并导入文章里的图片，并对图片相对路径做替换操作
+        // Xử lý nội dung chính của bài viết
+        // Khi nhập bài viết, đồng thời nhập luôn các hình ảnh trong bài viết và thay thế đường dẫn tương đối của hình ảnh
         post.Content = processor.MarkdownParse();
         if (string.IsNullOrEmpty(post.Summary)) {
             post.Summary = processor.GetSummary(200);
         }
 
-        // 存入数据库
+        // Lưu vào cơ sở dữ liệu
         post = await _postRepo.InsertAsync(post);
 
         return post;

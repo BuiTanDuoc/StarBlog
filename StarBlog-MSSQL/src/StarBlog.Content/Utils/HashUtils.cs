@@ -4,7 +4,7 @@ using System.Text;
 namespace StarBlog.Content.Utils;
 
 /// <summary>
-/// 哈希工具
+/// Công cụ băm (hash)
 /// </summary>
 public static class HashUtils {
     private static string ComputeHash(HashAlgorithm hashAlgorithm, string source) {

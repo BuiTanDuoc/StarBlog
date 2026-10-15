@@ -3,8 +3,8 @@ using Microsoft.Extensions.Options;
 namespace StarBlog.Web.Services.OutboxServices;
 
 /// <summary>
-/// Outbox 后台任务 Worker
-/// <para>以 HostedService 形式常驻运行，周期性拉取并处理 outbox_message。</para>
+/// Outbox Tác vụ nền Worker
+/// <para>Chạy thường trú dưới dạng HostedService, định kỳ lấy và xử lý outbox_message.</para>
 /// </summary>
 public class OutboxWorker : BackgroundService {
     private readonly ILogger<OutboxWorker> _logger;

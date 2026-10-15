@@ -11,7 +11,7 @@
                 this.themes = res.data
             })
 
-        // 读取本地主题配置
+        // Đọc cấu hình giao diện cục bộ
         let theme = localStorage.getItem('currentTheme')
         if (theme != null) this.currentTheme = theme
     },
@@ -22,7 +22,7 @@
             this.currentTheme = themeName
             localStorage.setItem('currentTheme', themeName)
             localStorage.setItem('currentThemeCssUrl', theme.cssUrl)
-            // 换主题之后最好要刷新页面，不然可能样式冲突
+            // Sau khi đổi giao diện nên tải lại trang, nếu không có thể bị xung đột style
             location.reload()
         }
     }

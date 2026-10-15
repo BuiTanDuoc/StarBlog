@@ -5,7 +5,7 @@ using StarBlog.Web.Services;
 namespace StarBlog.Web.Services.OutboxServices;
 
 /// <summary>
-/// 邮件发送任务处理器
+/// Bộ xử lý tác vụ gửi email
 /// </summary>
 public class EmailSendOutboxHandler : IOutboxHandler {
     private readonly EmailService _emailService;
@@ -18,7 +18,7 @@ public class EmailSendOutboxHandler : IOutboxHandler {
 
     public async Task HandleAsync(OutboxMessage message, CancellationToken cancellationToken) {
         var payload = JsonSerializer.Deserialize<OutboxEmailPayload>(message.Payload);
-        if (payload == null) throw new InvalidOperationException($"Outbox payload 反序列化失败：{message.Id}");
+        if (payload == null) throw new InvalidOperationException($"Outbox payload Giải tuần tự hóa thất bại: {message.Id}");
 
         await _emailService.SendEmailAsync(payload.Subject, payload.HtmlBody, payload.ToName, payload.ToAddress);
     }

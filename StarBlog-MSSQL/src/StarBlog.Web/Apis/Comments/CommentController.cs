@@ -24,7 +24,7 @@ public class CommentController : ControllerBase {
     }
 
     /// <summary>
-    /// 获取分页评论
+    /// Lấy bình luận có phân trang
     /// </summary>
     [HttpGet]
     public async Task<ApiResponsePaged<Comment>> GetPagedList([FromQuery] CommentQueryParameters @params) {
@@ -34,17 +34,17 @@ public class CommentController : ControllerBase {
     }
 
     /// <summary>
-    /// 根据邮箱和验证码，获取匿名用户信息
+    /// Lấy thông tin người dùng ẩn danh dựa trên email và mã xác thực
     /// </summary>
     [HttpGet("[action]")]
     public async Task<ApiResponse> GetAnonymousUser(string email, string otp) {
-        if (!CommentService.IsValidEmail(email)) return ApiResponse.BadRequest("提供的邮箱地址无效");
+        if (!CommentService.IsValidEmail(email)) return ApiResponse.BadRequest("Địa chỉ email được cung cấp không hợp lệ");
 
         var verified = _commentService.VerifyOtp(email, otp, clear: false);
-        if (!verified) return ApiResponse.BadRequest("验证码无效");
+        if (!verified) return ApiResponse.BadRequest("Mã xác thực không hợp lệ");
 
         var anonymous = await _commentService.GetAnonymousUser(email);
-        // 暂时不使用生成新验证码的功能，避免用户体验割裂
+        // Tạm thời không dùng chức năng sinh mã xác thực mới, tránh trải nghiệm người dùng bị đứt gãy
         // var (_, newOtp) = await _commentService.GenerateOtp(email, true);
 
         return ApiResponse.Ok(new {
@@ -54,24 +54,24 @@ public class CommentController : ControllerBase {
     }
 
     /// <summary>
-    /// 获取邮件验证码
+    /// Lấy mã xác thực qua email
     /// </summary>
     [HttpGet("[action]")]
     public async Task<ApiResponse> GetEmailOtp(string email) {
         if (!CommentService.IsValidEmail(email)) {
-            return ApiResponse.BadRequest("提供的邮箱地址无效");
+            return ApiResponse.BadRequest("Địa chỉ email được cung cấp không hợp lệ");
         }
 
         var (result, _) = await _commentService.GenerateOtp(email);
         return result
-            ? ApiResponse.Ok("发送邮件验证码成功，五分钟内有效")
-            : ApiResponse.BadRequest("上一个验证码还在有效期内，请勿重复请求验证码");
+            ? ApiResponse.Ok("Gửi mã xác thực qua email thành công, có hiệu lực trong năm phút")
+            : ApiResponse.BadRequest("Mã xác thực trước đó vẫn còn hiệu lực, vui lòng không yêu cầu mã lặp lại");
     }
 
     [HttpPost]
     public async Task<ApiResponse<Comment>> Add(CommentCreationDto dto) {
         if (!_commentService.VerifyOtp(dto.Email, dto.EmailOtp)) {
-            return ApiResponse.BadRequest("验证码无效");
+            return ApiResponse.BadRequest("Mã xác thực không hợp lệ");
         }
 
         var anonymousUser = await _commentService.GetOrCreateAnonymousUser(
@@ -91,11 +91,11 @@ public class CommentController : ControllerBase {
         if (_filter.CheckBadWord(dto.Content)) {
             comment.IsNeedAudit = true;
             comment.Visible = false;
-            msg = "小管家发现您可能使用了不良用语，该评论将在审核通过后展示~";
+            msg = "Trợ lý kiểm duyệt phát hiện bạn có thể đã dùng từ ngữ không phù hợp, bình luận này sẽ được hiển thị sau khi được duyệt~";
         }
         else {
             comment.Visible = true;
-            msg = "评论由小管家审核通过，感谢您参与讨论~";
+            msg = "Bình luận đã được trợ lý kiểm duyệt phê duyệt, cảm ơn bạn đã tham gia thảo luận~";
         }
 
         comment = await _commentService.Add(comment);
@@ -114,7 +114,7 @@ public class CommentController : ControllerBase {
     }
 
     /// <summary>
-    /// 审核通过
+    /// Duyệt
     /// </summary>
     [Authorize]
     [HttpPost("{id}/[action]")]
@@ -125,7 +125,7 @@ public class CommentController : ControllerBase {
     }
 
     /// <summary>
-    /// 审核拒绝
+    /// Từ chối duyệt
     /// </summary>
     [Authorize]
     [HttpPost("{id}/[action]")]

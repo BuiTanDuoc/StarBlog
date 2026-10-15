@@ -14,17 +14,17 @@ using StarBlog.Api.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 纯 WebAPI：仅注册 Controllers（不包含 MVC Views）
-// 同时启用全局响应包装，确保绝大多数 Action 的返回结构稳定一致（ApiResponse / ApiResponsePaged）。
+// WebAPI thuần: chỉ đăng ký Controllers (không bao gồm MVC Views)
+// Đồng thời bật bao bọc phản hồi toàn cục, đảm bảo cấu trúc trả về của hầu hết Action ổn định và nhất quán (ApiResponse / ApiResponsePaged).
 builder.Services.AddControllers(options => {
     options.Filters.Add<ResponseWrapperFilter>();
 });
 
-// 缓存与 HttpContextAccessor：部分服务（例如统计、IP/UA 解析、邮件/评论逻辑）会用到
+// Cache và HttpContextAccessor: một số dịch vụ (ví dụ thống kê, phân tích IP/UA, logic email/bình luận) sẽ dùng đến
 builder.Services.AddMemoryCache();
 builder.Services.AddHttpContextAccessor();
 
-// 响应压缩：对 JSON/XML/静态文本等响应启用 Brotli/Gzip，减少带宽消耗
+// Nén phản hồi: bật Brotli/Gzip cho các phản hồi JSON/XML/văn bản tĩnh, v.v. để giảm tiêu thụ băng thông
 builder.Services.AddResponseCompression(options => {
     options.EnableForHttps = true;
     options.Providers.Add<Microsoft.AspNetCore.ResponseCompression.BrotliCompressionProvider>();
@@ -49,23 +49,23 @@ builder.Services.Configure<Microsoft.AspNetCore.ResponseCompression.GzipCompress
     options.Level = System.IO.Compression.CompressionLevel.Optimal;
 });
 
-// AutoMapper：控制器 DTO <-> Entity 的映射
+// AutoMapper: ánh xạ DTO <-> Entity của controller
 builder.Services.AddAutoMapper(typeof(Program));
 
-// 访问日志/统计用的 EF Core SQL Server（与 FreeSql 业务库并存）
+// EF Core SQL Server dùng cho nhật ký truy cập/thống kê (cùng tồn tại với cơ sở dữ liệu nghiệp vụ FreeSql)
 builder.Services.AddDbContext<AppDbContext>(options => {
     options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer-Log"));
 });
 
-// 业务数据访问（FreeSql）
+// Truy cập dữ liệu nghiệp vụ (FreeSql)
 builder.Services.AddFreeSql(builder.Configuration);
 builder.Services.AddVisitRecord();
 builder.Services.AddHttpClient();
 
-// HealthChecks：提供 /health（汇总）、/health/live（存活）、/health/ready（就绪）端点
+// HealthChecks: cung cấp các endpoint /health (tổng hợp), /health/live (còn sống), /health/ready (sẵn sàng)
 builder.Services.AddStarBlogHealthChecks();
 
-// CORS：Next.js 前端跨域调用需要（带 Cookie/凭据时必须显式列出允许的 Origin）
+// CORS: cần cho frontend Next.js gọi chéo miền (khi kèm Cookie/thông tin xác thực thì phải liệt kê rõ các Origin được phép)
 builder.Services.AddCors(options => {
     options.AddDefaultPolicy(policyBuilder => {
         policyBuilder.AllowCredentials();
@@ -81,16 +81,16 @@ builder.Services.AddCors(options => {
     });
 });
 
-// Swagger：按既有分组输出 OpenAPI，并保留（可选）Swagger 访问授权中间件
+// Swagger: xuất OpenAPI theo các nhóm hiện có, đồng thời giữ lại middleware xác thực truy cập Swagger (tùy chọn)
 builder.Services.AddSwagger();
 
-// AppSettings：加载邮件/监控/安全相关配置（其中 email/monitoring 的 json 文件为 optional）
+// AppSettings: nạp các cấu hình liên quan đến email/giám sát/bảo mật (trong đó tệp json của email/monitoring là optional)
 builder.Services.AddSettings(builder.Configuration);
 
-// JWT Bearer：后台管理相关接口依赖
+// JWT Bearer: các API quản trị phụ thuộc vào
 builder.Services.AddAuth(builder.Configuration);
 
-// ImageSharp：保留现有图片处理能力（例如图片相关服务与中间件链路）
+// ImageSharp: giữ nguyên khả năng xử lý hình ảnh hiện có (ví dụ các dịch vụ và chuỗi middleware liên quan đến hình ảnh)
 builder.Services.AddImageSharp();
 
 builder.Services.AddSingleton<IAppPathProvider, AspNetAppPathProvider>();
@@ -98,7 +98,7 @@ builder.Services.AddSingleton<IFileStorage, PhysicalFileStorage>();
 builder.Services.AddSingleton<IClock, SystemClock>();
 builder.Services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
 
-// 应用层服务：为了保证 API 行为与 StarBlog.Web 一致，首轮迁移直接沿用既有 Service 列表
+// Dịch vụ tầng ứng dụng: để đảm bảo hành vi API giống với StarBlog.Web, đợt di chuyển đầu tiên dùng nguyên danh sách Service hiện có
 builder.Services.AddSingleton<CommonService>();
 builder.Services.AddSingleton<EmailService>();
 builder.Services.AddSingleton<ThemeService>();
@@ -113,7 +113,7 @@ builder.Services.AddScoped<LinkService>();
 builder.Services.AddScoped<PhotoService>();
 builder.Services.AddScoped<PostService>();
 
-// Outbox：将“需要后台处理的任务”（例如邮件发送）异步化，避免阻塞接口响应
+// Outbox: bất đồng bộ hóa các "tác vụ cần xử lý nền" (ví dụ gửi email), tránh chặn phản hồi của API
 builder.Services.Configure<OutboxOptions>(builder.Configuration.GetSection("Outbox"));
 builder.Services.AddScoped<OutboxService>();
 builder.Services.AddScoped<OutboxProcessor>();
@@ -121,7 +121,7 @@ builder.Services.AddScoped<IOutboxHandler, EmailSendOutboxHandler>();
 builder.Services.AddHostedService<OutboxWorker>();
 builder.Services.AddHostedService<BackgroundTaskWorker>();
 
-// 上传/导入等场景可能包含大文件，放开 Kestrel 请求体大小限制（由业务逻辑自行校验）
+// Các tình huống tải lên/nhập có thể chứa tệp lớn, nên nới giới hạn kích thước request body của Kestrel (do logic nghiệp vụ tự kiểm tra)
 builder.WebHost.ConfigureKestrel(options => {
     options.Limits.MaxRequestBodySize = long.MaxValue;
 });
@@ -145,7 +145,7 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions {
     ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
 });
 
-// 说明：ImageSharp 中间件需要存在 webroot（本项目提供空的 wwwroot 目录以满足启动）
+// Ghi chú: middleware ImageSharp cần có webroot (dự án này cung cấp thư mục wwwroot rỗng để đáp ứng việc khởi động)
 app.UseImageSharp();
 app.UseResponseCompression();
 
@@ -154,8 +154,8 @@ app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Swagger UI：Development 环境免登录直接访问（启动后浏览器自动打开 /api-docs/swagger），
-// 其他环境仍需要已认证用户才能访问（避免生产环境直接暴露文档）
+// Swagger UI: môi trường Development truy cập trực tiếp không cần đăng nhập (sau khi khởi động trình duyệt tự mở /api-docs/swagger),
+// các môi trường khác vẫn cần người dùng đã xác thực mới truy cập được (tránh để lộ tài liệu trực tiếp ở môi trường production)
 app.UseSwaggerPkg(requireAuth: !app.Environment.IsDevelopment());
 
 app.MapStarBlogHealthChecks();

@@ -8,12 +8,12 @@
             <div class="btn-group btn-group-sm" role="group" aria-label="Language switcher">
                 <a href="@Context.Request.Path"
                    class="btn btn-outline-secondary @(Model.IsTranslation ? "" : "active")">
-                    中文
+                    Tiếng Trung
                 </a>
                 @foreach (var lang in Model.AvailableLanguages) {
                     var langLabel = lang switch {
                         "en" => "English",
-                        "ja" => "日本語",
+                        "ja" => "Tiếng Nhật",
                         "ko" => "한국어",
                         _ => lang
                     };
@@ -30,11 +30,11 @@
     <div class="post-meta">
         <div class="d-flex justify-content-between">
             <div>
-                发布：
+                Xuất bản: 
                 <span>@Model.CreationTime.ToString("yyyy-MM-dd hh:mm")</span>
             </div>
             <div>
-                更新：
+                Cập nhật: 
                 @Model.LastUpdateTime.ToString("yyyy-MM-dd hh:mm")
             </div>
         </div>
@@ -42,7 +42,7 @@
         <div class="d-flex justify-content-between">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item active">博客</li>
+                    <li class="breadcrumb-item active">Blog</li>
                     @foreach (var category in Model.Categories) {
                         <li class="breadcrumb-item">
                             <a asp-controller="Blog" asp-action="List"
@@ -53,7 +53,7 @@
                     }
                 </ol>
             </nav>
-            <div>字数：@Model.Content.Length.ToString()</div>
+            <div>Số chữ: @Model.Content.Length.ToString()</div>
         </div>
     </div>
 </header>

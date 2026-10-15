@@ -13,25 +13,25 @@
                 <li class="nav-item">
                     <a class="nav-link @ViewContext.NavItemActive("Home", "Index")"
                        asp-controller="Home" asp-action="Index">
-                        主页
+                        Trang chủ
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link @ViewContext.NavItemActive("Blog", "List")"
                        asp-controller="Blog" asp-action="List">
-                        文章
+                        Bài viết
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link @ViewContext.NavItemActive("Photography", "Index")" 
                        asp-controller="Photography" asp-action="Index">
-                        照片
+                        Ảnh
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link @ViewContext.NavItemActive("Rss", "Index")"
                        asp-controller="Rss" asp-action="Index">
-                        订阅
+                        Đăng ký
                     </a>
                 </li>
                 <li class="nav-item">
@@ -43,11 +43,11 @@
                 <li class="nav-item">
                     <a class="nav-link @ViewContext.NavItemActive("About", "Index")"
                        asp-controller="About" asp-action="Index">
-                        关于
+                        Giới thiệu
                     </a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false">界面主题</a>
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false">Giao diện</a>
                     <ul class="dropdown-menu" aria-labelledby="dropdown04">
                         <li v-for="theme in themes">
                             <a v-if="theme.name===currentTheme" class="dropdown-item active">{{theme.name}}</a>
@@ -57,7 +57,7 @@
                 </li>
             </ul>
             <form asp-controller="Search" asp-action="Blog" method="get">
-                <input type="search" class="form-control" placeholder="输入搜索..." aria-label="Search" name="keyword">
+                <input type="search" class="form-control" placeholder="Nhập để tìm kiếm..." aria-label="Search" name="keyword">
             </form>
         </div>
     </div>

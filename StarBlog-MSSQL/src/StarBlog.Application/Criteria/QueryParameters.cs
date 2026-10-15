@@ -1,23 +1,23 @@
 namespace StarBlog.Application.Criteria;
 
 /// <summary>
-/// 请求参数
+/// Tham số yêu cầu
 /// </summary>
 public class QueryParameters {
     /// <summary>
-    /// 最大页面条目
+    /// Số mục tối đa mỗi trang
     /// </summary>
     public const int MaxPageSize = 50;
 
     private int _pageSize = 10;
 
     /// <summary>
-    /// 是否启用分页（默认 true）
+    /// Có bật phân trang hay không (mặc định true)
     /// </summary>
     public bool EnablePaging { get; set; } = true;
 
     /// <summary>
-    /// 页面大小
+    /// Kích thước trang
     /// </summary>
     public int PageSize {
         get => _pageSize;
@@ -25,17 +25,17 @@ public class QueryParameters {
     }
 
     /// <summary>
-    /// 当前页码
+    /// Số trang hiện tại
     /// </summary>
     public int Page { get; set; } = 1;
 
     /// <summary>
-    /// 搜索关键词
+    /// Từ khóa tìm kiếm
     /// </summary>
     public string? Search { get; set; }
 
     /// <summary>
-    /// 排序字段
+    /// Trường sắp xếp
     /// </summary>
     public string? SortBy { get; set; }
 }

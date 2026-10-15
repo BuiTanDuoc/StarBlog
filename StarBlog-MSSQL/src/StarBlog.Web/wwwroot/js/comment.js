@@ -21,7 +21,7 @@
         submitDisabled: true,
         replyDisabled: true,
         replyComment: null,
-        getEmailOtpText: '获取',
+        getEmailOtpText: 'Lấy',
         otpInterval: null,
         form: {
             parentId: '',
@@ -34,24 +34,24 @@
         },
         formRules: {
             userName: [
-                {required: true, message: '请输入用户名称', trigger: 'blur'},
-                {min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur'}
+                {required: true, message: 'Vui lòng nhập tên người dùng', trigger: 'blur'},
+                {min: 2, max: 20, message: 'Độ dài từ 2 đến 20 ký tự', trigger: 'blur'}
             ],
             email: [
-                {required: true, message: '请输入邮箱', trigger: 'blur'},
-                {type: 'email', message: '邮箱格式不正确'}
+                {required: true, message: 'Vui lòng nhập email', trigger: 'blur'},
+                {type: 'email', message: 'Định dạng email không đúng'}
             ],
             emailOtp: [
-                {required: true, message: '请输入邮箱验证码', trigger: 'change'},
-                {len: 4, message: '长度 4 个字符', trigger: 'change'}
+                {required: true, message: 'Vui lòng nhập mã xác thực email', trigger: 'change'},
+                {len: 4, message: 'Độ dài 4 ký tự', trigger: 'change'}
             ],
             url: [
-                {type: 'url', message: `请输入正确的url`, trigger: 'blur'},
+                {type: 'url', message: `Vui lòng nhập đúng url`, trigger: 'blur'},
             ],
             content: [
-                {required: true, message: '请输入评论内容', trigger: 'blur'},
-                {min: 1, max: 300, message: '长度 在 1 到 300 个字符', trigger: 'blur'},
-                // {whitespace: true, message: '评论内容只存在空格', trigger: 'blur'},
+                {required: true, message: 'Vui lòng nhập nội dung bình luận', trigger: 'blur'},
+                {min: 1, max: 300, message: 'Độ dài từ 1 đến 300 ký tự', trigger: 'blur'},
+                // {whitespace: true, message: 'Nội dung bình luận chỉ có khoảng trắng', trigger: 'blur'},
             ]
         },
     },
@@ -129,7 +129,7 @@
         },
         async handleGetEmailOtp() {
             if (!this.form.email) {
-                this.$message.error('请输入邮箱地址！')
+                this.$message.error('Vui lòng nhập địa chỉ email!')
                 return
             }
             this.getEmailOtpLoading = true
@@ -137,7 +137,7 @@
             this.getEmailOtpLoading = false
             if (res.successful) {
                 this.$message.success(res.message)
-                // 发送成功，显示倒计时
+                // Gửi thành công, hiển thị đếm ngược
                 let countdown = 60 * 5
                 this.getEmailOtpText = `${countdown}s`
                 this.otpInterval = setInterval(() => {
@@ -147,7 +147,7 @@
                         this.getEmailOtpDisabled = true
                     } else {
                         countdown = 60 * 5
-                        this.getEmailOtpText = '获取'
+                        this.getEmailOtpText = 'Lấy'
                         if (this.otpInterval) clearInterval(this.otpInterval)
                         this.getEmailOtpDisabled = false
                     }
@@ -170,11 +170,11 @@
                     this.form.url = res.data.anonymousUser.url
                 }
                 this.form.emailOtp = res.data.newOtp
-                // 锁住邮箱和验证码，不用编辑了
+                // Khóa email và mã xác thực, không cần chỉnh sửa nữa
                 this.getEmailOtpDisabled = true
                 this.emailDisabled = true
                 this.emailOtpDisabled = true
-                // 开启编辑用户名、网址、内容、回复
+                // Mở cho chỉnh sửa tên người dùng, website, nội dung, phản hồi
                 this.userNameDisabled = false
                 this.urlDisabled = false
                 this.contentDisabled = false
@@ -193,7 +193,7 @@
         handleReset() {
             this.$refs.form.resetFields()
             if (this.otpInterval) clearInterval(this.otpInterval)
-            this.getEmailOtpText = '获取'
+            this.getEmailOtpText = 'Lấy'
             this.emailDisabled = false
             this.emailOtpDisabled = false
             this.getEmailOtpDisabled = false

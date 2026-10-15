@@ -6,7 +6,7 @@ using StarBlog.Data.Models;
 namespace StarBlog.Web.Services;
 
 /// <summary>
-/// 统一的Sitemap生成服务
+/// Dịch vụ tạo Sitemap thống nhất
 /// </summary>
 public class SitemapService {
     private readonly IBaseRepository<Post> _postRepo;
@@ -26,13 +26,13 @@ public class SitemapService {
     }
 
     /// <summary>
-    /// 生成主sitemap
+    /// Tạo sitemap chính
     /// </summary>
     public async Task<string> GenerateMainSitemapAsync() {
         var baseUrl = GetBaseUrl();
         var urls = new List<SitemapUrl>();
 
-        // 添加首页
+        // Thêm trang chủ
         urls.Add(new SitemapUrl {
             Location = baseUrl,
             LastModified = DateTime.Now,
@@ -40,7 +40,7 @@ public class SitemapService {
             Priority = "1.0"
         });
 
-        // 添加博客列表页
+        // Thêm trang danh sách blog
         urls.Add(new SitemapUrl {
             Location = $"{baseUrl}/Blog/List",
             LastModified = DateTime.Now,
@@ -48,7 +48,7 @@ public class SitemapService {
             Priority = "0.8"
         });
 
-        // 添加分类页面
+        // Thêm các trang danh mục
         var categories = await _categoryRepo.Where(c => c.Visible).ToListAsync();
         foreach (var category in categories) {
             urls.Add(new SitemapUrl {
@@ -59,7 +59,7 @@ public class SitemapService {
             });
         }
 
-        // 添加文章页面
+        // Thêm các trang bài viết
         var posts = await _postRepo.Where(p => p.IsPublish)
             .OrderByDescending(p => p.LastUpdateTime)
             .ToListAsync();
@@ -77,7 +77,7 @@ public class SitemapService {
             });
         }
 
-        // 添加其他静态页面
+        // Thêm các trang tĩnh khác
         var staticPages = new[] {
             new { Url = "/About", Priority = "0.5", ChangeFreq = "monthly" },
             new { Url = "/Photography", Priority = "0.5", ChangeFreq = "weekly" },
@@ -97,7 +97,7 @@ public class SitemapService {
     }
 
     /// <summary>
-    /// 生成图片sitemap
+    /// Tạo sitemap hình ảnh
     /// </summary>
     public async Task<string> GenerateImageSitemapAsync() {
         var baseUrl = GetBaseUrl();
@@ -116,7 +116,7 @@ public class SitemapService {
                 imageUrls.Add(new SitemapImageUrl {
                     PageUrl = postUrl,
                     ImageUrl = imageUrl,
-                    Caption = $"{post.Title} 相关图片",
+                    Caption = $"{post.Title} hình ảnh liên quan",
                     Title = post.Title,
                     LastModified = post.LastUpdateTime
                 });
@@ -127,7 +127,7 @@ public class SitemapService {
     }
 
     /// <summary>
-    /// 生成sitemap索引
+    /// Tạo chỉ mục sitemap
     /// </summary>
     public string GenerateSitemapIndex() {
         var baseUrl = GetBaseUrl();
@@ -146,7 +146,7 @@ public class SitemapService {
     }
 
     /// <summary>
-    /// 生成标准XML sitemap
+    /// Tạo XML chuẩn sitemap
     /// </summary>
     private string GenerateXmlSitemap(IEnumerable<SitemapUrl> urls) {
         var settings = CreateXmlWriterSettings();
@@ -172,7 +172,7 @@ public class SitemapService {
     }
 
     /// <summary>
-    /// 生成图片XML sitemap
+    /// Tạo XML hình ảnh sitemap
     /// </summary>
     private string GenerateXmlImageSitemap(IEnumerable<SitemapImageUrl> imageUrls) {
         var settings = CreateXmlWriterSettings();
@@ -206,7 +206,7 @@ public class SitemapService {
     }
 
     /// <summary>
-    /// 生成sitemap索引XML
+    /// Tạo XML chỉ mục sitemap
     /// </summary>
     private string GenerateXmlSitemapIndex(IEnumerable<SitemapIndexEntry> sitemaps) {
         var settings = CreateXmlWriterSettings();
@@ -230,7 +230,7 @@ public class SitemapService {
     }
 
     /// <summary>
-    /// 创建统一的XML写入设置
+    /// Tạo thiết lập ghi XML thống nhất
     /// </summary>
     private static XmlWriterSettings CreateXmlWriterSettings() {
         return new XmlWriterSettings {
@@ -241,7 +241,7 @@ public class SitemapService {
     }
 
     /// <summary>
-    /// 获取基础URL
+    /// Lấy URL cơ sở
     /// </summary>
     private string GetBaseUrl() {
         var host = _configService["host"];
@@ -250,7 +250,7 @@ public class SitemapService {
 }
 
 /// <summary>
-/// Sitemap URL条目
+/// Sitemap Mục URL
 /// </summary>
 public class SitemapUrl {
     public string Location { get; set; } = "";
@@ -260,7 +260,7 @@ public class SitemapUrl {
 }
 
 /// <summary>
-/// Sitemap图片URL条目
+/// Mục URL hình ảnh của Sitemap
 /// </summary>
 public class SitemapImageUrl {
     public string PageUrl { get; set; } = "";
@@ -271,7 +271,7 @@ public class SitemapImageUrl {
 }
 
 /// <summary>
-/// Sitemap索引条目
+/// Mục chỉ mục Sitemap
 /// </summary>
 public class SitemapIndexEntry {
     public string Location { get; set; } = "";

@@ -10,7 +10,7 @@ using StarBlog.Data.Models;
 namespace StarBlog.Web.Services;
 
 /// <summary>
-/// 文章翻译配置
+/// Cấu hình dịch bài viết
 /// </summary>
 public class TranslationConfig {
     public const string SectionName = "Translation";
@@ -28,7 +28,7 @@ public class LLMConfig {
 }
 
 /// <summary>
-/// 文章翻译服务
+/// Dịch vụ dịch bài viết
 /// </summary>
 public class TranslationService {
     private readonly ILogger<TranslationService> _logger;
@@ -47,7 +47,7 @@ public class TranslationService {
         _translationRepo = translationRepo;
         _config = config.Value;
 
-        // 初始化 LLM 客户端（OpenAI 兼容接口）
+        // Khởi tạo LLM client (API tương thích OpenAI)
         if (!string.IsNullOrEmpty(_config.LLM.Key)) {
             _chatClient = new OpenAIClient(
                 new ApiKeyCredential(_config.LLM.Key),
@@ -59,7 +59,7 @@ public class TranslationService {
     }
 
     /// <summary>
-    /// 获取文章的翻译
+    /// Lấy bản dịch của bài viết
     /// </summary>
     public async Task<PostTranslation?> GetTranslation(string postId, string language) {
         return await _translationRepo
@@ -68,7 +68,7 @@ public class TranslationService {
     }
 
     /// <summary>
-    /// 获取文章的可用翻译语言列表
+    /// Lấy danh sách ngôn ngữ dịch khả dụng của bài viết
     /// </summary>
     public async Task<List<string>> GetAvailableLanguages(string postId) {
         return await _translationRepo
@@ -77,47 +77,47 @@ public class TranslationService {
     }
 
     /// <summary>
-    /// 翻译单篇文章
+    /// Dịch một bài viết
     /// </summary>
     public async Task<PostTranslation> TranslatePostAsync(string postId, string language) {
         EnsureLLMClient();
 
         var post = await _postRepo.Where(p => p.Id == postId).FirstAsync();
-        if (post == null) throw new Exception($"文章 {postId} 不存在");
+        if (post == null) throw new Exception($"Bài viết {postId} không tồn tại");
 
-        // 检查是否已有翻译，有则更新
+        // Kiểm tra xem đã có bản dịch chưa, nếu có thì cập nhật
         var existing = await _translationRepo
             .Where(t => t.PostId == postId && t.Language == language)
             .FirstAsync();
 
-        _logger.LogInformation("开始翻译文章: {Title} -> {Lang}", post.Title, language);
+        _logger.LogInformation("Bắt đầu dịch bài viết: {Title} -> {Lang}", post.Title, language);
 
-        // 1. 翻译标题
+        // 1. Dịch tiêu đề
         var title = await TranslateText(post.Title, language, "title");
-        _logger.LogInformation("  标题翻译完成: {Title}", title);
+        _logger.LogInformation("  Dịch tiêu đề hoàn tất: {Title}", title);
 
-        // 2. 翻译摘要
+        // 2. Dịch tóm tắt
         string? summary = null;
         if (!string.IsNullOrWhiteSpace(post.Summary)) {
             summary = await TranslateText(post.Summary, language, "summary");
-            _logger.LogInformation("  摘要翻译完成");
+            _logger.LogInformation("  Dịch tóm tắt hoàn tất");
         }
 
-        // 3. 翻译 Markdown 内容
+        // 3. Dịch nội dung Markdown
         string? content = null;
         if (!string.IsNullOrWhiteSpace(post.Content)) {
             content = await TranslateMarkdown(post.Content, language);
-            _logger.LogInformation("  内容翻译完成");
+            _logger.LogInformation("  Dịch nội dung hoàn tất");
         }
 
-        // 4. 保存或更新翻译
+        // 4. Lưu hoặc cập nhật bản dịch
         if (existing != null) {
             existing.Title = title;
             existing.Summary = summary;
             existing.Content = content;
             existing.LastUpdateTime = DateTime.Now;
             await _translationRepo.UpdateAsync(existing);
-            _logger.LogInformation("翻译已更新: {Title}", post.Title);
+            _logger.LogInformation("Đã cập nhật bản dịch: {Title}", post.Title);
             return existing;
         }
         else {
@@ -132,13 +132,13 @@ public class TranslationService {
                 LastUpdateTime = DateTime.Now
             };
             await _translationRepo.InsertAsync(translation);
-            _logger.LogInformation("翻译已保存: {Title}", post.Title);
+            _logger.LogInformation("Đã lưu bản dịch: {Title}", post.Title);
             return translation;
         }
     }
 
     /// <summary>
-    /// 删除翻译
+    /// Xóa bản dịch
     /// </summary>
     public async Task<int> DeleteTranslation(string translationId) {
         return await _translationRepo.Where(t => t.Id == translationId).ToDelete().ExecuteAffrowsAsync();
@@ -172,7 +172,7 @@ public class TranslationService {
 
         foreach (var section in sections) {
             if (section.Length > _config.MaxContentLength) {
-                // 大段落按段落拆分
+                // Đoạn lớn thì tách theo từng đoạn
                 var paragraphs = section.Split("\n\n");
                 var translatedParagraphs = new List<string>();
                 foreach (var para in paragraphs) {
@@ -230,22 +230,22 @@ public class TranslationService {
                 return sb.ToString().Trim();
             }
             catch (Exception ex) when (attempt < _config.MaxRetries) {
-                _logger.LogWarning(ex, "翻译请求第 {Attempt} 次失败，{Max} 次后重试", attempt, _config.MaxRetries);
+                _logger.LogWarning(ex, "Yêu cầu dịch thất bại lần thứ {Attempt}, thử lại (tối đa {Max} lần)", attempt, _config.MaxRetries);
                 await Task.Delay(1000 * (int)Math.Pow(2, attempt));
             }
         }
 
-        throw new Exception($"翻译失败，已重试 {_config.MaxRetries} 次");
+        throw new Exception($"Dịch thất bại, đã thử lại {_config.MaxRetries} lần");
     }
 
     private void EnsureLLMClient() {
         if (_chatClient == null) {
-            throw new Exception("翻译服务未配置 LLM API Key，请在 appsettings.json 的 Translation:LLM:Key 中设置");
+            throw new Exception("Dịch vụ dịch chưa cấu hình LLM API Key, vui lòng thiết lập tại Translation:LLM:Key trong appsettings.json");
         }
     }
 
     /// <summary>
-    /// 按 Markdown 标题分段（H1/H2/H3）
+    /// Chia đoạn theo tiêu đề Markdown (H1/H2/H3)
     /// </summary>
     private static List<string> SplitMarkdownBySections(string markdown) {
         var lines = markdown.Split('\n');

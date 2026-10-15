@@ -3,7 +3,7 @@
 namespace StarBlog.Data.Models;
 
 /// <summary>
-/// 访问记录
+/// Bản ghi truy cập
 /// </summary>
 [Table(Name = "visit_record")]
 public class VisitRecord {
@@ -11,57 +11,57 @@ public class VisitRecord {
     public long Id { get; set; }
 
     /// <summary>
-    /// IP地址
+    /// Địa chỉ IP
     /// </summary>
     public string? Ip { get; set; }
 
     /// <summary>
-    /// IP信息
+    /// Thông tin IP
     /// </summary>
     public IpInfo IpInfo { get; set; }
 
     /// <summary>
-    /// 请求路径
+    /// Đường dẫn yêu cầu
     /// </summary>
     public string RequestPath { get; set; }
 
     /// <summary>
-    /// 请求参数
+    /// Tham số yêu cầu
     /// </summary>
     public string? RequestQueryString { get; set; }
 
     /// <summary>
-    /// 请求方法
+    /// Phương thức yêu cầu
     /// </summary>
     public string RequestMethod { get; set; }
 
     /// <summary>
-    /// 用户设备
+    /// Thiết bị của người dùng
     /// </summary>
     public string? UserAgent { get; set; }
 
     /// <summary>
-    /// UA信息
+    /// Thông tin UA
     /// </summary>
     public UserAgentInfo UserAgentInfo { get; set; } = new();
 
     /// <summary>
-    /// 时间
+    /// Thời gian
     /// </summary>
     public DateTime Time { get; set; }
 
-    /// <summary>HTTP 状态码</summary>
+    /// <summary>HTTP Mã trạng thái</summary>
     public int StatusCode { get; set; }
 
-    /// <summary>响应耗时（ms）</summary>
+    /// <summary>Thời gian phản hồi (ms)</summary>
     public int ResponseTimeMs { get; set; }
 
-    /// <summary>来源页面</summary>
+    /// <summary>Trang nguồn</summary>
     public string? Referrer { get; set; }
 }
 
 public class IpInfo {
-    // 区域
+    // Khu vực
     public string? RegionCode { get; set; }
     public string? Country { get; set; }
     public string? Province { get; set; }

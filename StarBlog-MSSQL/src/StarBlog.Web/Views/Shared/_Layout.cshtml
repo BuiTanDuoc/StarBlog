@@ -7,31 +7,31 @@
 <head>
     <meta charset="utf-8">
 
-    @* SEO Meta标签 *@
+    @* SEO Thẻ Meta *@
     @if (ViewData["SeoMetadata"] != null) {
         <partial name="Widgets/SeoMeta" model='ViewData["SeoMetadata"]'/>
     }
     else {
-        <title>StarBlog · 画星星高手</title>
-        <meta name="description" content="画星星高手博客；程序设计实验室博客；">
+        <title>StarBlog · Cao thủ vẽ ngôi sao</title>
+        <meta name="description" content="Blog Cao thủ vẽ ngôi sao; Blog Phòng thí nghiệm lập trình;">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="author" content="DealiAxy">
         <meta name="generator" content="StarBlog">
     }
 
-    @* 预加载关键资源 *@
+    @* Tải trước các tài nguyên quan trọng *@
     <link rel="preload" href="~/lib/bootstrap/dist/css/bootstrap.css" as="style">
     <link rel="preload" href="~/lib/font-awesome/css/all.css" as="style">
     <link rel="preload" href="~/js/site.preload.js" as="script">
 
-    @* CSS资源 *@
+    @* Tài nguyên CSS *@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="~/lib/font-awesome/css/all.css">
     <link rel="stylesheet" href="~/css/features.css">
     <link rel="stylesheet" href="~/css/metro.css">
     <link rel="stylesheet" href="~/css/footer.css">
 
-    @* 预加载脚本 *@
+    @* Tải trước script *@
     <script src="~/js/site.preload.js"></script>
     <environment exclude="Development">
         @if (MonitoringService.IsUmamiEnabled) {
@@ -56,7 +56,7 @@
 
     @await RenderSectionAsync("head", false)
 
-    @* 结构化数据 *@
+    @* Dữ liệu có cấu trúc *@
     @if (ViewData["StructuredData"] != null) {
         <partial name="Widgets/StructuredData" model='ViewData["StructuredData"]'/>
     }
@@ -121,16 +121,16 @@
                         </a>.
                     </p>
                     <p>
-                        所有內容皆以<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en"
-                                       rel="external nofollow" target="_blank"> 知识共享署名-相同方式共享 4.0
-                            国际许可协议 </a>进行发布。<br>
-                        含有程序代码內容的文章 (如 Java, Python, C#, Go) 除外，包含的程序代码皆以 <a
+                        Tất cả nội dung đều được phát hành theo<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en"
+                                       rel="external nofollow" target="_blank"> Creative Commons Ghi nhận nguồn gốc - Chia sẻ tương tự 4.0
+                            Giấy phép Quốc tế </a>.<br>
+                        Trừ các bài viết có chứa mã nguồn lập trình (như Java, Python, C#, Go), mã nguồn có trong đó đều được phát hành theo <a
                             href="http://www.gnu.org/licenses/gpl.html" rel="external nofollow" target="_blank">GPL
-                            v3</a> 发布。
+                            v3</a> .
                     </p>
                     <p>
-                        本站使用 <a href="https://github.com/Deali-Axy/StarBlog">StarBlog</a> 开源博客系统，
-                        基于 <a href="https://dotnet.microsoft.com/zh-cn/">.NetCore</a> 技术构建
+                        Website này sử dụng hệ thống blog mã nguồn mở <a href="https://github.com/Deali-Axy/StarBlog">StarBlog</a>,
+                        được xây dựng trên công nghệ <a href="https://dotnet.microsoft.com/vi-vn/">.NetCore</a>
                     </p>
                 </div>
             </div>

@@ -22,7 +22,7 @@ public class PostProcessor {
     }
 
     /// <summary>
-    /// Markdown内容解析，复制图片 & 替换图片链接
+    /// Phân tích nội dung Markdown, sao chép hình ảnh & thay thế liên kết hình ảnh
     /// </summary>
     public string MarkdownParse() {
         if (_post.Content == null) {
@@ -56,7 +56,7 @@ public class PostProcessor {
                 linkInline.Url = imgFilename;
                 File.Copy(imgPath, destPath);
 
-                Console.WriteLine($"复制 {imgPath} 到 {destPath}");
+                Console.WriteLine($"Sao chép {imgPath} đến {destPath}");
             }
         }
 
@@ -67,7 +67,7 @@ public class PostProcessor {
     }
 
     /// <summary>
-    /// 从文章正文提取前 <paramref name="length"/> 字的梗概
+    /// Trích xuất phần tóm tắt từ <paramref name="length"/> ký tự đầu của nội dung bài viết
     /// </summary>
     public string GetSummary(int length) {
         return _post.Content == null
@@ -76,13 +76,14 @@ public class PostProcessor {
     }
 
     /// <summary>
-    /// 填充文章状态和标题
+    /// Điền trạng thái và tiêu đề bài viết
     /// </summary>
     public (string, string) InflateStatusTitle() {
-        const string pattern = @"^（(.+)）(.+)$";
-        var status = _post.Status ?? "已发布";
+        // Quy ước tiêu đề: "(Trạng thái)Tiêu đề". Vẫn chấp nhận cả dấu ngoặc toàn chiều rộng (full-width) của dữ liệu cũ.
+        const string pattern = @"^[(（](.+)[)）](.+)$";
+        var status = _post.Status ?? "Đã xuất bản";
         var title = _post.Title;
-        if (string.IsNullOrEmpty(title)) return (status, $"未命名文章{_post.CreationTime.ToLongDateString()}");
+        if (string.IsNullOrEmpty(title)) return (status, $"Bài viết chưa đặt tên {_post.CreationTime.ToLongDateString()}");
 
         var result = Regex.Match(title, pattern);
         if (!result.Success) return (status, title);
@@ -93,7 +94,7 @@ public class PostProcessor {
         _post.Status = status;
         _post.Title = title;
 
-        if (!new[] { "已发表", "已发布" }.Contains(_post.Status)) {
+        if (!new[] { "Đã đăng", "Đã xuất bản" }.Contains(_post.Status)) {
             _post.IsPublish = false;
         }
 

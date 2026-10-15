@@ -5,7 +5,7 @@ using StarBlog.Web.Extensions;
 namespace StarBlog.Web.Apis;
 
 /// <summary>
-/// 用于测试 DataWrapper 的功能
+/// Dùng để kiểm thử chức năng của DataWrapper
 /// </summary>
 [ApiController]
 [Route("Api/[controller]/[action]")]
@@ -67,11 +67,11 @@ public class DataWrapperTestController : ControllerBase {
 
     [HttpGet]
     public IActionResult SoftlyExceptionResult() {
-        throw new Exception("该异常会被包装");
+        throw new Exception("Ngoại lệ này sẽ được bao bọc");
     }
 
     [HttpGet]
     public IActionResult NormalExceptionResult() {
-        throw new Exception("该异常会被包装为专用的异常类型，当IsDebug配置为true时，将显示堆栈信息。");
+        throw new Exception("Ngoại lệ này sẽ được bao bọc thành kiểu ngoại lệ chuyên dụng, khi cấu hình IsDebug là true sẽ hiển thị thông tin stack.");
     }
 }

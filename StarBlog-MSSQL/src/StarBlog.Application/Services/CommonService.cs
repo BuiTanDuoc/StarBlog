@@ -4,7 +4,7 @@ using StarBlog.Content.Utils;
 namespace StarBlog.Application.Services;
 
 /// <summary>
-/// 一些公共服务
+/// Một số dịch vụ dùng chung
 /// </summary>
 public class CommonService {
     private readonly ILogger<CommonService> _logger;
@@ -16,10 +16,10 @@ public class CommonService {
     }
 
     /// <summary>
-    /// 下载文件
+    /// Tải xuống tệp
     /// </summary>
     /// <param name="url"></param>
-    /// <param name="savePath">保存路径，需要完整路径</param>
+    /// <param name="savePath">Đường dẫn lưu, cần đường dẫn đầy đủ</param>
     /// <returns></returns>
     public async Task<string?> DownloadFileAsync(string url, string savePath) {
         var httpClient = _httpClientFactory.CreateClient();
@@ -34,7 +34,7 @@ public class CommonService {
             return fileName;
         }
         catch (Exception ex) {
-            _logger.LogError("下载文件出错，信息：{Error}", ex);
+            _logger.LogError("Lỗi khi tải xuống tệp, thông tin: {Error}", ex);
             return null;
         }
     }

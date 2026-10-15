@@ -3,8 +3,8 @@ using System.Text.RegularExpressions;
 namespace StarBlog.Api.Extensions; 
 
 /// <summary>
-/// HttpContext.Request 扩展，可以判断是否手机访问
-/// <para>参考：https://www.jianshu.com/p/6524efad1496</para>
+/// HttpContext.Request Mở rộng, có thể xác định có truy cập bằng điện thoại hay không
+/// <para>Tham khảo: https://www.jianshu.com/p/6524efad1496</para>
 /// </summary>
 public static class HttpRequestExt {
     // regex from http://detectmobilebrowsers.com/

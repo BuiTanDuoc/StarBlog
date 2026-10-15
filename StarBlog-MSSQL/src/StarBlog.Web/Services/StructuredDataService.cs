@@ -17,8 +17,8 @@ public class StructuredDataService {
             context = "https://schema.org",
             type = "WebSite",
             name = "StarBlog",
-            alternateName = "画星星高手博客",
-            description = "画星星高手博客，程序设计实验室。专注于互联网热门新技术探索与团队敏捷开发实践。",
+            alternateName = "Blog Cao thủ vẽ ngôi sao",
+            description = "Blog Cao thủ vẽ ngôi sao, Phòng thí nghiệm lập trình. Chuyên khám phá các công nghệ mới đang được quan tâm trên internet và thực hành phát triển linh hoạt theo nhóm.",
             url = baseUrl,
             author = new {
                 type = "Person",
@@ -56,8 +56,8 @@ public class StructuredDataService {
             context = "https://schema.org",
             type = "Organization",
             name = "StarBlog",
-            alternateName = "画星星高手博客",
-            description = "程序设计实验室，专注于互联网热门新技术探索与团队敏捷开发实践。",
+            alternateName = "Blog Cao thủ vẽ ngôi sao",
+            description = "Phòng thí nghiệm lập trình, chuyên khám phá các công nghệ mới đang được quan tâm trên internet và thực hành phát triển linh hoạt theo nhóm.",
             url = baseUrl,
             logo = new {
                 type = "ImageObject",
@@ -89,7 +89,7 @@ public class StructuredDataService {
             context = "https://schema.org",
             type = "BlogPosting",
             headline = post.Title,
-            description = !string.IsNullOrEmpty(post.Summary) && post.Summary != "（没有介绍）" 
+            description = !string.IsNullOrEmpty(post.Summary) && post.Summary != "(Không có mô tả)" 
                 ? post.Summary 
                 : ExtractDescriptionFromContent(post.Content),
             url = postUrl,
@@ -130,13 +130,13 @@ public class StructuredDataService {
             new {
                 type = "ListItem",
                 position = 1,
-                name = "首页",
+                name = "Trang chủ",
                 item = baseUrl
             },
             new {
                 type = "ListItem",
                 position = 2,
-                name = "博客",
+                name = "Blog",
                 item = $"{baseUrl}/Blog/List"
             }
         };
@@ -177,8 +177,8 @@ public class StructuredDataService {
             context = "https://schema.org",
             type = "Person",
             name = "DealiAxy",
-            alternateName = "画星星高手",
-            description = "程序员，技术博主，专注于Web开发、机器学习等技术领域。",
+            alternateName = "Cao thủ vẽ ngôi sao",
+            description = "Lập trình viên, blogger công nghệ, chuyên về phát triển Web, học máy và các lĩnh vực công nghệ khác.",
             url = "https://deali.cn",
             sameAs = new[] {
                 "https://github.com/Deali-Axy",
@@ -186,7 +186,7 @@ public class StructuredDataService {
                 "https://www.zhihu.com/people/dealiaxy",
                 "https://live.bilibili.com/11883038"
             },
-            jobTitle = "软件工程师",
+            jobTitle = "Kỹ sư phần mềm",
             worksFor = new {
                 type = "Organization",
                 name = "StarBlog"
@@ -200,14 +200,14 @@ public class StructuredDataService {
     }
 
     private string ExtractDescriptionFromContent(string content) {
-        if (string.IsNullOrEmpty(content)) return "StarBlog 技术博客文章";
+        if (string.IsNullOrEmpty(content)) return "StarBlog bài viết blog kỹ thuật";
 
-        // 移除Markdown标记
+        // Loại bỏ ký hiệu Markdown
         var plainText = System.Text.RegularExpressions.Regex.Replace(content, @"[#*`\[\]()_~]", "");
         plainText = System.Text.RegularExpressions.Regex.Replace(plainText, @"!\[.*?\]\(.*?\)", "");
         plainText = System.Text.RegularExpressions.Regex.Replace(plainText, @"\[.*?\]\(.*?\)", "");
         
-        // 取前160个字符作为描述
+        // Lấy 160 ký tự đầu làm mô tả
         return plainText.Length > 160 ? plainText.Substring(0, 157) + "..." : plainText;
     }
 

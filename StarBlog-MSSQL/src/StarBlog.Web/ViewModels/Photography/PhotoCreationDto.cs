@@ -4,14 +4,14 @@ namespace StarBlog.Web.ViewModels.Photography;
 
 public class PhotoCreationDto {
     /// <summary>
-    /// 作品标题
+    /// Tiêu đề tác phẩm
     /// </summary>
-    [Required(ErrorMessage = "作品标题不能为空")]
+    [Required(ErrorMessage = "Tiêu đề tác phẩm không được để trống")]
     public string Title { get; set; }
 
     /// <summary>
-    /// 拍摄地点
+    /// Địa điểm chụp
     /// </summary>
-    [Required(ErrorMessage = "拍摄地点不能为空")]
+    [Required(ErrorMessage = "Địa điểm chụp không được để trống")]
     public string Location { get; set; }
 }

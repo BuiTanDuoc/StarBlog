@@ -8,7 +8,7 @@ using StarBlog.Web.Services;
 namespace StarBlog.Web.Apis.Admin;
 
 /// <summary>
-/// 配置中心
+/// Trung tâm cấu hình
 /// </summary>
 [Authorize]
 [ApiController]
@@ -36,7 +36,7 @@ public class ConfigController : ControllerBase {
     public ApiResponse<ConfigItem> Add(ConfigItemCreationDto dto) {
         var item = _service.GetByKey(dto.Key);
         if (item != null) {
-            return ApiResponse.BadRequest($"key {dto.Key} 已存在！");
+            return ApiResponse.BadRequest($"key {dto.Key} đã tồn tại!");
         }
 
         item = _service.AddOrUpdate(new ConfigItem {
@@ -59,6 +59,6 @@ public class ConfigController : ControllerBase {
     [HttpDelete("{key}")]
     public ApiResponse Delete(string key) {
         var item = _service.GetByKey(key);
-        return item == null ? ApiResponse.NotFound() : ApiResponse.Ok($"已删除 {_service.DeleteByKey(key)} 条数据");
+        return item == null ? ApiResponse.NotFound() : ApiResponse.Ok($"Đã xóa {_service.DeleteByKey(key)} bản ghi");
     }
 }

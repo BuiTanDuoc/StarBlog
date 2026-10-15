@@ -3,12 +3,12 @@ using Microsoft.OpenApi;
 namespace StarBlog.Web.Models; 
 
 /// <summary>
-/// 接口组
-/// <para>分组设计参考：https://wangyou233.wang/archives/73</para>
+/// Nhóm API
+/// <para>Tham khảo thiết kế nhóm: https://wangyou233.wang/archives/73</para>
 /// </summary>
 public class SwaggerGroup {
     /// <summary>
-    /// 组名称（同时用于做URL前缀）
+    /// Tên nhóm (đồng thời dùng làm tiền tố URL)
     /// </summary>
     public string Name { get; set; }
 
@@ -22,7 +22,7 @@ public class SwaggerGroup {
     }
 
     /// <summary>
-    /// 生成 <see cref="Microsoft.OpenApi.OpenApiInfo"/>
+    /// Tạo <see cref="Microsoft.OpenApi.OpenApiInfo"/>
     /// </summary>
     public OpenApiInfo ToOpenApiInfo(string version = "1.0") {
         var item = new OpenApiInfo();

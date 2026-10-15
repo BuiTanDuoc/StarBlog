@@ -8,7 +8,7 @@ public static class StringExt {
     }
 
     /// <summary>
-    /// 限制字符串显示长度并在末尾添加省略号
+    /// Giới hạn độ dài hiển thị của chuỗi và thêm dấu ba chấm ở cuối
     /// </summary>
     public static string LimitWithEllipsis(this string str, int length) {
         return str.Length <= length ? str : $"{str[..length]}...";

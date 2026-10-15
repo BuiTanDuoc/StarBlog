@@ -10,7 +10,7 @@ using StarBlog.Web.ViewModels.VisitRecord;
 namespace StarBlog.Web.Apis.Admin;
 
 /// <summary>
-/// 访问记录
+/// Bản ghi truy cập
 /// </summary>
 [Authorize]
 [ApiController]
@@ -36,7 +36,7 @@ public class VisitRecordController : ControllerBase {
     }
 
     /// <summary>
-    /// 获取全部访问记录
+    /// Lấy toàn bộ bản ghi truy cập
     /// </summary>
     /// <returns></returns>
     [HttpGet("All")]
@@ -45,7 +45,7 @@ public class VisitRecordController : ControllerBase {
     }
 
     /// <summary>
-    /// 总览数据
+    /// Dữ liệu tổng quan
     /// </summary>
     /// <returns></returns>
     [HttpGet("[action]")]
@@ -54,9 +54,9 @@ public class VisitRecordController : ControllerBase {
     }
 
     /// <summary>
-    /// 趋势数据
+    /// Dữ liệu xu hướng
     /// </summary>
-    /// <param name="days">查看最近几天的数据，默认7天</param>
+    /// <param name="days">Xem dữ liệu của vài ngày gần đây, mặc định 7 ngày</param>
     /// <returns></returns>
     [HttpGet("[action]")]
     public async Task<ApiResponse<List<DailyTrend>>> DailyTrend([FromQuery] VisitRecordParameters p, int days = 7) {
@@ -64,7 +64,7 @@ public class VisitRecordController : ControllerBase {
     }
     
     /// <summary>
-    /// 获取小时级趋势
+    /// Lấy xu hướng theo giờ
     /// </summary>
     [HttpGet("[action]")]
     public async Task<ApiResponse<List<HourlyTrend>>> HourlyTrend([FromQuery] VisitRecordParameters p) {
@@ -72,16 +72,16 @@ public class VisitRecordController : ControllerBase {
     }
 
     /// <summary>
-    /// 获取地理信息筛选参数
+    /// Lấy tham số lọc thông tin địa lý
     /// </summary>
-    /// <param name="param">可选 country, province, city</param>
+    /// <param name="param">Tùy chọn country, province, city</param>
     [HttpGet("[action]")]
     public async Task<ApiResponse<List<string?>>> GeoFilterParams([FromQuery] VisitRecordParameters p, string param = "country") {
         return await _service.GetGeoFilterParams(p, param);
     }
 
     /// <summary>
-    /// 获取 UserAgent 筛选参数
+    /// Lấy tham số lọc UserAgent
     /// </summary>
     [HttpGet("[action]")]
     public async Task<ApiResponse<UserAgentFilterParams>> UserAgentFilterParams([FromQuery] VisitRecordParameters p) {
@@ -89,7 +89,7 @@ public class VisitRecordController : ControllerBase {
     }
 
     /// <summary>
-    /// 地理位置分布统计
+    /// Thống kê phân bố vị trí địa lý
     /// </summary>
     [HttpGet("GeoDistribution")]
     public async Task<ApiResponse> GeoDistribution([FromQuery] VisitRecordParameters p) {
@@ -97,7 +97,7 @@ public class VisitRecordController : ControllerBase {
     }
 
     /// <summary>
-    /// 获取来源域名分析
+    /// Lấy phân tích tên miền nguồn
     /// </summary>
     [HttpGet("[action]")]
     public async Task<ApiResponse<List<ReferrerDomain>>> ReferrerDomains([FromQuery] VisitRecordParameters p, int top = 10) {
@@ -105,7 +105,7 @@ public class VisitRecordController : ControllerBase {
     }
 
     /// <summary>
-    /// 获取环比增长数据
+    /// Lấy dữ liệu tăng trưởng so với kỳ trước
     /// </summary>
     [HttpGet("[action]")]
     public async Task<ApiResponse<GrowthRate>> GrowthRate([FromQuery] VisitRecordParameters p, int days = 7) {
@@ -113,7 +113,7 @@ public class VisitRecordController : ControllerBase {
     }
 
     /// <summary>
-    /// 获取跳出率统计
+    /// Lấy thống kê tỷ lệ thoát
     /// </summary>
     [HttpGet("[action]")]
     public async Task<ApiResponse<BounceRateStats>> BounceRate([FromQuery] VisitRecordParameters p) {
@@ -121,7 +121,7 @@ public class VisitRecordController : ControllerBase {
     }
 
     /// <summary>
-    /// 获取首次访问统计
+    /// Lấy thống kê lần truy cập đầu tiên
     /// </summary>
     [HttpGet("[action]")]
     public async Task<ApiResponse<FirstVisitStats>> FirstVisit([FromQuery] VisitRecordParameters p, [FromQuery] int days = 7) {
@@ -129,7 +129,7 @@ public class VisitRecordController : ControllerBase {
     }
 
     /// <summary>
-    /// 获取技术分布统计
+    /// Lấy thống kê phân bố công nghệ
     /// </summary>
     [HttpGet("[action]")]
     public async Task<ApiResponse<TechDistribution>> TechDistribution([FromQuery] VisitRecordParameters p) {
@@ -137,7 +137,7 @@ public class VisitRecordController : ControllerBase {
     }
 
     /// <summary>
-    /// 获取慢请求排行
+    /// Lấy xếp hạng request chậm
     /// </summary>
     [HttpGet("[action]")]
     public async Task<ApiResponse<List<SlowRequest>>> SlowRequests([FromQuery] VisitRecordParameters p, int top = 10) {
@@ -145,7 +145,7 @@ public class VisitRecordController : ControllerBase {
     }
 
     /// <summary>
-    /// 获取转化行为分析
+    /// Lấy phân tích hành vi chuyển đổi
     /// </summary>
     [HttpGet("[action]")]
     public async Task<ApiResponse<ConversionStats>> Conversion([FromQuery] VisitRecordParameters p, string targetPath) {
@@ -153,7 +153,7 @@ public class VisitRecordController : ControllerBase {
     }
 
     /// <summary>
-    /// 获取PV/UV统计
+    /// Lấy thống kê PV/UV
     /// </summary>
     [HttpGet("[action]")]
     public async Task<ApiResponse<PvUv>> PvUv([FromQuery] VisitRecordParameters p) {
@@ -161,7 +161,7 @@ public class VisitRecordController : ControllerBase {
     }
 
     /// <summary>
-    /// 获取响应时间统计
+    /// Lấy thống kê thời gian phản hồi
     /// </summary>
     [HttpGet("[action]")]
     public async Task<ApiResponse> ResponseTimeStats([FromQuery] VisitRecordParameters p) {
@@ -169,7 +169,7 @@ public class VisitRecordController : ControllerBase {
     }
 
     /// <summary>
-    /// 获取Top N访问路径
+    /// Lấy Top N đường dẫn truy cập
     /// </summary>
     [HttpGet("[action]")]
     public async Task<ApiResponse<List<TopPath>>> TopPaths([FromQuery] VisitRecordParameters p, int top = 10) {

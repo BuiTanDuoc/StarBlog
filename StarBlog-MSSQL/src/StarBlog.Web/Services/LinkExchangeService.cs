@@ -6,7 +6,7 @@ using StarBlog.Web.Services.OutboxServices;
 namespace StarBlog.Web.Services;
 
 /// <summary>
-/// 友情链接申请
+/// Yêu cầu trao đổi liên kết bạn bè
 /// </summary>
 public class LinkExchangeService {
     private readonly IBaseRepository<LinkExchange> _repo;
@@ -20,7 +20,7 @@ public class LinkExchangeService {
     }
 
     /// <summary>
-    /// 查询 id 是否存在
+    /// Kiểm tra id có tồn tại hay không
     /// </summary>
     public async Task<bool> HasId(int id) {
         return await _repo.Where(a => a.Id == id).AnyAsync();
@@ -82,12 +82,12 @@ public class LinkExchangeService {
         var sb = new StringBuilder();
         sb.AppendLine($"<p>{message}</p>");
         sb.AppendLine($"<br>");
-        sb.AppendLine($"<p>以下是您申请的友链信息：</p>");
-        sb.AppendLine($"<p>网站名称：{item.Name}</p>");
-        sb.AppendLine($"<p>介绍：{item.Description}</p>");
-        sb.AppendLine($"<p>网址：{item.Url}</p>");
-        sb.AppendLine($"<p>站长：{item.WebMaster}</p>");
-        if (item.Reason != null) sb.AppendLine($"<p>补充信息：{item.Reason}</p>");
+        sb.AppendLine($"<p>Dưới đây là thông tin liên kết bạn bè bạn đã đăng ký:</p>");
+        sb.AppendLine($"<p>Tên website: {item.Name}</p>");
+        sb.AppendLine($"<p>Giới thiệu: {item.Description}</p>");
+        sb.AppendLine($"<p>URL: {item.Url}</p>");
+        sb.AppendLine($"<p>Quản trị viên website: {item.WebMaster}</p>");
+        if (item.Reason != null) sb.AppendLine($"<p>Thông tin bổ sung: {item.Reason}</p>");
         sb.AppendLine($"<br>");
         sb.AppendLine($"<br>");
         await _outboxService.EnqueueEmailAsync(
@@ -100,14 +100,14 @@ public class LinkExchangeService {
     }
 
     public async Task SendEmailOnAdd(LinkExchange item) {
-        await SendEmail(item, "友链申请已提交", "友链申请已提交，正在处理中，请及时关注邮件通知~");
+        await SendEmail(item, "Yêu cầu trao đổi liên kết đã được gửi", "Yêu cầu trao đổi liên kết đã được gửi, đang được xử lý, vui lòng theo dõi thông báo qua email~");
     }
 
     public async Task SendEmailOnAccept(LinkExchange item) {
-        await SendEmail(item, "友链申请结果反馈", "您好，友链申请已通过！感谢支持，欢迎互访哦~");
+        await SendEmail(item, "Phản hồi kết quả yêu cầu trao đổi liên kết", "Xin chào, yêu cầu trao đổi liên kết đã được chấp nhận! Cảm ơn bạn đã ủng hộ, hoan nghênh ghé thăm lẫn nhau nhé~");
     }
 
     public async Task SendEmailOnReject(LinkExchange item) {
-        await SendEmail(item, "友链申请结果反馈", "很抱歉，友链申请未通过！建议您查看补充信息，调整后再次进行申请，感谢您的理解与支持~");
+        await SendEmail(item, "Phản hồi kết quả yêu cầu trao đổi liên kết", "Rất tiếc, yêu cầu trao đổi liên kết không được chấp nhận! Đề nghị bạn xem thông tin bổ sung, điều chỉnh rồi đăng ký lại, cảm ơn sự thông cảm và ủng hộ của bạn~");
     }
 }

@@ -24,7 +24,7 @@
 LICENSE
 README.md
 
-# 添加以下排除项
+# Thêm các mục loại trừ sau
 **/wwwroot/media/**
 **/wwwroot/assets/**
 **/*.log

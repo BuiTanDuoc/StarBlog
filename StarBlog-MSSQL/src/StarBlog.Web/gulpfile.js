@@ -1,7 +1,7 @@
 ﻿/// <binding BeforeBuild='min' Clean='clean' ProjectOpened='auto' />
 "use strict";
 
-//加载使用到的 gulp 插件
+//Nạp các plugin gulp được sử dụng
 const gulp = require("gulp"),
     rimraf = require("rimraf"),
     concat = require("gulp-concat"),
@@ -11,7 +11,7 @@ const gulp = require("gulp"),
     changed = require("gulp-changed"),
     obfuscate = require('gulp-obfuscate');
 
-//定义 wwwroot 下的各文件存放路径
+//Định nghĩa đường dẫn lưu các tệp trong wwwroot
 const paths = {
     root: "./wwwroot/",
     css: './wwwroot/css/',
@@ -20,17 +20,17 @@ const paths = {
 };
 
 //css
-paths.cssDist = paths.css + "**/*.css";//匹配所有 css 的文件所在路径
-paths.minCssDist = paths.css + "**/*.min.css";//匹配所有 css 对应压缩后的文件所在路径
-paths.concatCssDist = paths.css + "app.min.css";//将所有的 css 压缩到一个 css 文件后的路径
+paths.cssDist = paths.css + "**/*.css";//Khớp đường dẫn của tất cả tệp css
+paths.minCssDist = paths.css + "**/*.min.css";//Khớp đường dẫn của tất cả tệp css sau khi nén tương ứng
+paths.concatCssDist = paths.css + "app.min.css";//Đường dẫn sau khi nén tất cả css vào một tệp css
 
 //js
-paths.jsDist = paths.js + "**/*.js";//匹配所有 js 的文件所在路径
-paths.minJsDist = paths.js + "**/*.min.js";//匹配所有 js 对应压缩后的文件所在路径
-paths.concatJsDist = paths.js + "app.min.js";//将所有的 js 压缩到一个 js 文件后的路径
+paths.jsDist = paths.js + "**/*.js";//Khớp đường dẫn của tất cả tệp js
+paths.minJsDist = paths.js + "**/*.min.js";//Khớp đường dẫn của tất cả tệp js sau khi nén tương ứng
+paths.concatJsDist = paths.js + "app.min.js";//Đường dẫn sau khi nén tất cả js vào một tệp js
 
 
-//使用 npm 下载的前端组件包
+//Các gói thành phần frontend tải về bằng npm
 const libs = [
     {name: "axios", dist: "./node_modules/axios/dist/**/*.*"},
     {name: "chart.js", dist: "./node_modules/chart.js/dist/**/*.*"},
@@ -46,7 +46,7 @@ const libs = [
     // {name: 'echarts-wordcloud', dist: './node_modules/echarts-wordcloud/dist/**/*.*'},
 ];
 
-// 使用 npm 下载的前端组件，自定义存放位置
+// Các thành phần frontend tải về bằng npm, tùy chỉnh vị trí lưu
 const customLibs = [
     {name: "dayjs", dist: "./node_modules/dayjs/**/*.*"},
     {name: "editormd", dist: "./node_modules/editor.md-ext/*.js"},
@@ -62,20 +62,20 @@ const customLibs = [
     {name: 'element-ui/lib/theme-chalk/fonts', dist: './node_modules/element-ui/lib/theme-chalk/fonts/*.*'},
     {name: 'font-awesome', dist: './node_modules/@fortawesome/fontawesome-free/**/*.*'},
     {name: 'highlight.js', dist: './node_modules/highlight.js/**/*.*'},
-    // Post.BackendRender.cshtml 引用 ~/lib/highlight/highlight.min.js 和 ~/lib/highlight/styles/*.min.css
+    // Post.BackendRender.cshtml tham chiếu ~/lib/highlight/highlight.min.js và ~/lib/highlight/styles/*.min.css
     {name: 'highlight', dist: './node_modules/@highlightjs/cdn-assets/highlight.min.js'},
     {name: 'highlight/styles', dist: './node_modules/@highlightjs/cdn-assets/styles/*.min.css'},
     {name: 'github-markdown-css', dist: './node_modules/github-markdown-css/*.css'},
     {name: 'imagesloaded', dist: './node_modules/imagesloaded/*.js'},
 ]
 
-//清除压缩后的文件
+//Xóa các tệp đã nén
 gulp.task("clean:css", done => rimraf(paths.minCssDist, done));
 gulp.task("clean:js", done => rimraf(paths.minJsDist, done));
 
 gulp.task("clean", gulp.series(["clean:js", "clean:css"]));
 
-//移动 npm 下载的前端组件包到 wwwroot 路径下
+//Di chuyển các gói thành phần frontend tải bằng npm vào đường dẫn wwwroot
 gulp.task("move:dist", done => {
     libs.forEach(item => {
         gulp.src(item.dist)
@@ -91,7 +91,7 @@ gulp.task("move:custom", done => {
     done()
 })
 
-//每一个 css 文件压缩到对应的 min.css
+//Nén mỗi tệp css thành tệp tương ứng có đuôi min.css
 gulp.task("min:css", () => {
     return gulp.src([paths.cssDist, "!" + paths.minCssDist], {base: "."})
         .pipe(rename({suffix: '.min'}))
@@ -100,7 +100,7 @@ gulp.task("min:css", () => {
         .pipe(gulp.dest('.'));
 });
 
-//将所有的 css 文件合并打包压缩到 app.min.css 中
+//Gộp, đóng gói và nén tất cả tệp css vào app.min.css
 gulp.task("concat:css", () => {
     return gulp.src([paths.cssDist, "!" + paths.minCssDist], {base: "."})
         .pipe(concat(paths.concatCssDist))
@@ -109,7 +109,7 @@ gulp.task("concat:css", () => {
         .pipe(gulp.dest("."));
 });
 
-//每一个 js 文件压缩到对应的 min.js
+//Nén mỗi tệp js thành tệp tương ứng có đuôi min.js
 gulp.task("min:js", () => {
     return gulp.src([paths.jsDist, "!" + paths.minJsDist], {base: "."})
         .pipe(rename({suffix: '.min'}))
@@ -118,7 +118,7 @@ gulp.task("min:js", () => {
         .pipe(gulp.dest('.'));
 });
 
-//将所有的 js 文件合并打包压缩到 app.min.js 中
+//Gộp, đóng gói và nén tất cả tệp js vào app.min.js
 gulp.task("concat:js", () => {
     return gulp.src([paths.jsDist, "!" + paths.minJsDist], {base: "."})
         .pipe(concat(paths.concatJsDist))
@@ -133,7 +133,7 @@ gulp.task("min", gulp.series(["min:js", "min:css"]))
 gulp.task("concat", gulp.series(["concat:js", "concat:css"]))
 
 
-//监听文件变化后自动执行
+//Tự động thực thi sau khi theo dõi thấy tệp thay đổi
 gulp.task("auto", () => {
     gulp.watch(paths.css, gulp.series(["min:css", "concat:css"]));
     gulp.watch(paths.js, gulp.series(["min:js", "concat:js"]));

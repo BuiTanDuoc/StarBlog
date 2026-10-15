@@ -3,7 +3,7 @@
 namespace StarBlog.Data.Models;
 
 /// <summary>
-/// 推荐分类
+/// Danh mục nổi bật
 /// </summary>
 [Table(Name = "featured_category", OldName = "FeaturedCategory")]
 public class FeaturedCategory {
@@ -14,19 +14,19 @@ public class FeaturedCategory {
     public Category Category { get; set; }
 
     /// <summary>
-    /// 重新定义的推荐名称
+    /// Tên nổi bật được định nghĩa lại
     /// </summary>
     public string Name { get; set; }
 
     /// <summary>
-    /// 推荐分类解释
+    /// Giải thích về danh mục nổi bật
     /// </summary>
     public string Description { get; set; }
 
     /// <summary>
-    /// 图标
+    /// Biểu tượng
     /// <list type="number">
-    ///     <listheader>例子</listheader>
+    ///     <listheader>Ví dụ</listheader>
     ///     <item>fa-solid fa-c</item>
     ///     <item>fa-brands fa-python</item>
     ///     <item>fa-brands fa-android</item>

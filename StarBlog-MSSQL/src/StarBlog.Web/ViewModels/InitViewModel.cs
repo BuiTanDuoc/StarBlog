@@ -3,15 +3,15 @@
 namespace StarBlog.Web.ViewModels;
 
 public class InitViewModel {
-    [Display(Name = "用户名")]
+    [Display(Name = "Tên người dùng")]
     public string Username { get; set; }
 
-    [Display(Name = "密码")]
+    [Display(Name = "Mật khẩu")]
     public string Password { get; set; }
 
-    [Display(Name = "博客域名")]
+    [Display(Name = "Tên miền blog")]
     public string Host { get; set; }
 
-    [Display(Name = "文章默认渲染方式")]
+    [Display(Name = "Cách render bài viết mặc định")]
     public string DefaultRender { get; set; }
 }

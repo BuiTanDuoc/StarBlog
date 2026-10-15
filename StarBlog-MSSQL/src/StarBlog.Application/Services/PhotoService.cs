@@ -69,11 +69,11 @@ public class PhotoService {
     }
 
     /// <summary>
-    /// 生成JPEG缩略图 （使用 ImageSharp）
+    /// Tạo ảnh thu nhỏ JPEG (sử dụng ImageSharp)
     /// </summary>
     /// <param name="id"></param>
-    /// <param name="width">设置为0则不调整大小</param>
-    /// <param name="quality">质量，默认85</param>
+    /// <param name="width">Đặt là 0 thì không thay đổi kích thước</param>
+    /// <param name="quality">Chất lượng, mặc định 85</param>
     public async Task<byte[]> GetThumb(string id, int width = 0, int quality = 85) {
         var photo = await _photoRepo.Where(a => a.Id == id).FirstAsync();
         using var image = await Image.LoadAsync(GetPhotoFilePath(photo));
@@ -127,7 +127,7 @@ public class PhotoService {
     }
 
     /// <summary>
-    /// 获取随机一张图片
+    /// Lấy một ảnh ngẫu nhiên
     /// </summary>
     public async Task<Photo?> GetRandomPhoto() {
         var count = await _photoRepo.Select.CountAsync();
@@ -139,7 +139,7 @@ public class PhotoService {
     }
 
     /// <summary>
-    /// 添加推荐图片
+    /// Thêm ảnh nổi bật
     /// </summary>
     public async Task<FeaturedPhoto> AddFeaturedPhoto(Photo photo) {
         var item = await _featuredPhotoRepo.Where(a => a.PhotoId == photo.Id).FirstAsync();
@@ -150,7 +150,7 @@ public class PhotoService {
     }
 
     /// <summary>
-    /// 删除推荐图片
+    /// Xóa ảnh nổi bật
     /// </summary>
     public async Task<int> DeleteFeaturedPhoto(Photo photo) {
         var item = await _featuredPhotoRepo.Where(a => a.PhotoId == photo.Id).FirstAsync();
@@ -158,8 +158,8 @@ public class PhotoService {
     }
 
     /// <summary>
-    /// 删除照片
-    /// <para>删除照片文件和数据库记录</para>
+    /// Xóa ảnh
+    /// <para>Xóa tệp ảnh và bản ghi trong cơ sở dữ liệu</para>
     /// </summary>
     public async Task<int> DeleteById(string id) {
         var photo = await _photoRepo.Where(a => a.Id == id).FirstAsync();
@@ -171,7 +171,7 @@ public class PhotoService {
     }
 
     /// <summary>
-    /// 重建图片库数据（重新扫描每张图片的大小等数据）
+    /// Dựng lại dữ liệu thư viện ảnh (quét lại kích thước, v.v. của từng ảnh)
     /// </summary>
     public async Task<int> ReBuildData() {
         var photos = await GetAll();
@@ -184,7 +184,7 @@ public class PhotoService {
     }
 
     /// <summary>
-    /// 批量导入图片
+    /// Nhập hàng loạt hình ảnh
     /// </summary>
     public async Task<List<Photo>> BatchImport() {
         var result = new List<Photo>();
@@ -202,10 +202,10 @@ public class PhotoService {
             };
             var savePath = GetPhotoFilePath(photo);
 
-            // 如果图片超出大小限制则需要先调整
+            // Nếu ảnh vượt quá giới hạn kích thước thì cần điều chỉnh trước
             var resizeFlag = await ResizePhoto(new FileStream(file.FullName, FileMode.Open), savePath);
 
-            // 没调整过大小则直接保存上传的图片
+            // Nếu chưa điều chỉnh kích thước thì lưu trực tiếp ảnh đã tải lên
             if (!resizeFlag) {
                 file.CopyTo(savePath, true);
             }
@@ -219,7 +219,7 @@ public class PhotoService {
     }
 
     /// <summary>
-    /// 初始化照片资源目录
+    /// Khởi tạo thư mục tài nguyên ảnh
     /// </summary>
     private string InitPhotoMediaDir() {
         var dir = Path.Combine(_paths.WebRootPath, "media", "photography");
@@ -229,14 +229,14 @@ public class PhotoService {
     }
 
     /// <summary>
-    /// 获取图片的物理存储路径
+    /// Lấy đường dẫn lưu trữ vật lý của ảnh
     /// </summary>
     private string GetPhotoFilePath(Photo photo) {
         return Path.Combine(InitPhotoMediaDir(), photo.FilePath);
     }
 
     /// <summary>
-    /// 重建图片数据（扫描图片的大小等数据）
+    /// Dựng lại dữ liệu ảnh (quét kích thước, v.v. của ảnh)
     /// </summary>
     private async Task<Photo> BuildPhotoData(Photo photo) {
         var savePath = GetPhotoFilePath(photo);
@@ -248,7 +248,7 @@ public class PhotoService {
     }
 
     /// <summary>
-    /// 根据设置调整图片大小
+    /// Điều chỉnh kích thước ảnh theo thiết lập
     /// </summary>
     private static async Task<bool> ResizePhoto(Stream stream, string savePath) {
         const int maxWidth = 1500;

@@ -16,9 +16,9 @@ $(function () {
             tocm: true,    // Using [TOCM]
             emoji: true,
             taskList: true,
-            tex: true,  // 默认不解析
-            flowChart: true,  // 默认不解析
-            sequenceDiagram: true,  // 默认不解析
+            tex: true,  // Mặc định không phân tích
+            flowChart: true,  // Mặc định không phân tích
+            sequenceDiagram: true,  // Mặc định không phân tích
         });
 
         initTreeView(editorMdView.markdownTocTree)
@@ -26,9 +26,9 @@ $(function () {
 })
 
 /**
- * 转换文章里的图片链接
+ * Chuyển đổi liên kết hình ảnh trong bài viết
  *
- * @deprecated 现在不需要了，直接在后端处理
+ * @deprecated Giờ không cần nữa, xử lý trực tiếp ở backend
  * @param postId
  */
 function procImages(postId) {

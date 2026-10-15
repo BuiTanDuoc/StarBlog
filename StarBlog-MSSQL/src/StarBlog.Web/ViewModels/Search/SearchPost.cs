@@ -8,8 +8,8 @@ public class SearchPost {
 
     public int ContentScore { get; set; }
 
-    // 标题每命中一次+100分
-    // 内容命中+1分
+    // Mỗi lần khớp tiêu đề +100 điểm
+    // Khớp nội dung +1 điểm
     public int Score => TitleScore * 100 + ContentScore;
     public string HighlightedTitle { get; set; }
     public string HighlightedSnippet { get; set; }

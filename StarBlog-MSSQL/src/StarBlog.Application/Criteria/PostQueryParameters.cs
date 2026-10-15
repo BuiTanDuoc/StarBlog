@@ -1,26 +1,26 @@
 namespace StarBlog.Application.Criteria; 
 
 /// <summary>
-/// 博客文章请求参数
+/// Tham số yêu cầu bài viết blog
 /// </summary>
 public class PostQueryParameters : QueryParameters {
     /// <summary>
-    /// 是否已发布（仅管理员可以查询和管理未发布文章）
+    /// Đã xuất bản hay chưa (chỉ quản trị viên mới có thể truy vấn và quản lý bài viết chưa xuất bản)
     /// </summary>
     public bool? IsPublish { get; set; } = null;
 
     /// <summary>
-    /// 文章状态
+    /// Trạng thái bài viết
     /// </summary>
     public string? Status { get; set; }
     
     /// <summary>
-    /// 分类ID
+    /// ID danh mục
     /// </summary>
     public int CategoryId { get; set; } = 0;
 
     /// <summary>
-    /// 排序字段
+    /// Trường sắp xếp
     /// </summary>
     public new string? SortBy { get; set; } = "-LastUpdateTime";
 }

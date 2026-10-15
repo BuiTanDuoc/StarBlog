@@ -9,7 +9,7 @@ using StarBlog.Web.ViewModels;
 namespace StarBlog.Web.Apis.Blog;
 
 /// <summary>
-/// 推荐博客
+/// Blog nổi bật
 /// </summary>
 [Authorize]
 [ApiController]
@@ -43,7 +43,7 @@ public class FeaturedPostController : ControllerBase {
     [HttpPost]
     public ApiResponse<FeaturedPost> Add([FromQuery] string postId) {
         var post = _postRepo.Where(a => a.Id == postId).First();
-        if (post == null) return ApiResponse.NotFound($"博客 {postId} 不存在");
+        if (post == null) return ApiResponse.NotFound($"Blog {postId} không tồn tại");
         var item= _featuredPostRepo.Insert(new FeaturedPost { PostId = postId });
         return new ApiResponse<FeaturedPost>(item);
     }
@@ -51,7 +51,7 @@ public class FeaturedPostController : ControllerBase {
     [HttpDelete("{id:int}")]
     public ApiResponse Delete(int id) {
         var item = _featuredPostRepo.Where(a => a.Id == id).First();
-        if (item == null) return ApiResponse.NotFound($"推荐博客记录 {id} 不存在");
+        if (item == null) return ApiResponse.NotFound($"Bản ghi blog nổi bật {id} không tồn tại");
         var rows = _featuredPostRepo.Delete(item);
         return ApiResponse.Ok($"deleted {rows} rows.");
     }

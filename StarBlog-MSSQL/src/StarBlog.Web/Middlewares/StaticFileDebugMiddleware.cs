@@ -3,7 +3,7 @@ using Microsoft.Extensions.FileProviders;
 namespace StarBlog.Web.Middlewares;
 
 /// <summary>
-/// 静态文件调试中间件
+/// Middleware gỡ lỗi tệp tĩnh
 /// </summary>
 public class StaticFileDebugMiddleware(
     RequestDelegate next,
@@ -13,7 +13,7 @@ public class StaticFileDebugMiddleware(
     public async Task InvokeAsync(HttpContext context) {
         var path = context.Request.Path.Value;
 
-        // 只记录静态文件请求
+        // Chỉ ghi nhận các request tệp tĩnh
         if (path != null && (path.StartsWith("/js/") || path.StartsWith("/css/") || path.StartsWith("/lib/"))) {
             var physicalPath = Path.Combine(env.WebRootPath, path.TrimStart('/'));
             var fileExists = File.Exists(physicalPath);
@@ -28,7 +28,7 @@ public class StaticFileDebugMiddleware(
 
         await next(context);
 
-        // 记录响应状态
+        // Ghi nhận trạng thái phản hồi
         if (path != null && (path.StartsWith("/js/") || path.StartsWith("/css/") || path.StartsWith("/lib/"))) {
             logger.LogInformation("Static file response: {Path}, Status: {StatusCode}",
                 path, context.Response.StatusCode);

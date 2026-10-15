@@ -1,7 +1,7 @@
 ﻿@model StarBlog.Web.ViewModels.Search.SearchResultViewModel
 
 @{
-    ViewData["Title"] = $"{Model.Keyword} - 搜索结果";
+    ViewData["Title"] = $"{Model.Keyword} - Kết quả tìm kiếm";
 }
 
 <style>
@@ -375,31 +375,31 @@
 </style>
 
 <div class="search-page">
-    <!-- 搜索英雄区域 -->
+    <!-- Khu vực hero tìm kiếm -->
     <div class="search-hero">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-8">
                     <h1>
                         <i class="fas fa-search me-3"></i>
-                        搜索结果：<span class="search-keyword">@Model.Keyword</span>
+                        Kết quả tìm kiếm: <span class="search-keyword">@Model.Keyword</span>
                     </h1>
                     <p class="search-meta">
                         <i class="fas fa-lightbulb me-2"></i>
-                        为您精心筛选出最相关的优质内容
+                        Đã chọn lọc kỹ những nội dung chất lượng và liên quan nhất cho bạn
                     </p>
                 </div>
                 <div class="col-lg-4">
                     <div class="search-stats text-center">
                         <i class="fas fa-chart-bar me-2"></i>
-                        找到 <strong>@Model.SearchPosts.Count</strong> 篇相关文章
+                        Tìm thấy <strong>@Model.SearchPosts.Count</strong> bài viết liên quan
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 搜索结果容器 -->
+    <!-- Vùng chứa kết quả tìm kiếm -->
     <div class="results-container">
         <div class="container">
             @if (Model.SearchPosts.Count == 0) {
@@ -407,36 +407,36 @@
                     <div class="no-results-icon">
                         <i class="fas fa-search-minus"></i>
                     </div>
-                    <h2 class="no-results-title">暂无搜索结果</h2>
+                    <h2 class="no-results-title">Chưa có kết quả tìm kiếm</h2>
                     <p class="no-results-text">
-                        很抱歉，没有找到与 "<strong>@Model.Keyword</strong>" 相关的文章内容。<br>
-                        建议您尝试使用其他关键词，或者浏览我们的热门文章。
+                        Rất tiếc, không tìm thấy nội dung bài viết liên quan đến "<strong>@Model.Keyword</strong>".<br>
+                        Bạn có thể thử dùng từ khóa khác, hoặc xem các bài viết phổ biến của chúng tôi.
                     </p>
                     <a class="home-button" asp-controller="Home" asp-action="Index">
-                        <i class="fas fa-home me-2"></i>返回首页探索
+                        <i class="fas fa-home me-2"></i>Về trang chủ để khám phá
                     </a>
                 </div>
             }
             else {
-                <!-- 布局控制器 -->
+                <!-- Bộ điều khiển bố cục -->
                 <div class="layout-controls">
                     <div class="results-info">
                         <i class="fas fa-search me-1"></i>
-                        显示 <strong>@Model.SearchPosts.Count</strong> 个搜索结果
+                        Hiển thị <strong>@Model.SearchPosts.Count</strong> kết quả tìm kiếm
                     </div>
                     <div class="layout-toggle">
                         <button class="layout-btn" id="gridBtn" onclick="switchLayout('grid')">
                             <i class="fas fa-th"></i>
-                            网格视图
+                            Dạng lưới
                         </button>
                         <button class="layout-btn" id="listBtn" onclick="switchLayout('list')">
                             <i class="fas fa-list"></i>
-                            列表视图
+                            Dạng danh sách
                         </button>
                     </div>
                 </div>
                 
-                <!-- 搜索结果 -->
+                <!-- Kết quả tìm kiếm -->
                 <div class="row grid-layout" id="resultsContainer">
                     @foreach (var item in Model.SearchPosts) {
                         <div class="col-lg-4 col-md-6 col-12 result-item">
@@ -469,20 +469,20 @@
                                         @if (!string.IsNullOrWhiteSpace(item.Post.Slug)) {
                                             <a class="read-more-link" href="/p/@item.Post.Slug">
                                                 <i class="fas fa-book-open me-1"></i>
-                                                深入阅读
+                                                Đọc chi tiết
                                             </a>
                                         }
                                         else {
                                             <a class="read-more-link" asp-controller="Blog" asp-action="Post" asp-route-id="@item.Post.Id">
                                                 <i class="fas fa-book-open me-1"></i>
-                                                深入阅读
+                                                Đọc chi tiết
                                             </a>
                                         }
                                     </div>
                                     
                                     <div class="post-date">
                                         <i class="fas fa-calendar-alt me-1"></i>
-                                        @item.Post.CreationTime.ToString("yyyy年MM月dd日")
+                                        @item.Post.CreationTime.ToString("dd/MM/yyyy")
                                     </div>
                                 </div>
                             </article>
@@ -495,18 +495,18 @@
 </div>
 
 <script>
-    // 布局切换功能
+    // Chức năng chuyển đổi bố cục
     function switchLayout(layout) {
         const container = document.getElementById('resultsContainer');
         const gridBtn = document.getElementById('gridBtn');
         const listBtn = document.getElementById('listBtn');
         
-        // 移除所有布局类
+        // Xóa tất cả các class bố cục
         container.classList.remove('grid-layout', 'list-layout');
         gridBtn.classList.remove('active');
         listBtn.classList.remove('active');
         
-        // 添加新的布局类
+        // Thêm class bố cục mới
         container.classList.add(layout + '-layout');
         
         if (layout === 'grid') {
@@ -515,11 +515,11 @@
             listBtn.classList.add('active');
         }
         
-        // 保存用户偏好
+        // Lưu tùy chọn của người dùng
         localStorage.setItem('searchLayout', layout);
     }
     
-    // 页面加载时恢复用户偏好的布局
+    // Khi tải trang, khôi phục bố cục theo tùy chọn của người dùng
     document.addEventListener('DOMContentLoaded', function() {
         const savedLayout = localStorage.getItem('searchLayout') || 'grid';
         switchLayout(savedLayout);

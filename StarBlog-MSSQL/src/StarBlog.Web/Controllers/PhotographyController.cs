@@ -23,7 +23,7 @@ public class PhotographyController : Controller {
     public async Task<IActionResult> Photo(string id) {
         var photo = await _photoService.GetById(id);
         if (photo == null) {
-            _messages.Error($"图片 {id} 不存在！");
+            _messages.Error($"Hình ảnh {id} không tồn tại!");
             return RedirectToAction(nameof(Index));
         }
 
@@ -33,7 +33,7 @@ public class PhotographyController : Controller {
     public async Task<IActionResult> Next(string id) {
         var item = await _photoService.GetNext(id);
         if (item == null) {
-            _messages.Warning("没有下一张图片了~");
+            _messages.Warning("Không còn ảnh tiếp theo nữa~");
             return RedirectToAction(nameof(Photo), new {id});
         }
 
@@ -43,7 +43,7 @@ public class PhotographyController : Controller {
     public async Task<IActionResult> Previous(string id) {
         var item = await _photoService.GetPrevious(id);
         if (item == null) {
-            _messages.Warning("没有上一张图片了~");
+            _messages.Warning("Không còn ảnh trước đó nữa~");
             return RedirectToAction(nameof(Photo), new {id});
         }
 
@@ -53,12 +53,12 @@ public class PhotographyController : Controller {
     public async Task<IActionResult> RandomPhoto() {
         var item = await _photoService.GetRandomPhoto();
         if (item == null) {
-            _messages.Error("当前没有图片，请先上传！");
+            _messages.Error("Hiện chưa có hình ảnh nào, vui lòng tải lên trước!");
             return RedirectToAction("Index", "Home");
         }
 
-        _messages.Info($"随机推荐了图片 <b>{item.Title}</b> 给你~" +
-                       $"<span class='ps-3'><a href=\"{Url.Action(nameof(RandomPhoto))}\">再来一次</a></span>");
+        _messages.Info($"Đã đề xuất ngẫu nhiên hình ảnh <b>{item.Title}</b> cho bạn~" +
+                       $"<span class='ps-3'><a href=\"{Url.Action(nameof(RandomPhoto))}\">Thử lại lần nữa</a></span>");
         return RedirectToAction(nameof(Photo), new {id = item.Id});
     }
 }

@@ -1,20 +1,20 @@
 @{
-    ViewData["Title"] = "Sitemap测试";
+    ViewData["Title"] = "Kiểm thử Sitemap";
 }
 
 <div class="container py-5">
     <div class="row">
         <div class="col-lg-8 mx-auto">
-            <h1 class="mb-4">Sitemap测试</h1>
+            <h1 class="mb-4">Kiểm thử Sitemap</h1>
             
             <div class="alert alert-info">
-                <h5>Sitemap说明</h5>
-                <p>Sitemap帮助搜索引擎更好地发现和索引网站内容。</p>
+                <h5>Giải thích về Sitemap</h5>
+                <p>Sitemap giúp công cụ tìm kiếm phát hiện và lập chỉ mục nội dung website tốt hơn.</p>
             </div>
 
             <div class="card">
                 <div class="card-header">
-                    <h5>可用的Sitemap</h5>
+                    <h5>Các Sitemap khả dụng</h5>
                 </div>
                 <div class="card-body">
                     @if (ViewBag.SitemapUrls != null) {
@@ -25,13 +25,13 @@
                                     <small class="d-block text-muted">
                                         @switch (url) {
                                             case "/sitemap.xml":
-                                                @:主要的XML sitemap，包含所有页面
+                                                @:XML sitemap chính, bao gồm tất cả các trang
                                                 break;
                                             case "/sitemap-images.xml":
-                                                @:图片sitemap，包含所有文章中的图片
+                                                @:Sitemap hình ảnh, bao gồm hình ảnh trong tất cả bài viết
                                                 break;
                                             case "/sitemap-index.xml":
-                                                @:Sitemap索引文件，列出所有sitemap
+                                                @:Tệp chỉ mục Sitemap, liệt kê tất cả sitemap
                                                 break;
                                         }
                                     </small>
@@ -43,8 +43,8 @@
             </div>
 
             <div class="mt-4">
-                <h5>Sitemap验证工具</h5>
-                <p>您可以使用以下工具验证sitemap的有效性：</p>
+                <h5>Công cụ xác thực Sitemap</h5>
+                <p>Bạn có thể dùng các công cụ sau để xác thực tính hợp lệ của sitemap:</p>
                 <ul>
                     <li><a href="https://www.google.com/webmasters/tools/sitemap-list" target="_blank">Google Search Console</a></li>
                     <li><a href="https://www.bing.com/webmaster" target="_blank">Bing Webmaster Tools</a></li>
@@ -53,7 +53,7 @@
             </div>
 
             <div class="mt-4">
-                <a href="/seo-test" class="btn btn-primary">返回SEO测试首页</a>
+                <a href="/seo-test" class="btn btn-primary">Về trang chủ kiểm thử SEO</a>
             </div>
         </div>
     </div>

@@ -11,7 +11,7 @@ using StarBlog.Web.ViewModels.Blog;
 namespace StarBlog.Web.Apis.Blog;
 
 /// <summary>
-/// 博客
+/// Blog
 /// </summary>
 [ApiController]
 [Route("Api/[controller]")]
@@ -27,7 +27,7 @@ public class BlogController : ControllerBase {
     }
 
     /// <summary>
-    /// 获取置顶博客
+    /// Lấy blog được ghim
     /// </summary>
     /// <returns></returns>
     [HttpGet("Top")]
@@ -37,7 +37,7 @@ public class BlogController : ControllerBase {
     }
 
     /// <summary>
-    /// 获取推荐博客
+    /// Lấy blog nổi bật
     /// </summary>
     /// <returns></returns>
     [HttpGet("Featured")]
@@ -47,7 +47,7 @@ public class BlogController : ControllerBase {
     }
 
     /// <summary>
-    /// 博客信息概况
+    /// Tổng quan thông tin blog
     /// </summary>
     /// <returns></returns>
     // [Authorize]
@@ -58,7 +58,7 @@ public class BlogController : ControllerBase {
     }
 
     /// <summary>
-    /// 博客文章状态列表
+    /// Danh sách trạng thái bài viết blog
     /// </summary>
     /// <returns></returns>
     [HttpGet("[action]")]
@@ -68,7 +68,7 @@ public class BlogController : ControllerBase {
     }
 
     /// <summary>
-    /// 上传博客压缩包 + 导入
+    /// Tải lên gói nén blog + nhập
     /// </summary>
     /// <returns></returns>
     [Authorize]
@@ -77,18 +77,18 @@ public class BlogController : ControllerBase {
         [FromServices] CategoryService categoryService
     ) {
         if (!file.FileName.EndsWith(".zip")) {
-            return ApiResponse.BadRequest("只能上传zip格式的文件哦~");
+            return ApiResponse.BadRequest("Chỉ có thể tải lên tệp định dạng zip thôi nhé~");
         }
 
         var category = await categoryService.GetById(dto.CategoryId);
-        if (category == null) return ApiResponse.BadRequest($"分类 {dto.CategoryId} 不存在！");
+        if (category == null) return ApiResponse.BadRequest($"Danh mục {dto.CategoryId} không tồn tại!");
 
         try {
             return new ApiResponse<Post>(await _blogService.Upload(dto, file));
         }
         catch (Exception ex) {
-            _logger.LogError(ex, "解压文件出错：{message}", ex.Message);
-            return ApiResponse.Error($"解压文件出错：{ex.Message}");
+            _logger.LogError(ex, "Lỗi khi giải nén tệp: {message}", ex.Message);
+            return ApiResponse.Error($"Lỗi khi giải nén tệp: {ex.Message}");
         }
     }
 }

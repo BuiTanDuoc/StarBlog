@@ -11,10 +11,10 @@ public class SeoService {
     }
 
     public SeoMetadata GetHomeSeoMetadata() {
-        var siteName = "曦远博客 · StarBlog · 画星星高手 · 程序设计实验室";
+        var siteName = "Blog Hy Viễn · StarBlog · Cao thủ vẽ ngôi sao · Phòng thí nghiệm lập trình";
         var description =
-            "DealiAxy，曦远博客，画星星高手博客，程序设计实验室。专注于互联网热门新技术探索与团队敏捷开发实践，包括架构设计、机器学习与数据分析算法、移动端开发、Linux、Web前后端开发等技术分享。";
-        var keywords = "曦远,DealiAxy,程序设计实验室,博客,编程,技术,开发,StarBlog,画星星高手,程序设计,Web开发,机器学习,数据分析";
+            "DealiAxy, blog Hy Viễn, blog Cao thủ vẽ ngôi sao, Phòng thí nghiệm lập trình. Chuyên khám phá các công nghệ mới đang được quan tâm trên internet và thực hành phát triển linh hoạt theo nhóm, bao gồm thiết kế kiến trúc, thuật toán học máy và phân tích dữ liệu, phát triển di động, Linux, phát triển Web frontend/backend, v.v.";
+        var keywords = "Hy Viễn,DealiAxy,Phòng thí nghiệm lập trình,blog,lập trình,công nghệ,phát triển,StarBlog,Cao thủ vẽ ngôi sao,thiết kế chương trình,phát triển Web,học máy,phân tích dữ liệu";
 
         return new SeoMetadata {
             Title = siteName,
@@ -32,7 +32,7 @@ public class SeoService {
 
     public SeoMetadata GetPostSeoMetadata(PostViewModel post) {
         var title = $"{post.Title} - StarBlog";
-        var description = !string.IsNullOrEmpty(post.Summary) && post.Summary != "（没有介绍）"
+        var description = !string.IsNullOrEmpty(post.Summary) && post.Summary != "(Không có mô tả)"
             ? post.Summary
             : ExtractDescriptionFromContent(post.Content);
 
@@ -59,9 +59,9 @@ public class SeoService {
     }
 
     public SeoMetadata GetCategorySeoMetadata(Category category, int postCount) {
-        var title = $"{category.Name} - 分类 - StarBlog";
-        var description = $"StarBlog {category.Name} 分类下的所有文章，共 {postCount} 篇文章。";
-        var keywords = $"{category.Name},分类,StarBlog,博客,技术文章";
+        var title = $"{category.Name} - Danh mục - StarBlog";
+        var description = $"StarBlog {category.Name} - tất cả bài viết trong danh mục này, tổng cộng {postCount} bài viết.";
+        var keywords = $"{category.Name},danh mục,StarBlog,blog,bài viết kỹ thuật";
         var url = $"{GetBaseUrl()}/Blog/List?categoryId={category.Id}";
 
         return new SeoMetadata {
@@ -80,9 +80,9 @@ public class SeoService {
     }
 
     public SeoMetadata GetBlogListSeoMetadata(int page = 1) {
-        var title = page > 1 ? $"博客文章 - 第{page}页 - StarBlog" : "博客文章 - StarBlog";
-        var description = "StarBlog 博客文章列表，分享编程技术、开发经验、技术教程等内容。";
-        var keywords = "博客,文章列表,编程,技术,开发,StarBlog";
+        var title = page > 1 ? $"Bài viết blog - Trang {page} - StarBlog" : "Bài viết blog - StarBlog";
+        var description = "StarBlog Danh sách bài viết blog, chia sẻ kỹ thuật lập trình, kinh nghiệm phát triển, hướng dẫn kỹ thuật và các nội dung khác.";
+        var keywords = "blog,danh sách bài viết,lập trình,công nghệ,phát triển,StarBlog";
         var url = page > 1 ? $"{GetBaseUrl()}/Blog/List?page={page}" : $"{GetBaseUrl()}/Blog/List";
 
         return new SeoMetadata {
@@ -101,23 +101,23 @@ public class SeoService {
     }
 
     private string ExtractDescriptionFromContent(string content) {
-        if (string.IsNullOrEmpty(content)) return "StarBlog 技术博客文章";
+        if (string.IsNullOrEmpty(content)) return "StarBlog bài viết blog kỹ thuật";
 
-        // 移除Markdown标记
+        // Loại bỏ ký hiệu Markdown
         var plainText = System.Text.RegularExpressions.Regex.Replace(content, @"[#*`\[\]()_~]", "");
         plainText = System.Text.RegularExpressions.Regex.Replace(plainText, @"!\[.*?\]\(.*?\)", "");
         plainText = System.Text.RegularExpressions.Regex.Replace(plainText, @"\[.*?\]\(.*?\)", "");
 
-        // 取前160个字符作为描述
+        // Lấy 160 ký tự đầu làm mô tả
         return plainText.Length > 160 ? plainText.Substring(0, 157) + "..." : plainText;
     }
 
     private string GenerateKeywordsFromPost(PostViewModel post) {
-        var keywords = new List<string> { "曦远", "DealiAxy", "StarBlog", "博客", "技术" };
+        var keywords = new List<string> { "Hy Viễn", "DealiAxy", "StarBlog", "blog", "công nghệ" };
 
         keywords.Add(post.Category.Name);
 
-        // 从标题中提取关键词
+        // Trích xuất từ khóa từ tiêu đề
         var titleWords = post.Title.Split(new[] { ' ', '-', '_', ':', '：', '，', '。' },
             StringSplitOptions.RemoveEmptyEntries);
         keywords.AddRange(titleWords.Where(w => w.Length > 1).Take(3));

@@ -1,6 +1,6 @@
 ﻿/**
- * 动态加载CSS
- * 参考：http://lengyun.github.io/js/3-2-2dynamicAddCSS.html
+ * Tải CSS động
+ * Tham khảo: http://lengyun.github.io/js/3-2-2dynamicAddCSS.html
  */
 function loadStyles(url) {
     let link = document.createElement("link");

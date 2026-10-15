@@ -4,8 +4,8 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 namespace StarBlog.Api.HealthChecks;
 
 /// <summary>
-/// Readiness：检查 FreeSql 业务库是否可用。
-/// 这里使用最轻量的探测语句（select 1），用于验证连接与执行通道正常。
+/// Readiness: kiểm tra cơ sở dữ liệu nghiệp vụ FreeSql có khả dụng không.
+/// Ở đây dùng câu lệnh thăm dò nhẹ nhất (select 1) để xác nhận kết nối và kênh thực thi hoạt động bình thường.
 /// </summary>
 public sealed class FreeSqlHealthCheck : IHealthCheck {
     private readonly IFreeSql _freeSql;

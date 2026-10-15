@@ -51,8 +51,8 @@
                             <span class="typewriter" data-text="DealiAxy's Blog">DealiAxy's Blog</span>
                         </h1>
                         <div class="hero-subtitle">
-                            <h3 class="h4 text-white-50 mb-3">曦远 (DealiAxy)</h3>
-                            <p class="lead mb-4">独立开发者 · Linux中度依赖者 · 业余摄影玩家 · 文学爱好者</p>
+                            <h3 class="h4 text-white-50 mb-3">Hy Viễn (DealiAxy)</h3>
+                            <p class="lead mb-4">Nhà phát triển độc lập · Người phụ thuộc vừa phải vào Linux · Người chơi nhiếp ảnh nghiệp dư · Người yêu văn học</p>
                         </div>
                     </div>
 
@@ -64,7 +64,7 @@
                             <a class="skill-tag" asp-controller="Search" asp-action="Blog" asp-route-keyword="React">React</a>
                             <a class="skill-tag" asp-controller="Search" asp-action="Blog" asp-route-keyword="Flutter">Flutter</a>
                             <a class="skill-tag" asp-controller="Search" asp-action="Blog" asp-route-keyword="Kotlin">Kotlin</a>
-                            <a class="skill-tag" asp-controller="Search" asp-action="Blog" asp-route-keyword="Go语言">Go</a>
+                            <a class="skill-tag" asp-controller="Search" asp-action="Blog" asp-route-keyword="Ngôn ngữ Go">Go</a>
                             <a class="skill-tag" asp-controller="Search" asp-action="Blog" asp-route-keyword="LLM">LLM</a>
                         </div>
                     </div>
@@ -76,10 +76,10 @@
                                 <i class="fab fa-github"></i>
                             </a>
                             <a href="https://www.zhihu.com/people/dealiaxy" target="_blank" class="social-link"
-                               title="知乎">
+                               title="Zhihu">
                                 <i class="fab fa-zhihu"></i>
                             </a>
-                            <a href="https://www.cnblogs.com/deali/" target="_blank" class="social-link" title="博客园">
+                            <a href="https://www.cnblogs.com/deali/" target="_blank" class="social-link" title="Cnblogs">
                                 <i class="fas fa-blog"></i>
                             </a>
                         </div>
@@ -90,16 +90,16 @@
                         <div class="d-grid gap-3 d-md-flex justify-content-md-start">
                             <a class="btn btn-primary btn-lg px-4 py-3 rounded-pill shadow-sm"
                                asp-controller="Blog" asp-action="RandomPost">
-                                <i class="fas fa-book-open me-2"></i>阅读文章
+                                <i class="fas fa-book-open me-2"></i>Đọc bài viết
                             </a>
                             <a class="btn btn-outline-light btn-lg px-4 py-3 rounded-pill"
                                asp-controller="Photography" asp-action="RandomPhoto">
-                                <i class="fas fa-camera me-2"></i>欣赏摄影
+                                <i class="fas fa-camera me-2"></i>Thưởng thức nhiếp ảnh
                             </a>
                             @if (Model.ChartVisible) {
                                 <button class="btn btn-outline-light btn-lg px-4 py-3 rounded-pill"
                                         @@click="switchChartType">
-                                    <i class="fas fa-chart-bar me-2"></i>切换图表
+                                    <i class="fas fa-chart-bar me-2"></i>Chuyển đổi biểu đồ
                                 </button>
                             }
                         </div>
@@ -109,7 +109,7 @@
                     <div class="hero-status mt-4">
                         <div class="status-badge">
                             <span class="status-indicator"></span>
-                            <span class="status-text">StarBlog v2 正在开发中</span>
+                            <span class="status-text">StarBlog v2 Đang trong quá trình phát triển</span>
                         </div>
                     </div>
                 </div>
@@ -126,7 +126,7 @@
 </div>
 
 <div class="container px-4 py-4" id="custom-cards">
-    <h2 class="pb-2 border-bottom">照片</h2>
+    <h2 class="pb-2 border-bottom">Ảnh</h2>
 
     @if (Model.FeaturedPhotos.Any()) {
         <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
@@ -138,23 +138,23 @@
         </div>
     }
     else {
-        @await Html.PartialAsync("Widgets/PlaceholderCard", "推荐图片")
+        @await Html.PartialAsync("Widgets/PlaceholderCard", "Ảnh nổi bật")
     }
 
 </div>
 
 <div class="container px-4 py-3">
-    <h2 class="pb-2 border-bottom">置顶文章</h2>
+    <h2 class="pb-2 border-bottom">Bài viết được ghim</h2>
 
     @if (Model.TopPost != null) {
         <partial name="Widgets/TopPostCard" model="Model.TopPost"/>
     }
     else {
-        @await Html.PartialAsync("Widgets/PlaceholderCard", "置顶博客")
+        @await Html.PartialAsync("Widgets/PlaceholderCard", "Blog được ghim")
     }
 
 
-    <h2 class="pb-2 border-bottom">推荐文章</h2>
+    <h2 class="pb-2 border-bottom">Bài viết nổi bật</h2>
 
     @if (Model.FeaturedPosts.Any()) {
         <div class="row mb-2">
@@ -164,12 +164,12 @@
         </div>
     }
     else {
-        @await Html.PartialAsync("Widgets/PlaceholderCard", "推荐博客")
+        @await Html.PartialAsync("Widgets/PlaceholderCard", "Blog nổi bật")
     }
 </div>
 
 <div class="container px-4 py-3" id="featured-3">
-    <h2 class="pb-2 border-bottom">推荐分类</h2>
+    <h2 class="pb-2 border-bottom">Danh mục nổi bật</h2>
     @if (Model.FeaturedCategories.Any()) {
         <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
             @foreach (var fc in Model.FeaturedCategories) {
@@ -178,15 +178,15 @@
         </div>
     }
     else {
-        @await Html.PartialAsync("Widgets/PlaceholderCard", "推荐分类")
+        @await Html.PartialAsync("Widgets/PlaceholderCard", "Danh mục nổi bật")
     }
 
 </div>
 
 <div class="container px-4 py-3">
     <div class="d-flex justify-content-between mb-2 border-bottom">
-        <h2>友情链接</h2>
-        <a class="btn btn-link" asp-controller="LinkExchange" asp-action="Add">申请友链</a>
+        <h2>Liên kết bạn bè</h2>
+        <a class="btn btn-link" asp-controller="LinkExchange" asp-action="Add">Đăng ký liên kết bạn bè</a>
     </div>
     @if (Model.Links.Any()) {
         <div class="d-grid gap-2 d-md-block">
@@ -197,7 +197,7 @@
         </div>
     }
     else {
-        @await Html.PartialAsync("Widgets/PlaceholderCard", "友情链接")
+        @await Html.PartialAsync("Widgets/PlaceholderCard", "Liên kết bạn bè")
     }
 </div>
 
@@ -213,14 +213,14 @@
 
     <!-- Hero Section JavaScript -->
     <script>
-        // 平滑滚动到下一个部分
+        // Cuộn mượt đến phần tiếp theo
         document.querySelector('.scroll-arrow')?.addEventListener('click', function () {
             document.querySelector('#custom-cards').scrollIntoView({
                 behavior: 'smooth'
             });
         });
 
-        // 技能标签随机颜色效果
+        // Hiệu ứng màu ngẫu nhiên cho nhãn kỹ năng
         document.addEventListener('DOMContentLoaded', function () {
             const skillTags = document.querySelectorAll('.skill-tag');
             const colors = [

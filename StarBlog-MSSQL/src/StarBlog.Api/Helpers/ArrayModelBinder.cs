@@ -17,14 +17,14 @@ public class ArrayModelBinder : IModelBinder {
             return Task.CompletedTask;
         }
 
-        // 使用反射获取参数类型
+        // Dùng reflection để lấy kiểu tham số
         var elementType = bindingContext.ModelType.GetTypeInfo().GenericTypeParameters[0];
         
-        // 根据参数类型，新建一个类型转换器
+        // Dựa vào kiểu tham số, tạo một type converter mới
         var converter = TypeDescriptor.GetConverter(elementType);
 
-        // 按照 , 分割字符串，
-        // 指定 `StringSplitOptions.RemoveEmptyEntries` 参数，用以清除空值，比如 `1,,3,4` -> `["1", "3", "4"]`
+        // Tách chuỗi theo dấu phẩy (,),
+        // Chỉ định tham số `StringSplitOptions.RemoveEmptyEntries` để loại bỏ giá trị rỗng, ví dụ `1,,3,4` -> `["1", "3", "4"]`
         var values = value.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)
             .Select(x => converter.ConvertFromString(x.Trim()))
             .ToArray();

@@ -19,17 +19,17 @@ let homeApp = new Vue({
     },
     methods: {
         /**
-         * 生成随机RGB颜色字符串，例如：rgb(123,123,123)
+         * Tạo chuỗi màu RGB ngẫu nhiên, ví dụ: rgb(123,123,123)
          * @returns {string}
          */
         randomRGB() {
             return 'rgb(' + this.randomColorArray().join(',') + ')'
         },
-        // 生成随机RGBA字符串，例如：rgba(123,123,123,0.2)
+        // Tạo chuỗi RGBA ngẫu nhiên, ví dụ: rgba(123,123,123,0.2)
         randomRGBA(a) {
             return this.convertRGBA(this.randomColorArray(), a)
         },
-        // RGB数组转换成RGBA字符串
+        // Chuyển mảng RGB thành chuỗi RGBA
         convertRGBA(rgbArray, a) {
             let color = Array.from(rgbArray)
             color.push(a)

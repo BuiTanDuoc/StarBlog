@@ -12,7 +12,7 @@ public static class ConfigureFreeSql {
 
         services.AddSingleton(freeSql);
 
-        // 仓储模式支持
+        // Hỗ trợ repository pattern
         services.AddFreeRepository();
     }
 }

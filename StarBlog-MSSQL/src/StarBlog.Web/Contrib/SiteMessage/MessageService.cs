@@ -2,7 +2,7 @@
 
 public class MessageService {
     private readonly IHttpContextAccessor _httpContextAccessor;
-    private const string DefaultTitle = "提示信息";
+    private const string DefaultTitle = "Thông báo";
     private const string SessionKey = "message-service-id";
     private Dictionary<string, Queue<Message>> MessageQueues { get; } = new();
 
@@ -15,7 +15,7 @@ public class MessageService {
     public Queue<Message> CurrentQueue {
         get {
             if (HttpContext == null) {
-                throw new Exception("There is no active HttpContext. / 当前没有活动的 HttpContext。");
+                throw new Exception("There is no active HttpContext. / Hiện không có HttpContext đang hoạt động.");
             }
 
             var id = HttpContext.Session.GetString(SessionKey);

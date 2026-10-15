@@ -11,13 +11,13 @@
         </p>
         @if (!string.IsNullOrWhiteSpace(Model.Slug)) {
             <a class="btn btn-outline-secondary stretched-link" href="/p/@Model.Slug">
-                查看全文
+                Xem toàn văn
             </a>
         }
         else {
             <a class="btn btn-outline-secondary stretched-link"
                asp-controller="Blog" asp-action="Post" asp-route-id="@Model.Id">
-                查看全文
+                Xem toàn văn
             </a>   
         }
     </div>

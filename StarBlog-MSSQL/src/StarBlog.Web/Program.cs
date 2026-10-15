@@ -19,7 +19,7 @@ var builder = WebApplication.CreateBuilder(args);
 var mvcBuilder = builder.Services.AddControllersWithViews(options => { options.Filters.Add<ResponseWrapperFilter>(); }
 );
 
-// 开发模式启用Razor页面动态编译
+// Bật biên dịch động trang Razor ở chế độ phát triển
 if (builder.Environment.IsDevelopment()) {
     mvcBuilder.AddRazorRuntimeCompilation();
 }
@@ -27,15 +27,15 @@ if (builder.Environment.IsDevelopment()) {
 builder.Services.AddMemoryCache();
 builder.Services.AddHttpContextAccessor();
 
-// 添加响应压缩
+// Thêm nén phản hồi
 builder.Services.AddResponseCompression(options => {
     options.EnableForHttps = true;
 
-    // 配置压缩提供程序（按优先级排序）
+    // Cấu hình các compression provider (sắp xếp theo độ ưu tiên)
     options.Providers.Add<Microsoft.AspNetCore.ResponseCompression.BrotliCompressionProvider>();
     options.Providers.Add<Microsoft.AspNetCore.ResponseCompression.GzipCompressionProvider>();
 
-    // 配置要压缩的 MIME 类型
+    // Cấu hình các kiểu MIME cần nén
     options.MimeTypes = Microsoft.AspNetCore.ResponseCompression.ResponseCompressionDefaults.MimeTypes.Concat(new[] {
         "application/javascript",
         "application/json",
@@ -48,12 +48,12 @@ builder.Services.AddResponseCompression(options => {
     });
 });
 
-// 配置 Brotli 压缩级别
+// Cấu hình mức nén Brotli
 builder.Services.Configure<Microsoft.AspNetCore.ResponseCompression.BrotliCompressionProviderOptions>(options => {
     options.Level = System.IO.Compression.CompressionLevel.Optimal;
 });
 
-// 配置 Gzip 压缩级别
+// Cấu hình mức nén Gzip
 builder.Services.Configure<Microsoft.AspNetCore.ResponseCompression.GzipCompressionProviderOptions>(options => {
     options.Level = System.IO.Compression.CompressionLevel.Optimal;
 });
@@ -107,10 +107,10 @@ builder.Services.AddStaticRobotsTxt(opt => {
 builder.Services.AddSwagger();
 builder.Services.AddSettings(builder.Configuration);
 builder.Services.AddAuth(builder.Configuration);
-// 注册 IHttpClientFactory，参考：https://docs.microsoft.com/zh-cn/dotnet/core/extensions/http-client
+// Đăng ký IHttpClientFactory, tham khảo: https://docs.microsoft.com/zh-cn/dotnet/core/extensions/http-client
 builder.Services.AddHttpClient();
 builder.Services.AddImageSharp();
-// 注册自定义服务
+// Đăng ký các dịch vụ tùy chỉnh
 builder.Services.AddSingleton<CommonService>();
 builder.Services.AddSingleton<EmailService>();
 builder.Services.AddSingleton<MessageService>();
@@ -132,7 +132,7 @@ builder.Services.AddScoped<ImageSeoService>();
 builder.Services.AddScoped<SitemapService>();
 builder.Services.AddScoped<TranslationService>();
 
-// 翻译配置
+// Cấu hình dịch thuật
 builder.Services.Configure<TranslationConfig>(builder.Configuration.GetSection(TranslationConfig.SectionName));
 
 builder.Services.Configure<OutboxOptions>(builder.Configuration.GetSection("Outbox"));
@@ -142,7 +142,7 @@ builder.Services.AddScoped<IOutboxHandler, EmailSendOutboxHandler>();
 builder.Services.AddHostedService<OutboxWorker>();
 builder.Services.AddHostedService<BackgroundTaskWorker>();
 
-// 设置请求最大大小
+// Đặt kích thước tối đa của request
 builder.WebHost.ConfigureKestrel(options => { options.Limits.MaxRequestBodySize = long.MaxValue; });
 
 var app = builder.Build();
@@ -154,7 +154,7 @@ if (app.Environment.IsDevelopment()) {
 else {
     app.UseExceptionHandler(applicationBuilder => {
         applicationBuilder.Run(async context => {
-            // todo 记录错误日志
+            // todo Ghi nhật ký lỗi
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
             await context.Response.WriteAsJsonAsync(new { message = "Unexpected error!" });
         });
@@ -170,38 +170,38 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions {
 app.UseImageSharp();
 // app.UseHttpsRedirection();
 
-// 启用响应压缩
+// Bật nén phản hồi
 app.UseResponseCompression();
 
-// 添加静态文件调试中间件（仅在非生产环境）
+// Thêm middleware gỡ lỗi tệp tĩnh (chỉ ở môi trường không phải production)
 if (!app.Environment.IsProduction()) {
     app.UseMiddleware<StaticFileDebugMiddleware>();
 }
 
-// 配置静态文件缓存
+// Cấu hình bộ nhớ đệm cho tệp tĩnh
 app.UseStaticFiles(new StaticFileOptions {
     ServeUnknownFileTypes = true,
     OnPrepareResponse = ctx => {
         var path = ctx.Context.Request.Path.Value;
 
-        // 对于 JS 和 CSS 文件，设置较短的缓存时间以便调试
+        // Với tệp JS và CSS, đặt thời gian cache ngắn hơn để tiện gỡ lỗi
         if (path != null && (path.EndsWith(".js") || path.EndsWith(".css"))) {
             if (app.Environment.IsDevelopment()) {
-                // 开发环境不缓存 JS/CSS
+                // Môi trường phát triển không cache JS/CSS
                 ctx.Context.Response.Headers.CacheControl = "no-cache, no-store, must-revalidate";
                 ctx.Context.Response.Headers.Pragma = "no-cache";
                 ctx.Context.Response.Headers.Expires = "0";
             }
             else {
-                // 生产环境短期缓存 JS/CSS
-                const int shortDuration = 60 * 60 * 24; // 1天
+                // Môi trường production cache ngắn hạn JS/CSS
+                const int shortDuration = 60 * 60 * 24; // 1 ngày
                 ctx.Context.Response.Headers.CacheControl = $"public,max-age={shortDuration}";
                 ctx.Context.Response.Headers.Expires = DateTime.UtcNow.AddDays(1).ToString("R");
             }
         }
         else {
-            // 其他静态文件长期缓存
-            const int durationInSeconds = 60 * 60 * 24 * 30; // 30天
+            // Các tệp tĩnh khác cache dài hạn
+            const int durationInSeconds = 60 * 60 * 24 * 30; // 30 ngày
             ctx.Context.Response.Headers.CacheControl = $"public,max-age={durationInSeconds}";
             ctx.Context.Response.Headers.Expires = DateTime.UtcNow.AddDays(30).ToString("R");
         }

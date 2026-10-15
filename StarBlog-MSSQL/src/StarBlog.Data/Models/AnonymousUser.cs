@@ -1,7 +1,7 @@
 ﻿namespace StarBlog.Data.Models;
 
 /// <summary>
-/// 匿名用户
+/// Người dùng ẩn danh
 /// </summary>
 public class AnonymousUser : ModelBase {
     public string Id { get; set; }

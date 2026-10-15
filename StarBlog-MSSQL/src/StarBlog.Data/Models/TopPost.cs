@@ -3,7 +3,7 @@
 namespace StarBlog.Data.Models;
 
 /// <summary>
-/// 置顶文章
+/// Bài viết được ghim
 /// </summary>
 [Table(Name = "top_post", OldName = "TopPost")]
 public class TopPost {

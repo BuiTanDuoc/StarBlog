@@ -53,10 +53,10 @@ public class HomeController : Controller {
             vm.RandomPhotoVisible = false;
         }
 
-        // 设置SEO元数据
+        // Thiết lập metadata SEO
         ViewData["SeoMetadata"] = _seoService.GetHomeSeoMetadata();
 
-        // 设置结构化数据
+        // Thiết lập dữ liệu có cấu trúc
         var structuredData = new Dictionary<string, string> {
             ["WebSite"] = _structuredDataService.GetWebsiteStructuredData(),
             ["Organization"] = _structuredDataService.GetOrganizationStructuredData(),
@@ -70,7 +70,7 @@ public class HomeController : Controller {
     [HttpGet]
     public IActionResult Init([FromServices] ConfigService conf) {
         if (conf["is_init"] == "true") {
-            _messages.Error("已经完成初始化！");
+            _messages.Error("Đã hoàn tất khởi tạo rồi!");
             return RedirectToAction(nameof(Index));
         }
 
@@ -83,27 +83,27 @@ public class HomeController : Controller {
     [HttpPost]
     public IActionResult Init([FromServices] IBaseRepository<User> userRepo, InitViewModel vm) {
         if (_conf["is_init"] == "true") {
-            _messages.Error("已经完成初始化！");
+            _messages.Error("Đã hoàn tất khởi tạo rồi!");
             return RedirectToAction(nameof(Index));
         }
 
         if (!ModelState.IsValid) return View();
 
-        // 保存配置
+        // Lưu cấu hình
         _conf["host"] = vm.Host;
         _conf["default_render"] = vm.DefaultRender;
         _conf["is_init"] = "true";
 
-        // 创建用户
-        // to do 这里暂时存储明文密码，后期要换成MD5加密存储。2023-5-7 搞定
-        // todo 使用加盐的hash密码 https://www.ais.com/how-to-generate-a-jwt-token-using-net-6/
+        // Tạo người dùng
+        // to do Tạm thời lưu mật khẩu dạng văn bản thuần ở đây, sau này sẽ đổi sang lưu mã hóa MD5. Đã xong ngày 2023-5-7
+        // todo Dùng mật khẩu băm (hash) có muối (salt) https://www.ais.com/how-to-generate-a-jwt-token-using-net-6/
         userRepo.Insert(new User {
             Id = Guid.NewGuid().ToString(),
             Name = vm.Username,
             Password = vm.Password.ToSHA256()
         });
 
-        _messages.Success("初始化完成！");
+        _messages.Success("Khởi tạo hoàn tất!");
         return RedirectToAction(nameof(Index));
     }
 }

@@ -20,17 +20,17 @@ public class PostViewModel {
     public List<TocNode>? TocNodes { get; set; }
 
     /// <summary>
-    /// 当前语言（null 或 "zh" 表示中文原文）
+    /// Ngôn ngữ hiện tại (null hoặc "zh" nghĩa là nguyên văn tiếng Trung)
     /// </summary>
     public string? CurrentLanguage { get; set; }
 
     /// <summary>
-    /// 可用的翻译语言列表
+    /// Danh sách ngôn ngữ dịch khả dụng
     /// </summary>
     public List<string> AvailableLanguages { get; set; } = new();
 
     /// <summary>
-    /// 当前是否显示翻译版本
+    /// Hiện có đang hiển thị bản dịch hay không
     /// </summary>
     public bool IsTranslation => !string.IsNullOrEmpty(CurrentLanguage) && CurrentLanguage != "zh";
 

@@ -17,7 +17,7 @@ public class TempFilterService {
             words = JsonSerializer.Deserialize<IEnumerable<Word>>(File.ReadAllText(wordsPath));
         }
         else {
-            _logger.LogWarning("未找到 words.json 文件，评论敏感词检测服务可能无法正常工作！");
+            _logger.LogWarning("Không tìm thấy tệp words.json, dịch vụ phát hiện từ nhạy cảm trong bình luận có thể không hoạt động bình thường!");
         }
 
         _toolkit = words != null

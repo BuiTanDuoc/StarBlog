@@ -1,9 +1,9 @@
 namespace StarBlog.Api.HealthChecks;
 
 /// <summary>
-/// Health Check 标签：
-/// - Live：存活探针（不检查外部依赖）
-/// - Ready：就绪探针（检查关键依赖）
+/// Health Check Tag:
+/// - Live: probe còn sống (không kiểm tra phụ thuộc bên ngoài)
+/// - Ready: probe sẵn sàng (kiểm tra các phụ thuộc quan trọng)
 /// </summary>
 public static class HealthCheckTags {
     public const string Live = "live";

@@ -4,38 +4,38 @@ public class PostUpdateDto {
     public string Id { get; set; }
 
     /// <summary>
-    /// 标题
+    /// Tiêu đề
     /// </summary>
     public string Title { get; set; }
 
     /// <summary>
-    /// 文章链接，设置后可以通过以下形式访问文章
+    /// Đường dẫn bài viết, sau khi thiết lập có thể truy cập bài viết theo dạng sau
     /// <para> http://starblog.com/p/post-slug1 </para>
     /// </summary>
     public string? Slug { get; set; }
     
     /// <summary>
-    /// 文章标记
+    /// Nhãn bài viết
     /// </summary>
     public string? Status { get; set; }
     
     /// <summary>
-    /// 是否发表（不发表的话就是草稿状态）
+    /// Có xuất bản hay không (nếu không xuất bản thì là trạng thái bản nháp)
     /// </summary>
     public bool IsPublish { get; set; }
 
     /// <summary>
-    /// 梗概
+    /// Tóm tắt
     /// </summary>
     public string Summary { get; set; }
 
     /// <summary>
-    /// 内容（markdown格式）
+    /// Nội dung (định dạng markdown)
     /// </summary>
     public string Content { get; set; }
 
     /// <summary>
-    /// 分类ID
+    /// ID danh mục
     /// </summary>
     public int CategoryId { get; set; }
 }

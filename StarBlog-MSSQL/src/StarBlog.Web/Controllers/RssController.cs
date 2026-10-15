@@ -35,7 +35,7 @@ public class RssController : Controller {
 
         var feed = new SyndicationFeed(
             "StarBlog",
-            "「程序设计实验室」 专注于互联网热门新技术探索与团队敏捷开发实践，包括架构设计、机器学习与数据分析算法、移动端开发、Linux、Web前后端开发等，欢迎一起探讨技术，分享学习实践经验。",
+            "Phòng thí nghiệm lập trình chuyên khám phá các công nghệ mới đang được quan tâm trên internet và thực hành phát triển linh hoạt theo nhóm, bao gồm thiết kế kiến trúc, thuật toán học máy và phân tích dữ liệu, phát triển di động, Linux, phát triển Web frontend/backend, v.v., hoan nghênh cùng thảo luận kỹ thuật, chia sẻ kinh nghiệm học tập và thực hành.",
             new Uri("http://blog.deali.cn"), "RSSUrl", posts.First().LastUpdateTime
         ) {
             Copyright = new TextSyndicationContent($"{DateTime.Now.Year} DealiAxy")

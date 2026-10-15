@@ -26,7 +26,7 @@
     font-size: 3.25em;
 }
 
-/*磁铁容器*/
+/*Khung chứa các tile*/
 .tile-container {
     width: 845px;
     margin: 5px auto;
@@ -36,7 +36,7 @@
     perspective: 1600px;
 }
 
-/*磁贴列*/
+/*Cột tile*/
 .tile-column {
     flex-direction: column;
     margin-left: 5px;
@@ -73,12 +73,12 @@
     height: 100%;
 }
 
-/*暗的背景*/
+/*Nền tối*/
 .tile-bg-dim {
     filter: brightness(50%);
 }
 
-/*小磁贴*/
+/*Tile nhỏ*/
 .tile-sm {
     width: 100px;
     height: 100px;
@@ -89,19 +89,19 @@
     line-height: 100px;
 }
 
-/*中磁贴*/
+/*Tile vừa*/
 .tile-md {
     width: 205px;
     height: 205px;
 }
 
-/*宽磁贴*/
+/*Tile rộng*/
 .tile-wd {
     width: 415px;
     height: 205px;
 }
 
-/*大磁贴*/
+/*Tile lớn*/
 .tile-lg {
     width: 415px;
     height: 415px;

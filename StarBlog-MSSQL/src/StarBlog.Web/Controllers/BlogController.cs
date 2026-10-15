@@ -49,12 +49,12 @@ public class BlogController : Controller {
             : await _categoryRepo.Where(a => a.Id == categoryId).FirstAsync();
 
         if (currentCategory == null) {
-            _messages.Error($"分类 {categoryId} 不存在！");
+            _messages.Error($"Danh mục {categoryId} không tồn tại!");
             return RedirectToAction(nameof(List));
         }
 
         if (!currentCategory.Visible) {
-            _messages.Warning($"分类 {categoryId} 暂不开放！");
+            _messages.Warning($"Danh mục {categoryId} tạm thời chưa mở!");
             return RedirectToAction(nameof(List));
         }
 
@@ -66,7 +66,7 @@ public class BlogController : Controller {
             SortBy = sortType == "desc" ? $"-{sortBy}" : sortBy
         });
 
-        // 设置SEO元数据
+        // Thiết lập metadata SEO
         if (categoryId > 0) {
             ViewData["SeoMetadata"] = _seoService.GetCategorySeoMetadata(currentCategory, posts.TotalItemCount);
         } else {
@@ -93,18 +93,18 @@ public class BlogController : Controller {
         var post = await _postService.GetById(id);
 
         if (post == null) {
-            _messages.Error($"文章 {id} 不存在！");
+            _messages.Error($"Bài viết {id} không tồn tại!");
             return RedirectToAction(nameof(List));
         }
 
         if (!post.IsPublish) {
-            _messages.Warning($"文章 {id} 未发布！");
+            _messages.Warning($"Bài viết {id} chưa được xuất bản!");
             return RedirectToAction(nameof(List));
         }
 
         var postViewModel = await _postService.GetPostViewModel(post);
 
-        // 查询可用翻译语言
+        // Truy vấn các ngôn ngữ dịch khả dụng
         var translations = await _translationRepo
             .Where(t => t.PostId == post.Id)
             .ToListAsync();
@@ -113,7 +113,7 @@ public class BlogController : Controller {
             .Distinct()
             .ToList();
 
-        // 如果指定了语言且有翻译，替换内容
+        // Nếu đã chỉ định ngôn ngữ và có bản dịch thì thay thế nội dung
         if (!string.IsNullOrEmpty(lang) && lang != "zh") {
             var translation = translations.FirstOrDefault(t => t.Language == lang);
             if (translation != null) {
@@ -127,7 +127,7 @@ public class BlogController : Controller {
             }
         }
 
-        // 存储语言偏好到 Cookie
+        // Lưu ngôn ngữ ưa thích vào Cookie
         if (!string.IsNullOrEmpty(lang)) {
             Response.Cookies.Append("blog_lang", lang, new CookieOptions {
                 Expires = DateTimeOffset.UtcNow.AddYears(1),
@@ -136,10 +136,10 @@ public class BlogController : Controller {
             });
         }
 
-        // 设置SEO元数据
+        // Thiết lập metadata SEO
         ViewData["SeoMetadata"] = _seoService.GetPostSeoMetadata(postViewModel);
 
-        // 设置结构化数据
+        // Thiết lập dữ liệu có cấu trúc
         var structuredData = new Dictionary<string, string> {
             ["BlogPosting"] = _structuredDataService.GetBlogPostingStructuredData(postViewModel),
             ["BreadcrumbList"] = _structuredDataService.GetBreadcrumbStructuredData(postViewModel),
@@ -147,7 +147,7 @@ public class BlogController : Controller {
         };
         ViewData["StructuredData"] = structuredData;
 
-        // 获取相关文章
+        // Lấy các bài viết liên quan
         ViewData["RelatedPosts"] = await _postService.GetRelatedPosts(post, 4);
 
         var viewName = "Post.FrontendRender";
@@ -161,13 +161,13 @@ public class BlogController : Controller {
     public IActionResult RandomPost() {
         var posts = _postRepo.Where(a => a.IsPublish).ToList();
         if (posts.Count == 0) {
-            _messages.Error("当前没有文章，请先添加文章！");
+            _messages.Error("Hiện chưa có bài viết nào, vui lòng thêm bài viết trước!");
             return RedirectToAction("Index", "Home");
         }
 
         var rndPost = posts[Random.Shared.Next(posts.Count)];
-        _messages.Info($"随机推荐了文章 <b>{rndPost.Title}</b> 给你~" +
-                       $"<span class='ps-3'><a href=\"{Url.Action(nameof(RandomPost))}\">再来一次</a></span>");
+        _messages.Info($"Đã đề xuất ngẫu nhiên bài viết <b>{rndPost.Title}</b> cho bạn~" +
+                       $"<span class='ps-3'><a href=\"{Url.Action(nameof(RandomPost))}\">Thử lại lần nữa</a></span>");
         return RedirectToAction(nameof(Post), new { id = rndPost.Id });
     }
 

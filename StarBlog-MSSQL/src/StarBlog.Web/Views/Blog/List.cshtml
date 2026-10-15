@@ -4,7 +4,7 @@
 @using StarBlog.Web.ViewModels.Blog
 @model StarBlog.Web.ViewModels.Blog.BlogListViewModel
 @{
-    ViewData["Title"] = "博客列表";
+    ViewData["Title"] = "Danh sách blog";
 
     string ConditionActive(Func<bool> condition) {
         return condition() ? "active" : "";
@@ -37,7 +37,7 @@
 
                 <div class="btn-group" role="group">
                     <button id="btnGroupDrop1" type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        排序
+                        Sắp xếp
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                         <li>
@@ -45,7 +45,7 @@
                                asp-route-categoryId="@Model.CurrentCategoryId"
                                asp-route-sortType="@Model.SortType"
                                asp-route-sortBy="Title">
-                                文章标题
+                                Tiêu đề bài viết
                             </a>
                         </li>
                         <li>
@@ -53,7 +53,7 @@
                                asp-route-categoryId="@Model.CurrentCategoryId"
                                asp-route-sortType="@Model.SortType"
                                asp-route-sortBy="CreationTime">
-                                发表时间
+                                Thời gian đăng
                             </a>
                         </li>
                         <li>
@@ -61,7 +61,7 @@
                                asp-route-categoryId="@Model.CurrentCategoryId"
                                asp-route-sortType="@Model.SortType"
                                asp-route-sortBy="LastUpdateTime">
-                                更新时间
+                                Thời gian cập nhật
                             </a>
                         </li>
                     </ul>

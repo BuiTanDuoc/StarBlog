@@ -31,17 +31,17 @@ public class LinkExchangeController : Controller {
         if (!ModelState.IsValid) return View();
 
         if (await _service.HasUrl(vm.Url)) {
-            _messages.Error("相同网址的友链申请已提交！");
+            _messages.Error("Yêu cầu trao đổi liên kết cho cùng URL đã được gửi!");
             return View();
         }
 
         var item = _mapper.Map<LinkExchange>(vm);
         item = await _service.AddOrUpdate(item);
 
-        // 发送邮件通知
+        // Gửi email thông báo
         await _service.SendEmailOnAdd(item);
 
-        _messages.Info("友链申请已提交，正在处理中，请及时关注邮件通知~");
+        _messages.Info("Yêu cầu trao đổi liên kết đã được gửi, đang được xử lý, vui lòng theo dõi thông báo qua email~");
         return RedirectToAction("Index", "Home");
     }
 }

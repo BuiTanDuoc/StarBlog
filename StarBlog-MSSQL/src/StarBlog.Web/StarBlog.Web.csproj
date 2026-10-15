@@ -8,7 +8,7 @@
         <LangVersion>default</LangVersion>
     </PropertyGroup>
 
-    <!--  输出XML  -->
+    <!--  Xuất XML  -->
     <PropertyGroup>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <NoWarn>$(NoWarn);1591</NoWarn>
@@ -21,7 +21,7 @@
         <ProjectReference Include="..\StarBlog.Content\StarBlog.Content.csproj" />
     </ItemGroup>
 
-    <!--  复制静态资源  -->
+    <!--  Sao chép tài nguyên tĩnh  -->
     <ItemGroup>
         <Content Update="wwwroot/assets/**/*" CopyToPublishDirectory="Never" CopyToOutputDirectory="Never" />
         <Content Update="wwwroot/media/**/*" CopyToPublishDirectory="Never" CopyToOutputDirectory="Never" />

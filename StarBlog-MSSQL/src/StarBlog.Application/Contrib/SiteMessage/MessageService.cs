@@ -2,7 +2,7 @@ namespace StarBlog.Application.Contrib.SiteMessage;
 
 public class MessageService {
     private readonly IMessageStore _store;
-    private const string DefaultTitle = "提示信息";
+    private const string DefaultTitle = "Thông báo";
 
     public MessageService(IMessageStore store) {
         _store = store;

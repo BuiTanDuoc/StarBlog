@@ -31,51 +31,51 @@ public class SeoTestController : Controller {
         var testResults = new List<string>();
 
         try {
-            // 测试SEO服务
+            // Kiểm thử dịch vụ SEO
             var homeSeo = _seoService.GetHomeSeoMetadata();
-            testResults.Add($"✅ 首页SEO元数据生成成功: {homeSeo.Title}");
+            testResults.Add($"✅ Tạo metadata SEO trang chủ thành công: {homeSeo.Title}");
 
-            // 测试结构化数据服务
+            // Kiểm thử dịch vụ dữ liệu có cấu trúc
             var websiteStructuredData = _structuredDataService.GetWebsiteStructuredData();
-            testResults.Add($"✅ 网站结构化数据生成成功: {websiteStructuredData.Length} 字符");
+            testResults.Add($"✅ Tạo dữ liệu có cấu trúc của website thành công: {websiteStructuredData.Length} ký tự");
 
             var organizationStructuredData = _structuredDataService.GetOrganizationStructuredData();
-            testResults.Add($"✅ 组织结构化数据生成成功: {organizationStructuredData.Length} 字符");
+            testResults.Add($"✅ Tạo dữ liệu có cấu trúc của tổ chức thành công: {organizationStructuredData.Length} ký tự");
 
             var personStructuredData = _structuredDataService.GetPersonStructuredData();
-            testResults.Add($"✅ 个人结构化数据生成成功: {personStructuredData.Length} 字符");
+            testResults.Add($"✅ Tạo dữ liệu có cấu trúc của cá nhân thành công: {personStructuredData.Length} ký tự");
 
-            // 测试文章相关功能
+            // Kiểm thử các chức năng liên quan đến bài viết
             var firstPost = await _postRepo.Where(p => p.IsPublish).FirstAsync();
             if (firstPost != null) {
-                // 测试图片SEO优化
-                var testMarkdown = "![测试图片](test-image.jpg)";
+                // Kiểm thử tối ưu SEO cho hình ảnh
+                var testMarkdown = "![Ảnh thử nghiệm](test-image.jpg)";
                 var optimizedMarkdown = _imageSeoService.OptimizeImagesInMarkdown(testMarkdown, firstPost.Title);
-                testResults.Add($"✅ Markdown图片SEO优化成功: {optimizedMarkdown}");
+                testResults.Add($"✅ Tối ưu SEO hình ảnh Markdown thành công: {optimizedMarkdown}");
 
                 var testHtml = "<img src='test.jpg'>";
                 var optimizedHtml = _imageSeoService.OptimizeImagesInHtml(testHtml, firstPost.Title);
-                testResults.Add($"✅ HTML图片SEO优化成功: {optimizedHtml}");
+                testResults.Add($"✅ Tối ưu SEO hình ảnh HTML thành công: {optimizedHtml}");
 
-                // 测试图片URL提取
+                // Kiểm thử trích xuất URL hình ảnh
                 var imageUrls = _imageSeoService.ExtractImageUrls(firstPost);
-                testResults.Add($"✅ 图片URL提取成功: 找到 {imageUrls.Count} 张图片");
+                testResults.Add($"✅ Trích xuất URL hình ảnh thành công: tìm thấy {imageUrls.Count} hình ảnh");
             }
 
-            // 测试Sitemap服务
+            // Kiểm thử dịch vụ Sitemap
             var mainSitemap = await _sitemapService.GenerateMainSitemapAsync();
-            testResults.Add($"✅ 主sitemap生成成功: {mainSitemap.Length} 字符");
+            testResults.Add($"✅ Tạo sitemap chính thành công: {mainSitemap.Length} ký tự");
 
             var imageSitemap = await _sitemapService.GenerateImageSitemapAsync();
-            testResults.Add($"✅ 图片sitemap生成成功: {imageSitemap.Length} 字符");
+            testResults.Add($"✅ Tạo sitemap hình ảnh thành công: {imageSitemap.Length} ký tự");
 
             var sitemapIndex = _sitemapService.GenerateSitemapIndex();
-            testResults.Add($"✅ Sitemap索引生成成功: {sitemapIndex.Length} 字符");
+            testResults.Add($"✅ Tạo chỉ mục Sitemap thành công: {sitemapIndex.Length} ký tự");
 
-            testResults.Add("🎉 所有SEO功能测试通过！");
+            testResults.Add("🎉 Tất cả các kiểm thử chức năng SEO đều đạt!");
         }
         catch (Exception ex) {
-            testResults.Add($"❌ 测试失败: {ex.Message}");
+            testResults.Add($"❌ Kiểm thử thất bại: {ex.Message}");
         }
 
         ViewBag.TestResults = testResults;
@@ -98,28 +98,28 @@ public class SeoTestController : Controller {
     public async Task<IActionResult> TestMeta() {
         var posts = await _postRepo.Where(a => a.IsPublish).ToListAsync();
         if (posts.Count == 0) {
-            ViewBag.Error = "没有找到已发布的文章";
+            ViewBag.Error = "Không tìm thấy bài viết đã xuất bản";
             return View();
         }
         
         var post = posts[Random.Shared.Next(posts.Count)];
 
-        // 生成测试用的PostViewModel
+        // Tạo PostViewModel dùng để kiểm thử
         var postViewModel = new StarBlog.Web.ViewModels.PostViewModel {
             Id = post.Id,
             Title = post.Title,
-            Summary = post.Summary ?? "测试摘要",
-            Content = post.Content ?? "测试内容",
+            Summary = post.Summary ?? "Tóm tắt thử nghiệm",
+            Content = post.Content ?? "Nội dung thử nghiệm",
             CreationTime = post.CreationTime,
             LastUpdateTime = post.LastUpdateTime,
             Category = post.Category ?? new Category(),
             Categories = new List<Category>()
         };
 
-        // 设置SEO元数据
+        // Thiết lập metadata SEO
         ViewData["SeoMetadata"] = _seoService.GetPostSeoMetadata(postViewModel);
 
-        // 设置结构化数据
+        // Thiết lập dữ liệu có cấu trúc
         var structuredData = new Dictionary<string, string> {
             ["BlogPosting"] = _structuredDataService.GetBlogPostingStructuredData(postViewModel),
             ["BreadcrumbList"] = _structuredDataService.GetBreadcrumbStructuredData(postViewModel),

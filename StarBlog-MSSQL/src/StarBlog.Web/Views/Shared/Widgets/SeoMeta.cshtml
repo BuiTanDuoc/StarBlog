@@ -1,6 +1,6 @@
 @model StarBlog.Web.Services.SeoMetadata
 
-@* 基础Meta标签 *@
+@* Thẻ Meta cơ bản *@
 <title>@Model.Title</title>
 <meta name="description" content="@Model.Description">
 <meta name="keywords" content="@Model.Keywords">
@@ -12,7 +12,7 @@
     <link rel="canonical" href="@Model.CanonicalUrl">
 }
 
-@* Open Graph标签 *@
+@* Open Graph tag *@
 <meta property="og:title" content="@Model.OgTitle">
 <meta property="og:description" content="@Model.OgDescription">
 <meta property="og:type" content="@Model.OgType">
@@ -25,7 +25,7 @@
     <meta property="og:image:alt" content="@Model.OgTitle">
 }
 
-@* 文章特定的Open Graph标签 *@
+@* Thẻ Open Graph dành riêng cho bài viết *@
 @if (Model.OgType == "article") {
     @if (!string.IsNullOrEmpty(Model.OgArticleAuthor)) {
         <meta property="article:author" content="@Model.OgArticleAuthor">
@@ -41,7 +41,7 @@
     }
 }
 
-@* Twitter Card标签 *@
+@* Twitter Card tag *@
 <meta name="twitter:card" content="@Model.TwitterCard">
 <meta name="twitter:title" content="@Model.TwitterTitle">
 <meta name="twitter:description" content="@Model.TwitterDescription">
@@ -53,15 +53,15 @@
     <meta name="twitter:image:alt" content="@Model.TwitterTitle">
 }
 
-@* 移动端优化 *@
+@* Tối ưu cho thiết bị di động *@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="format-detection" content="telephone=no">
 <meta name="theme-color" content="#007bff">
 
-@* 搜索引擎指令 *@
+@* Chỉ thị cho công cụ tìm kiếm *@
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 
-@* 其他SEO相关标签 *@
+@* Các thẻ khác liên quan đến SEO *@
 <meta name="referrer" content="no-referrer-when-downgrade">
 <link rel="dns-prefetch" href="//fonts.googleapis.com">
 <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
