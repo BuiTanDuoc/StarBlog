@@ -11,10 +11,10 @@ public class SeoService {
     }
 
     public SeoMetadata GetHomeSeoMetadata() {
-        var siteName = "Blog Hy Viễn · StarBlog · Cao thủ vẽ ngôi sao · Phòng thí nghiệm lập trình";
+        var siteName = "StarBlog · Cao thủ vẽ ngôi sao · Phòng thí nghiệm lập trình";
         var description =
-            "DealiAxy, blog Hy Viễn, blog Cao thủ vẽ ngôi sao, Phòng thí nghiệm lập trình. Chuyên khám phá các công nghệ mới đang được quan tâm trên internet và thực hành phát triển linh hoạt theo nhóm, bao gồm thiết kế kiến trúc, thuật toán học máy và phân tích dữ liệu, phát triển di động, Linux, phát triển Web frontend/backend, v.v.";
-        var keywords = "Hy Viễn,DealiAxy,Phòng thí nghiệm lập trình,blog,lập trình,công nghệ,phát triển,StarBlog,Cao thủ vẽ ngôi sao,thiết kế chương trình,phát triển Web,học máy,phân tích dữ liệu";
+            "DealiAxy, blog Cao thủ vẽ ngôi sao, Phòng thí nghiệm lập trình. Chuyên khám phá các công nghệ mới đang được quan tâm trên internet và thực hành phát triển linh hoạt theo nhóm, bao gồm thiết kế kiến trúc, thuật toán học máy và phân tích dữ liệu, phát triển di động, Linux, phát triển Web frontend/backend, v.v.";
+        var keywords = "DealiAxy,Phòng thí nghiệm lập trình,blog,lập trình,công nghệ,phát triển,StarBlog,Cao thủ vẽ ngôi sao,thiết kế chương trình,phát triển Web,học máy,phân tích dữ liệu";
 
         return new SeoMetadata {
             Title = siteName,
@@ -113,7 +113,7 @@ public class SeoService {
     }
 
     private string GenerateKeywordsFromPost(PostViewModel post) {
-        var keywords = new List<string> { "Hy Viễn", "DealiAxy", "StarBlog", "blog", "công nghệ" };
+        var keywords = new List<string> { "DealiAxy", "StarBlog", "blog", "công nghệ" };
 
         keywords.Add(post.Category.Name);
 

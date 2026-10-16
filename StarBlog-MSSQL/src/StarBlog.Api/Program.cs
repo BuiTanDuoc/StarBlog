@@ -11,6 +11,7 @@ using StarBlog.Application.Services.OutboxServices;
 using StarBlog.Data;
 using StarBlog.Data.Extensions;
 using StarBlog.Api.Extensions;
+using StarBlog.Application.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -127,6 +128,9 @@ builder.WebHost.ConfigureKestrel(options => {
 });
 
 var app = builder.Build();
+
+// Tạo sẵn tài khoản quản trị (xem mục Seed:Admin trong appsettings.json)
+app.Services.SeedAdminUser();
 
 if (app.Environment.IsDevelopment()) {
     app.UseDeveloperExceptionPage();

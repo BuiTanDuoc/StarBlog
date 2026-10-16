@@ -4,449 +4,483 @@
 
 
 <p align="center">
-<a href="https://dotnet.microsoft.com/download/dotnet/6.0"><img src="https://img.shields.io/badge/.NET-6.0-512BD4?style=flat-square&logo=dotnet" alt=".NET 6"></a>
-<a href="https://github.com/Deali-Axy/StarBlog-Admin"><img src="https://img.shields.io/badge/Admin-Vue3-4FC08D?style=flat-square&logo=vue.js" alt="Vue 3"></a>
-<a href="https://blog.deali.cn"><img src="https://img.shields.io/badge/Demo-Online-brightgreen?style=flat-square" alt="Online Demo"></a>
-<a href="https://github.com/Deali-Axy/StarBlog-Admin"><img src="https://img.shields.io/badge/Admin-Repository-181717?style=flat-square&logo=github" alt="Admin Repository"></a>
+  <a href="https://dotnet.microsoft.com/download/dotnet/6.0"><img src="https://img.shields.io/badge/.NET-6.0-512BD4?style=flat-square&logo=dotnet" alt=".NET 6"></a>
+  <a href="https://github.com/Deali-Axy/StarBlog-Admin"><img src="https://img.shields.io/badge/Admin-Vue3-4FC08D?style=flat-square&logo=vue.js" alt="Vue 3"></a>
+  <a href="https://blog.deali.cn"><img src="https://img.shields.io/badge/Demo-Online-brightgreen?style=flat-square" alt="Online Demo"></a>
+  <a href="https://github.com/Deali-Axy/StarBlog-Admin"><img src="https://img.shields.io/badge/Admin-Repository-181717?style=flat-square&logo=github" alt="Admin Repository"></a>
 </p>
 
-## 📝 Introduction
+## 📝 Giới thiệu
 
-StarBlog is a modern blog system built with .NET 6 and ASP.NET Core. It supports Markdown article imports and adheres to RESTful API standards. The frontend is developed using Vue and ElementUI. This project serves as an excellent entry-level learning resource for .NET Core; it is accompanied by a series of development notes documenting the entire process of building the system from scratch, helping learners understand the development workflow of .NET Core projects. **Live Demo**: [https://blog.deali.cn](https://blog.deali.cn)
+StarBlog là một hệ thống blog hiện đại được phát triển dựa trên .NET 6 và ASP.NET Core, hỗ trợ nhập bài viết Markdown và tuân theo chuẩn RESTful API. Phần giao diện được phát triển bằng Vue + ElementUI, có thể dùng làm dự án học tập nhập môn .NET Core; đồng thời đi kèm một loạt ghi chép phát triển, ghi lại toàn bộ quá trình xây dựng hệ thống blog này từ con số không, giúp bạn học và hiểu quy trình phát triển một dự án .Net Core.
 
-**Admin Dashboard Project**: [https://github.com/Deali-Axy/StarBlog-Admin](https://github.com/Deali-Axy/StarBlog-Admin)
+**Demo trực tuyến**: [https://blog.deali.cn](https://blog.deali.cn)
 
-**AI Article Publishing Tool**: [https://github.com/star-blog/starblog-publisher](https://github.com/star-blog/starblog-publisher)
+**Dự án trang quản trị**: [https://github.com/Deali-Axy/StarBlog-Admin](https://github.com/Deali-Axy/StarBlog-Admin)
 
-## 📫 Project Motivation
+**Công cụ đăng bài AI**: [https://github.com/star-blog/starblog-publisher](https://github.com/star-blog/starblog-publisher)
 
-With so many online blogging platforms available, **why develop my own blog?**
+## 📫 Động lực thực hiện dự án
 
-I have been tinkering with blogs for quite some time—starting with WordPress, then moving on to static site generators like Hexo and Hugo hosted on GitHub—and I have constantly been experimenting and tweaking things along the way. I experimented with various solutions to better address my needs, but ultimately decided to invest the time to build my own system; you can view the specific details in my [development notes](https://www.cnblogs.com/deali/p/16104454.html).
+Có rất nhiều nền tảng blog trực tuyến, **vậy tại sao lại tự phát triển blog?**
 
-- I couldn't find an existing online blogging platform that satisfied me.
-- The writing experience on online platforms doesn't compare to using Typora locally.
-- Writing for platforms like WeChat Official Accounts often distracts me with the need to make content "catchy" rather than focusing on the article itself.
-- Hosting my own website gives me full control and ensures the content isn't polluted by unwanted ads or inappropriate information often found on third-party platforms.
+Tác giả đã loay hoay với blog khá lâu rồi: từ lúc đầu dùng WordPress, rồi sau đó dùng hexo, hugo và các trình tạo blog tĩnh khác để đưa lên github hosting, lúc nào cũng loay hoay.
 
-## ✨ Features
+Loay hoay là để giải quyết vấn đề tốt hơn, nhưng cuối cùng vẫn quyết định tự bỏ thời gian làm một cái; ý tưởng cụ thể có thể xem tại [Ghi chép phát triển](https://www.cnblogs.com/deali/p/16104454.html)
 
-- **Markdown Support**: (**Core Feature 💡**) Batch import of local Markdown articles; supports nested categories and automatic image importing/content conversion.
-- **Article Management**: Supports uploading and automatically importing individual articles (including image attachments) as packages.
-- **Photography Showcase**: Supports batch uploading of local photography and automatically reads EXIF ​​data.
-- **Customizable Homepage**: Configurable blog homepage supporting charts/random image displays and pinned articles, images, or categories.
-- **Theme Switching**: The frontend supports switching between multiple theme styles.
-- **Friendly Links**: Comprehensive link management, including support for user-submitted link requests.
-- **Traffic Statistics**: High-performance access logging, statistics, and data visualization.
-- **Random Image API**: Includes a random image API; random images are used as default article cover images.
-- **Comment System**: Built-in commenting for registered users and guests, featuring automatic filtering and moderation.
-- **RSS Subscription**: Supports RSS feeds.
+- Không tìm được một blog trực tuyến nào khiến mình hài lòng
+- Trải nghiệm viết blog trực tuyến không bằng viết cục bộ bằng typora
+- Nếu viết bài cho tài khoản công chúng (WeChat) thì sự chú ý sẽ bị phân tán một phần vào việc làm sao viết cho thu hút người đọc chứ không phải bản thân bài viết
+- Chỉ website của chính mình mới có toàn quyền kiểm soát, không bị nền tảng rác chèn thêm thông tin xấu làm ô nhiễm
 
-## 🌟 StarBlog Ecosystem
+## ✨ Tính năng
 
-StarBlog is more than just a blogging system; it is evolving into a complete blogging ecosystem that includes various supporting tools and projects:
+- **Hỗ trợ Markdown**: (**Tính năng cốt lõi💡**) Nhập hàng loạt bài viết Markdown cục bộ, hỗ trợ phân tích danh mục lồng nhiều cấp, tự động nhập hình ảnh và chuyển đổi nội dung
+- **Quản lý bài viết**: Hỗ trợ đóng gói tải lên từng bài viết (kèm tệp hình ảnh đính kèm) và tự động nhập
+- **Tác phẩm nhiếp ảnh**: Hỗ trợ tải lên hàng loạt tác phẩm nhiếp ảnh cục bộ, tự động đọc thông tin EXIF
+- **Trang chủ tùy chỉnh**: Trang chủ blog có thể cấu hình, hỗ trợ biểu đồ/hiển thị ảnh ngẫu nhiên ở trang chủ, cấu hình bài viết/hình ảnh/danh mục được ghim
+- **Chuyển đổi giao diện**: Giao diện blog phía người dùng hỗ trợ chuyển đổi nhiều phong cách chủ đề
+- **Liên kết bạn bè**: Chức năng quản lý liên kết bạn bè đầy đủ, hỗ trợ người dùng tự gửi yêu cầu trao đổi liên kết
+- **Thống kê truy cập**: Ghi nhận truy cập, thống kê và hiển thị trực quan hóa dữ liệu hiệu năng cao
+- **API ảnh ngẫu nhiên**: Cung cấp một bộ API ảnh ngẫu nhiên, ảnh bìa bài viết mặc định dùng ảnh ngẫu nhiên
+- **Hệ thống bình luận**: Tích hợp sẵn chức năng bình luận cho người dùng/khách, cùng chức năng tự động lọc và kiểm duyệt bình luận
+- **Đăng ký RSS**: Hỗ trợ đăng ký RSS
+
+## 🌟 Hệ sinh thái StarBlog
+
+StarBlog không chỉ là một hệ thống blog, nó đang phát triển thành một hệ sinh thái blog hoàn chỉnh, bao gồm nhiều công cụ và dự án đi kèm:
 
 ### StarBlog Publisher
 
-[StarBlog Publisher](https://github.com/star-blog/starblog-publisher) is a professional article publishing tool designed specifically for StarBlog, offering a more convenient publishing method than traditional package uploads. - **Markdown Support**: Supports previewing and publishing articles in Markdown format.
-- **Intuitive Interface**: Offers a user-friendly interface for easily managing and publishing blog content.
-- **AI Assistance**: Integrates various leading large AI models (including OpenAI's ChatGPT, Anthropic's Claude, DeepSeek, etc.).
-- **Cross-Platform**: Built using C# and .NET 8.0; runs on Windows, macOS, and Linux.
+[StarBlog Publisher](https://github.com/star-blog/starblog-publisher) là một công cụ đăng bài chuyên nghiệp được thiết kế riêng cho hệ thống blog StarBlog, cung cấp cách đăng bài thuận tiện hơn so với việc đóng gói và tải lên truyền thống.
+
+- **Hỗ trợ Markdown**: Hỗ trợ xem trước và đăng bài viết định dạng Markdown
+- **Giao diện trực quan**: Cung cấp giao diện thân thiện với người dùng, dễ dàng quản lý và đăng nội dung blog
+- **Hỗ trợ AI**: Tích hợp nhiều mô hình AI lớn hàng đầu (gồm ChatGPT của OpenAI, Claude của Anthropic và DeepSeek, v.v.)
+- **Đa nền tảng**: Xây dựng bằng C# và .NET 8.0, chạy được trên Windows, macOS và Linux
 
 ### StarBlog Admin
 
-[StarBlog Admin](https://github.com/Deali-Axy/StarBlog-Admin) is the administrative backend for StarBlog. Developed using Vue and ElementUI, it provides comprehensive blog content management capabilities.
+[StarBlog Admin](https://github.com/Deali-Axy/StarBlog-Admin) là dự án trang quản trị của StarBlog, được phát triển bằng Vue + ElementUI, cung cấp chức năng quản lý nội dung blog đầy đủ.
 
 ### StarBlogHub
 
-A decentralized blog aggregation platform that allows various personal blogs to connect and share traffic. ## 🏗️ Architecture
+Xây dựng một nền tảng tổng hợp blog phi tập trung, các blog cá nhân khác nhau đều có thể kết nối vào và chia sẻ lưu lượng truy cập.
 
-### Tech Stack
+## 🏗️ Kiến trúc
+
+### Công nghệ sử dụng
 
 #### Backend
 
-##### Core Framework & Infrastructure
-- **Web Framework**: ASP.NET Core - Cross-platform, high-performance .NET web application framework
-- **Monitoring & Debugging**: Rin - Real-time inspection tool for ASP.NET Core applications
+##### Framework cốt lõi và hạ tầng
+- **Web Framework**: ASP.NET Core - Framework ứng dụng Web .NET đa nền tảng, hiệu năng cao
+- **Giám sát và gỡ lỗi**: Rin - Công cụ kiểm tra thời gian thực cho ứng dụng ASP.NET Core
 
-##### Data Access & Processing
-- **Primary ORM**: FreeSql - High-performance ORM framework supporting multiple databases
-- **Secondary ORM**: Entity Framework Core - Microsoft's official ORM framework
-- **Object Mapping**: AutoMapper - Library for simplifying object-to-object mapping
+##### Truy cập và xử lý dữ liệu
+- **ORM chính**: FreeSql - Framework ORM hiệu năng cao, hỗ trợ nhiều loại cơ sở dữ liệu
+- **ORM phụ**: Entity Framework Core - Framework ORM chính thức của Microsoft
+- **Ánh xạ đối tượng**: AutoMapper - Thư viện công cụ giúp đơn giản hóa ánh xạ đối tượng - đối tượng
 
-##### API & Authentication
-- **API Documentation**: Swagger/OpenAPI (Swashbuckle.AspNetCore) - Tool for automatic RESTful API documentation generation
-- **Authentication Mechanism**: JWT (JSON Web Token) - Secure cross-domain authentication solution
-- **Search Engine Support**: RobotsTxtCore - Manages search engine crawler access policies
+##### API và xác thực
+- **Tài liệu API**: Swagger/OpenAPI (Swashbuckle.AspNetCore) - Công cụ tự động sinh tài liệu RESTful API
+- **Cơ chế xác thực**: JWT (JSON Web Token) - Giải pháp xác thực danh tính xuyên miền an toàn
+- **Hỗ trợ công cụ tìm kiếm**: RobotsTxtCore - Quản lý chính sách truy cập của trình thu thập dữ liệu công cụ tìm kiếm
 
-##### Content Processing
-- **Markdown Engine**: [Markdig](https://github.com/xoofx/markdig) - High-performance Markdown processor
-- **Image Processing**: ImageSharp - Cross-platform image processing library
-- **Pagination Component**: X.PagedList - Efficient data pagination solution
-- **RSS Support**: System.ServiceModel.Syndication - RSS content aggregation tool
+##### Xử lý nội dung
+- **Engine Markdown**: [Markdig](https://github.com/xoofx/markdig) - Bộ xử lý Markdown hiệu năng cao
+- **Xử lý hình ảnh**: ImageSharp - Thư viện xử lý hình ảnh đa nền tảng
+- **Thành phần phân trang**: X.PagedList - Giải pháp phân trang dữ liệu hiệu quả
+- **Hỗ trợ RSS**: System.ServiceModel.Syndication - Công cụ tổng hợp nội dung RSS
 
-##### Communication & Utilities
-- **Email Service**: MailKit - Cross-platform email client library
+##### Giao tiếp và công cụ
+- **Dịch vụ email**: MailKit - Thư viện email client đa nền tảng
 
 #### Frontend
-- **Blog Frontend**: Bootstrap + Vue + ElementUI + editor.md + bootswatch
-- **Admin Backend**: Vue + Vuex + Vue Router + ElementUI + SCSS
+- **Giao diện blog**: Bootstrap + Vue + ElementUI + editor.md + bootswatch
+- **Trang quản trị**: Vue + Vuex + Vue Router + ElementUI + SCSS
 
-### Project Structure
+### Cấu trúc dự án
 
 ```
 StarBlog/
 ├── src/
-│   ├── StarBlog.Api/       # Pure WebAPI (HTTP layer/Composition Root: Controllers + Middlewares + DI)
-│   ├── StarBlog.Application/ # Application Layer (Use case orchestration/Application services/DTOs/Background tasks, etc., consumed by StarBlog.Api)
-│   ├── StarBlog.Infrastructure/ # General Infrastructure (Diagnostics/Miscellaneous Capabilities)
-│   ├── StarBlog.Content/   # Content processing (Markdown/ToC/Import handling, etc.)
-│   ├── StarBlog.Data/      # Data models and data access layer (EF Core + FreeSql)
-│   └── StarBlog.Web/       # Main Web application (MVC/Razor + API; legacy path, currently unchanged)
+│   ├── StarBlog.Api/       # WebAPI thuần (tầng HTTP / composition root: Controllers + Middlewares + DI)
+│   ├── StarBlog.Application/ # Tầng ứng dụng (điều phối use case / application service / DTO / tác vụ nền, v.v., phục vụ StarBlog.Api)
+│   ├── StarBlog.Infrastructure/ # Hạ tầng dùng chung (chẩn đoán / các tiện ích khác)
+│   ├── StarBlog.Content/   # Xử lý nội dung (Markdown/ToC/xử lý nhập, v.v.)
+│   ├── StarBlog.Data/      # Mô hình dữ liệu và tầng truy cập dữ liệu (EF Core + FreeSql)
+│   └── StarBlog.Web/       # Ứng dụng Web chính (MVC/Razor + API, đường dẫn lịch sử, hiện không thay đổi)
 ├── tools/
-│   ├── MarkdownImporter/   # Blog post import CLI tool (formerly StarBlog.Migrate)
-│   ├── DataProc/           # Data processing tools (access log completion/image optimization/summaries, etc.)
-│   └── BlogImageOptimizer/ # Image optimization tool
-└── demo/                   # Demo/experimental projects (isolated from the main product)
+│   ├── MarkdownImporter/   # Công cụ CLI nhập bài viết blog (trước đây là StarBlog.Migrate)
+│   ├── DataProc/           # Công cụ xử lý dữ liệu (bổ sung nhật ký truy cập / tối ưu hình ảnh / tóm tắt, v.v.)
+│   └── BlogImageOptimizer/ # Công cụ tối ưu hình ảnh
+└── demo/                   # Dự án demo/thử nghiệm (tách biệt khỏi sản phẩm chính)
 ```
 
-### Layering and Responsibilities (DDD/Clean Architecture Approach)
+### Phân tầng và trách nhiệm (hướng DDD/Clean Architecture)
 
-This decomposition aligns more closely with "DDD layering principles/Clean Architecture": decoupling the HTTP adapter layer from "Use Case orchestration (Application Layer)," making it easier to evolve business logic and infrastructure without affecting external APIs.
+Cách phân chia này gần với hướng “tư tưởng phân tầng của DDD / Clean Architecture” hơn: tách tầng thích ứng HTTP khỏi “điều phối use case (Application Layer)”, giúp phát triển logic nghiệp vụ và hạ tầng mà không ảnh hưởng đến API công khai.
 
-#### Current Layering (Implemented)
+#### Phân tầng hiện tại (đã triển khai)
 
 ```
 StarBlog.Api (Presentation / Delivery)
-└─ Depends on → StarBlog.Application (Application Layer)
-└─ Depends on → StarBlog.Data / StarBlog.Infrastructure / StarBlog.Content
+  └─ phụ thuộc → StarBlog.Application (Application Layer)
+             └─ phụ thuộc → StarBlog.Data / StarBlog.Infrastructure / StarBlog.Content
 ```
 
 - **StarBlog.Api**
-- Responsible solely for HTTP: Controllers, middleware (Auth/Swagger/HealthChecks), DI composition root, routing, CORS policies, etc.
-- Does not house business rules or complex orchestration; maintains "thin controllers."
+  - Chỉ phụ trách HTTP: Controllers, middleware xác thực/Swagger/HealthChecks, DI composition root, định tuyến và chính sách CORS, v.v.
+  - Không chứa quy tắc nghiệp vụ và điều phối phức tạp, giữ “controller mỏng”.
 - **StarBlog.Application**
-- Houses the application layer: Application services (Use Case orchestration), DTOs/ViewModels, query parameter objects, background tasks (Outbox/VisitRecord Worker, etc.). 
-- Aims for "stable business behavior + testability" while avoiding dependency on StarBlog.Api (unidirectional dependency flow).
+  - Chứa tầng ứng dụng: application service (điều phối Use Case), DTO/ViewModels, đối tượng tham số truy vấn, tác vụ nền (Outbox/VisitRecord Worker, v.v.).
+  - Mục tiêu là “hành vi nghiệp vụ ổn định + dễ kiểm thử”, đồng thời tránh phụ thuộc vào StarBlog.Api (hướng phụ thuộc một chiều).
 
-#### Is this DDD?
+#### Đây có phải DDD không?
 
-- **Aligns with the "layered architecture" principle of DDD**: The current `StarBlog.Application` roughly corresponds to the DDD Application Layer, while `StarBlog.Api` corresponds to the Presentation/Interface Adapter layer.
-- **However, it is not yet "full DDD"** (the current state is "layered architecture" without an explicit domain layer):
-- There is no independent `StarBlog.Domain` module to represent aggregates, value objects, domain services, domain events, etc.
-- `StarBlog.Data.Models` still carries the bulk of the domain model (leaning more towards "persistence models" or "anemic models"), and repository abstractions are not yet fully decoupled from the infrastructure.
+- **Đúng hướng “tư tưởng phân tầng” của DDD**: `StarBlog.Application` hiện tại về cơ bản tương ứng với Application Layer của DDD; `StarBlog.Api` tương ứng với Presentation/Interface Adapter.
+- **Nhưng chưa phải “DDD đầy đủ”** (hiện trạng là “kiến trúc phân tầng + domain chưa được thể hiện tường minh”):
+  - Chưa có module `StarBlog.Domain` độc lập để biểu đạt aggregate/value object/domain service/domain event, v.v.
+  - `StarBlog.Data.Models` vẫn đảm nhận phần lớn mô hình domain (thiên về “mô hình lưu trữ / mô hình thiếu hành vi (anemic)”), phần trừu tượng hóa repository cũng chưa tách hẳn khỏi hạ tầng.
 
-#### Recommended Evolution Path (Optional)
+#### Lộ trình phát triển đề xuất (tùy chọn)
 
-If you wish to move closer to DDD (or the classic layered structure of Clean Architecture) in the future, you can gradually introduce the following:
+Nếu sau này muốn tiến gần hơn tới DDD (hoặc cách phân tầng kinh điển của Clean Architecture), có thể dần dần đưa vào:
 
 ```
 StarBlog.Api → StarBlog.Application → StarBlog.Domain
-↘  (Interfaces) ↙
-StarBlog.Infrastructure / StarBlog.Data (Implementations)
+                                 ↘  (interface) ↙
+                       StarBlog.Infrastructure / StarBlog.Data (triển khai)
 ```
 
-Core Principle: Dependencies point inward (layers containing more stable business rules should not depend on layers that are more prone to change). HTTP, databases, and third-party services are implemented and swappable at the outer layers.
+Nguyên tắc cốt lõi: phụ thuộc hướng vào trong (tầng có quy tắc nghiệp vụ ổn định hơn không phụ thuộc vào tầng dễ thay đổi hơn), HTTP/cơ sở dữ liệu/dịch vụ bên thứ ba đều được triển khai và thay thế ở tầng biên.
 
-## 🚀 Quick Start
+## 🚀 Bắt đầu nhanh
 
-### Prerequisites
+### Yêu cầu môi trường
 
 - **.NET 9 SDK**
-- **Node.js v18** or higher, along with **npm/yarn** (for managing front-end assets)
+- **Node.js v18** trở lên và **npm/yarn** (dùng để quản lý tài nguyên frontend)
 
-### Build Steps
+### Các bước build
 
-1. **Clone the Repository**
+1. **Clone repository**
 
 ```bash
 git clone https://github.com/Deali-Axy/StarBlog.git
 cd StarBlog
 ```
 
-2. **Prepare Front-end Assets**
+2. **Chuẩn bị tài nguyên frontend**
 
-This project uses NPM and Gulp to manage static front-end files. It requires Node.js v18 or higher. For more details, see: [ASP.NET Core Development Notes: Managing Front-end Static Files with NPM and Gulp](https://www.cnblogs.com/deali/p/15905760.html).
+Dự án này dùng NPM + Gulp để quản lý các tệp tĩnh frontend, cần Nodejs 18 trở lên, chi tiết xem tại: [Ghi chép phát triển AspNetCore: Dùng NPM và gulp để quản lý tệp tĩnh frontend](https://www.cnblogs.com/deali/p/15905760.html).
 
 ```bash
 cd src/StarBlog.Web
 npm i -g bower
-npm install  # or yarn
+npm install  # hoặc yarn
 npm install --global gulp-cli
 gulp move
 gulp min
 ```
 
-**Note**: This project depends on the [bootstrap5-treeview](https://www.npmjs.com/package/bootstrap5-treeview) component, which uses [Bower](https://bower.io/) for its build process. Please install Bower first (`npm i -g bower`); otherwise, the `npm install` step will fail.
+**Lưu ý**: Dự án này phụ thuộc vào thành phần [bootstrap5-treeview](https://www.npmjs.com/package/bootstrap5-treeview). Thành phần này lại dùng bower để build, vì vậy hãy cài [bower](https://bower.io/) trước: `npm i -g bower`, nếu không sẽ báo lỗi trong quá trình chạy `npm install`.
 
-3. **Run the Project**
+3. **Chạy dự án**
 
-Open the solution in Visual Studio or Rider, set `StarBlog.Web` as the startup project, and run it. Solution Overview:
-- `StarBlog.sln`: Main product project (`src`)
-- `StarBlog.Tools.sln`: Tools project (`tools`)
-- `StarBlog.Demo.sln`: Demo/experimental project (`demo`)
+Mở solution bằng Visual Studio hoặc Rider, đặt `StarBlog.Web` làm dự án khởi động rồi chạy.
 
-To get started quickly, this project uses an SQLite database by default. Most features utilize FreeSQL as the ORM; you can run the project directly without any additional configuration, as FreeSQL will automatically generate the necessary database schema.
+Giải thích về solution:
+- `StarBlog.sln`: Dự án sản phẩm chính (src)
+- `StarBlog.Tools.sln`: Dự án công cụ (tools)
+- `StarBlog.Demo.sln`: Dự án demo/thử nghiệm (demo)
 
-4. **Access Log Database Synchronization**
+Dự án này sử dụng cơ sở dữ liệu **SQL Server (MSSQL)**, hầu hết các chức năng đều dùng FreeSQL làm ORM; chỉ cần tạo trước một cơ sở dữ liệu trống (ví dụ `StarBlog`), sau đó sửa chuỗi kết nối trong `appsettings.json`, khi chạy dự án FreeSQL sẽ tự động sinh cấu trúc bảng:
 
-To optimize performance, the access log module in StarBlog uses a separate database managed by EFCore. For more details, see: [StarBlog Extra (1): New Access Statistics, Asynchronous Queues, and Database Sharding](https://blog.deali.cn/Blog/Post/a97ecc01df52707a)
+```json
+"ConnectionStrings": {
+  "SqlServer": "Server=localhost;Database=StarBlog;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True;",
+  "SqlServer-Log": "Server=localhost;Database=StarBlog;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True;"
+}
+```
 
-Unlike FreeSQL, EFCore does not automatically generate the database schema, so you must synchronize the database manually. It defaults to using SQLite, though you can switch to MySQL or PostgreSQL if preferred.
+- `SqlServer`: Cơ sở dữ liệu nghiệp vụ (FreeSQL)
+- `SqlServer-Log`: Cơ sở dữ liệu ghi nhận truy cập/thống kê (EF Core), có thể dùng chung một cơ sở dữ liệu với cơ sở dữ liệu nghiệp vụ, cũng có thể tách riêng
 
-First, install the EFCore CLI tool:
+4. **Đồng bộ cơ sở dữ liệu nhật ký truy cập**
+
+Module nhật ký truy cập của StarBlog để tối ưu hiệu năng nên dùng một cơ sở dữ liệu độc lập, được quản lý bằng EFCore, xem chi tiết: [StarBlog Ngoại truyện (1) Chức năng thống kê truy cập hoàn toàn mới, hàng đợi bất đồng bộ, lưu trữ tách cơ sở dữ liệu](https://blog.deali.cn/Blog/Post/a97ecc01df52707a)
+
+EFCore không thể tự động sinh cấu trúc bảng như FreeSQL, cần đồng bộ cơ sở dữ liệu thủ công, cũng dùng SQL Server. Các migration phiên bản SQLite vốn có trong repository đã bị gỡ bỏ, lần đầu sử dụng hãy tạo migration khởi tạo cho SQL Server (`dotnet ef migrations add InitialCreate`).
+
+Trước tiên cài đặt công cụ cli của EFCore:
 
 ```bash
 dotnet tool install --global dotnet-ef
 ```
 
-Synchronize the database (Windows 10+)
+Đồng bộ cơ sở dữ liệu (Windows10+)
 
 ```powershell
 cd src/StarBlog.Data
-$env:CONNECTION_STRING = "Data Source=..\StarBlog.Web\app.log.db"
+$env:CONNECTION_STRING = "Server=localhost;Database=StarBlog;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True;"
+# Lần đầu: tạo migration khởi tạo cho SQL Server
+dotnet ef migrations add InitialCreate
 dotnet ef database update
 ```
 
-Synchronize the database (Linux/macOS)
+Đồng bộ cơ sở dữ liệu (Linux/MacOS)
 
 ```bash
-cd StarBlog.Data
-export CONNECTION_STRING="Data Source=../StarBlog.Web/app.log.db"
+cd src/StarBlog.Data
+export CONNECTION_STRING="Server=localhost;Database=StarBlog;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True;"
+# Lần đầu: tạo migration khởi tạo cho SQL Server
+dotnet ef migrations add InitialCreate
 dotnet ef database update
 ```
 
-### Initialization
+### Khởi tạo
+**Cách nhanh (seed sẵn tài khoản quản trị):** khi khởi động, nếu bảng `user` đang rỗng thì ứng dụng tự tạo tài khoản theo mục `Seed:Admin` trong `appsettings.json` (mặc định `admin` / `Admin@123456`) và đánh dấu đã khởi tạo, nên không cần vào `/Home/Init`. **Hãy đổi mật khẩu mặc định trước khi triển khai thật**, hoặc đặt `"Enabled": false` để tắt seed.
 
-After launching the StarBlog project for the first time, visit `/Home/Init` to perform initialization tasks, such as creating an administrator account. You will then be able to use this account to log in to the management dashboard.
+```json
+"Seed": {
+  "Admin": { "Enabled": true, "Username": "admin", "Password": "Admin@123456" }
+}
+```
 
-**Note**: The initialization process can only be performed once. For further details, please refer to [StarBlog - (16) New Features (Monitoring/Statistics/Configuration/Initialization)](https://www.cnblogs.com/deali/p/16523157.html). ### Configuration
+**Cách thủ công:**
 
-#### Email Configuration
+Sau khi khởi động dự án StarBlog lần đầu, truy cập `/Home/Init` để thực hiện các thao tác khởi tạo như tạo tài khoản quản trị viên, sau đó mới có thể dùng tài khoản quản trị này để đăng nhập trang quản trị.
 
-StarBlog’s "Friendly Links" (blogroll) and comment system both utilize email functionality. For more details, see: [StarBlog - (28) Developing APIs for Friendly Links](https://blog.deali.cn/Blog/Post/f55c8c7610706503)
+**Lưu ý**: Thao tác khởi tạo chỉ có thể thực hiện một lần. Chi tiết xem [StarBlog - (16) Một số tính năng mới (giám sát/thống kê/cấu hình/khởi tạo)](https://www.cnblogs.com/deali/p/16523157.html).
 
-Please add a file named `appsettings.email.json` to the project root directory. Using an Outlook email account as an example, the configuration should look like this:
+### Cấu hình
+
+#### Cấu hình email
+
+Liên kết bạn bè và hệ thống bình luận của StarBlog đều dùng chức năng gửi email, chi tiết xem: [StarBlog - (28) Phát triển các API liên quan đến liên kết bạn bè](https://blog.deali.cn/Blog/Post/f55c8c7610706503)
+
+Vui lòng thêm tệp `appsettings.email.json` vào thư mục gốc của dự án, lấy email Outlook làm ví dụ, cấu hình như sau
 
 ```json
 "EmailAccountConfig": {
-"Host": "smtp-mail.outlook.com",
-"Port": 587,
-"FromUsername": "your-email@outlook.com",
-"FromPassword": "your-email-password",
-"FromAddress": "your-email@outlook.com"
+  "Host": "smtp-mail.outlook.com",
+  "Port": 587,
+  "FromUsername": "dia-chi-email@outlook.com",
+  "FromPassword": "mat-khau-email",
+  "FromAddress": "dia-chi-email@outlook.com"
 }
 ```
 
-#### Sensitive Word Detection
+#### Phát hiện từ nhạy cảm
 
-StarBlog uses the DFA (Deterministic Finite Automaton) algorithm to detect sensitive words in comments. To enable this, you must place a sensitive word database file named `words.json` within the `StarBlog.Web` project directory.
+StarBlog sử dụng kỹ thuật DFA để phát hiện từ nhạy cảm trong bình luận; khi sử dụng cần đặt một tệp thư viện từ nhạy cảm `words.json` trong dự án StarBlog.Web
 
-To maintain a civil and harmonious online environment, this file is not included in the open-source repository; you will need to source it yourself.
+Để giữ môi trường mạng văn minh và hài hòa, mã nguồn mở của dự án này không thể cung cấp sẵn, bạn nào cần có thể tự thu thập.
 
-The required format is as follows:
+Định dạng như sau
 
 ```json
 [
-{
-"Id": 1,
-"Value": "sensitive-word-example",
-"Tag": "violence"
-},
-{
-"Id": 2,
-"Value": "another-sensitive-word",
-"Tag": "advertisement"
-}
+  {
+    "Id": 1,
+    "Value": "dễ thương",
+    "Tag": "Bạo lực"
+  },
+  {
+    "Id": 2,
+    "Value": "cua sông",
+    "Tag": "Quảng cáo"
+  }
 ]
 ```
 
-> If you require this for learning or testing purposes, you can send a private message with the keyword "badwords" to the official WeChat account "程序设计实验室" (Programming Design Lab) to obtain it.
+>Nếu thực sự cần cho mục đích học tập, thử nghiệm, bạn có thể nhắn tin riêng từ khóa badwords ở hậu trường tài khoản công chúng (WeChat) "Phòng thí nghiệm lập trình" để nhận.
 >
->**Sensitive Word List Disclaimer**
+>**Tuyên bố miễn trừ trách nhiệm (Sensitive Word List Disclaimer)**
 >
->This sensitive word list is provided solely for learning, research, and testing purposes. **It is strictly prohibited to use this list for any commercial, illegal, or other activities that may violate local laws or regulations.**
+>Thư viện từ nhạy cảm này chỉ phục vụ mục đích học tập, nghiên cứu và thử nghiệm. **Nghiêm cấm sử dụng thư viện từ nhạy cảm này cho bất kỳ mục đích thương mại, mục đích bất hợp pháp hoặc các hành vi khác có thể vi phạm pháp luật tại nơi bạn sinh sống.**
 >
->Please note:
+>Xin lưu ý:
 >
->- The content of this list is gathered from various sources and **does not represent the position or views of the StarBlog project or its author.**
->- **Users are prohibited from distributing, sharing, reselling, or publicly publishing any part or the entirety of this sensitive word list in any form.** >- Users must comply with all applicable laws and regulations; **any legal liability arising from use shall be borne solely by the user.**
->- For compliance and security reasons, the content of the word library (lexicon) has been encrypted. Users assume all risks associated with decryption and subsequent use.
+>- Nội dung thư viện từ nhạy cảm có nguồn gốc rộng rãi, **không đại diện cho bất kỳ lập trường hay quan điểm nào của dự án StarBlog hoặc tác giả**.
+>- **Nghiêm cấm người dùng phát tán, chia sẻ, bán lại, công bố công khai toàn bộ hoặc một phần nội dung thư viện từ nhạy cảm này dưới bất kỳ hình thức nào**.
+>- Trong quá trình sử dụng, người dùng phải tuân thủ pháp luật hiện hành, **mọi trách nhiệm pháp lý phát sinh do đó do người sử dụng tự chịu**.
+>- Vì lý do tuân thủ và an toàn, nội dung thư viện từ đã được mã hóa, người sử dụng tự chịu rủi ro khi giải mã và sử dụng.
 >
->**By using this software, you acknowledge that you have read and agreed to the full terms of this disclaimer.**
+>**Việc sử dụng đồng nghĩa với việc bạn đã đọc và đồng ý toàn bộ nội dung của tuyên bố miễn trừ trách nhiệm này.**
 
-## Deployment
+## Triển khai
 
-StarBlog supports various deployment methods. The simplest approach is to publish the application in "self-contained" mode and then run it directly on your server.
+StarBlog hỗ trợ nhiều cách triển khai, cách có rào cản thấp nhất là publish ở chế độ self-container, sau đó chạy trực tiếp trên máy chủ.
 
 ```bash
-dotnet publish -r linux-x64 -c Release -p:PublishSingleFile=true -p:PublishTrimmed=true --self-contained true
+dotnet publish -r linux-x64 -c Release -p:PublishSingleFile=true -p:PublishTrimmed=true  --self-contained true
 ```
 
-Once published, upload the files from the `publish` directory to your server and execute the **StarBlog.Web** file.
+Sau khi publish, tải các tệp trong thư mục `publish` lên máy chủ, chạy tệp **StarBlog.Web** là được.
 
-For more information on deployment options, please refer to: [StarBlog - (31) Publishing and Deployment](https://blog.deali.cn/p/starblog-31)
+Các cách triển khai khác có thể tham khảo: [StarBlog - (31) Publish và triển khai](https://blog.deali.cn/p/starblog-31)
 
 
-## 📚 Development Notes
+## 📚 Ghi chép phát triển
 
-This project is accompanied by a series of development notes that document the entire process of building this blog system from scratch. These notes also serve as an introductory tutorial for .NET Core development.
+Dự án này đi kèm một loạt ghi chép phát triển, ghi lại toàn bộ quá trình xây dựng hệ thống blog này từ con số không, đồng thời có thể dùng làm giáo trình học nhập môn phát triển .NetCore.
 
-> PS: As the project code is updated frequently, please use the **v1.0.0 version** when following the development note series.
+> PS: Mã nguồn dự án cập nhật khá nhanh, để học theo loạt bài ghi chép phát triển, vui lòng dùng [mã nguồn phiên bản v1.0.0](https://github.com/Deali-Axy/StarBlog/tree/v1.0.0)
 >
-> Clone command:
+> lệnh clone
 >
 > ```bash
 > git clone --branch v1.0.0 --single-branch https://github.com/Deali-Axy/StarBlog.git
 > ```
 
-- [Building a Blog with .NET Core: StarBlog - (1) Why Build Your Own Blog?] ](https://www.cnblogs.com/deali/p/16104454.html)
-- [Developing a Blog Project with .NET Core: StarBlog - (2) Environment Setup and Project Creation](https://www.cnblogs.com/deali/p/16172342.html)
-- [Developing a Blog Project with .NET Core: StarBlog - (3) Model Design](https://www.cnblogs.com/deali/p/16180920.html)
-- [Developing a Blog Project with .NET Core: StarBlog - (4) Batch Importing Markdown Blog Posts](https://www.cnblogs.com/deali/p/16211720.html)
-- [Developing a Blog Project with .NET Core: StarBlog - (5) Getting Started with the Web Project](https://www.cnblogs.com/deali/p/16276448.html)
-- [Developing a Blog Project with .NET Core: StarBlog - (6) Page Development: Blog Post List](https://www.cnblogs.com/deali/p/16286780.html)
-- [Developing a Blog Project with .NET Core: StarBlog - (7) Page Development: Article Detail Page](https://www.cnblogs.com/deali/p/16293309.html)
-- [Developing a Blog Project with .NET Core: StarBlog - (8) Displaying Hierarchical Category Structures](https://www.cnblogs.com/deali/p/16307604.html)
-- [Developing a Blog Project with .NET Core: StarBlog - (9) Batch Importing Images](https://www.cnblogs.com/deali/p/16328825.html)
-- [Developing a Blog Project with .NET Core: StarBlog - (10) - [Image Waterfall Layout](https://www.cnblogs.com/deali/p/16335162.html)
-- [Developing a Blog Project with .NET Core: StarBlog - (11) Implementing Visit Statistics](https://www.cnblogs.com/deali/p/16349155.html)
-- [Developing a Blog Project with .NET Core: StarBlog - (12) Dynamic Compilation of Razor Pages](https://www.cnblogs.com/deali/p/16391656.html)
-- [Developing a Blog Project with .NET Core: StarBlog - (13) Adding a "Friendly Links" Feature](https://www.cnblogs.com/deali/p/16421699.html)
-- [Developing a Blog Project with .NET Core: StarBlog - (14) Implementing Theme Switching](https://www.cnblogs.com/deali/p/16441294.html)
-- [Developing a Blog Project with .NET Core: StarBlog - (15) Generating Images of Random Dimensions](https://www.cnblogs.com/deali/p/16457314.html)
-- [Developing a Blog Project with .NET Core: StarBlog - (16) New Features (Monitoring/Statistics/Configuration/Initialization)](https://www.cnblogs.com/deali/p/16523157.html)
-- [Developing a Blog Project with .NET Core: StarBlog - (17) Automatically Downloading External Images from Articles](https://www.cnblogs.com/deali/p/16586437.html)
-- [Developing a Blog Project with .NET Core: StarBlog - (18) Implementing Local Typora Article Packaging and Uploading](https://www.cnblogs.com/deali/p/16758878.html)
-- [Developing a Blog Project with .NET Core: StarBlog - (19) Exploring Markdown Rendering Solutions](https://www.cnblogs.com/deali/p/16834452.html)
-- [Developing a Blog Project with .NET Core: StarBlog - (20) Optimizing Image Display](https://www.cnblogs.com/deali/p/16929677.html)
-- [Developing a Blog Project with .NET Core: StarBlog - (21) Getting Started with RESTful API Development](https://www.cnblogs.com/deali/p/16989798.html)
-- [Developing a Blog Project with .NET Core: StarBlog - (22) Developing APIs for Blog Articles](https://www.cnblogs.com/deali/p/16991279.html)
-- [Developing a Blog Project with .NET Core: StarBlog - (23) - [Article List API: Pagination, Filtering, Searching, and Sorting](https://www.cnblogs.com/deali/p/16992573.html)
-- [Developing a Blog Project with .NET Core: StarBlog - (24) Standardizing API Response Formats](https://www.cnblogs.com/deali/p/16995384.html)
-- [Developing a Blog Project with .NET Core: StarBlog - (25) Image API and File Uploads](https://www.cnblogs.com/deali/p/16999818.html)
-- [Developing a Blog Project with .NET Core: StarBlog - (26) Integrating Swagger for API Documentation](https://www.cnblogs.com/deali/p/17093390.html)
-- [Developing a Blog Project with .NET Core: StarBlog - (27) Securing APIs with JWT](https://blog.sblt.deali.cn:9000/Blog/Post/541b8beae183d29e)
-- [Developing a Blog Project with .NET Core: StarBlog - (28) Developing APIs for Friendly Links](https://www.cnblogs.com/deali/p/starblog-28.html)
-- [Developing a Blog Project with .NET Core: StarBlog - (29) Implementing RSS Subscription Functionality](https://www.cnblogs.com/deali/p/17501704.html)
-- [Developing a Blog Project with .NET Core: StarBlog - (30) Implementing a Comment System](https://www.cnblogs.com/deali/p/17910094.html)
-- [Developing a Blog Project with .NET Core: StarBlog - (31) Publishing and Deployment](https://www.cnblogs.com/deali/p/18011965)
-- [Developing a Blog Project with .NET Core: StarBlog - (32) Phase 1 Complete](https://www.cnblogs.com/deali/p/18582026)
+- [Phát triển dự án blog bằng .NetCore StarBlog - (1) Tại sao cần tự viết một blog?](https://www.cnblogs.com/deali/p/16104454.html)
+- [Phát triển dự án blog bằng .NetCore StarBlog - (2) Chuẩn bị môi trường và tạo dự án](https://www.cnblogs.com/deali/p/16172342.html)
+- [Phát triển dự án blog bằng .NetCore StarBlog - (3) Thiết kế mô hình](https://www.cnblogs.com/deali/p/16180920.html)
+- [Phát triển dự án blog bằng .NetCore StarBlog - (4) Nhập hàng loạt blog markdown](https://www.cnblogs.com/deali/p/16211720.html)
+- [Phát triển dự án blog bằng .NetCore StarBlog - (5) Bắt đầu dựng dự án Web](https://www.cnblogs.com/deali/p/16276448.html)
+- [Phát triển dự án blog bằng .NetCore StarBlog - (6) Phát triển trang: danh sách bài viết blog](https://www.cnblogs.com/deali/p/16286780.html)
+- [Phát triển dự án blog bằng .NetCore StarBlog - (7) Phát triển trang: trang chi tiết bài viết](https://www.cnblogs.com/deali/p/16293309.html)
+- [Phát triển dự án blog bằng .NetCore StarBlog - (8) Hiển thị cấu trúc phân cấp danh mục](https://www.cnblogs.com/deali/p/16307604.html)
+- [Phát triển dự án blog bằng .NetCore StarBlog - (9) Nhập hàng loạt hình ảnh](https://www.cnblogs.com/deali/p/16328825.html)
+- [Phát triển dự án blog bằng .NetCore StarBlog - (10) Hình ảnh dạng thác nước (waterfall)](https://www.cnblogs.com/deali/p/16335162.html)
+- [Phát triển dự án blog bằng .NetCore StarBlog - (11) Triển khai thống kê truy cập](https://www.cnblogs.com/deali/p/16349155.html)
+- [Phát triển dự án blog bằng .NetCore StarBlog - (12) Biên dịch động trang Razor](https://www.cnblogs.com/deali/p/16391656.html)
+- [Phát triển dự án blog bằng .NetCore StarBlog - (13) Thêm chức năng liên kết bạn bè](https://www.cnblogs.com/deali/p/16421699.html)
+- [Phát triển dự án blog bằng .NetCore StarBlog - (14) Triển khai chức năng chuyển đổi giao diện](https://www.cnblogs.com/deali/p/16441294.html)
+- [Phát triển dự án blog bằng .NetCore StarBlog - (15) Tạo hình ảnh kích thước ngẫu nhiên](https://www.cnblogs.com/deali/p/16457314.html)
+- [Phát triển dự án blog bằng .NetCore StarBlog - (16) Một số tính năng mới (giám sát/thống kê/cấu hình/khởi tạo)](https://www.cnblogs.com/deali/p/16523157.html)
+- [Phát triển dự án blog bằng .NetCore StarBlog - (17) Tự động tải xuống hình ảnh bên ngoài trong bài viết](https://www.cnblogs.com/deali/p/16586437.html)
+- [Phát triển dự án blog bằng .NetCore StarBlog - (18) Triển khai đóng gói và tải lên bài viết Typora cục bộ](https://www.cnblogs.com/deali/p/16758878.html)
+- [Phát triển dự án blog bằng .NetCore StarBlog - (19) Khám phá giải pháp render Markdown](https://www.cnblogs.com/deali/p/16834452.html)
+- [Phát triển dự án blog bằng .NetCore StarBlog - (20) Tối ưu hiển thị hình ảnh](https://www.cnblogs.com/deali/p/16929677.html)
+- [Phát triển dự án blog bằng .NetCore StarBlog - (21) Bắt đầu phát triển RESTFul API](https://www.cnblogs.com/deali/p/16989798.html)
+- [Phát triển dự án blog bằng .NetCore StarBlog - (22) Phát triển các API liên quan đến bài viết blog](https://www.cnblogs.com/deali/p/16991279.html)
+- [Phát triển dự án blog bằng .NetCore StarBlog - (23) Phân trang, lọc, tìm kiếm, sắp xếp cho API danh sách bài viết](https://www.cnblogs.com/deali/p/16992573.html)
+- [Phát triển dự án blog bằng .NetCore StarBlog - (24) Thống nhất định dạng dữ liệu trả về của API](https://www.cnblogs.com/deali/p/16995384.html)
+- [Phát triển dự án blog bằng .NetCore StarBlog - (25) API hình ảnh và tải tệp lên](https://www.cnblogs.com/deali/p/16999818.html)
+- [Phát triển dự án blog bằng .NetCore StarBlog - (26) Tích hợp tài liệu API Swagger](https://www.cnblogs.com/deali/p/17093390.html)
+- [Phát triển dự án blog bằng .NetCore StarBlog - (27) Dùng JWT để bảo vệ API](https://blog.sblt.deali.cn:9000/Blog/Post/541b8beae183d29e)
+- [Phát triển dự án blog bằng .NetCore StarBlog - (28) Phát triển các API liên quan đến liên kết bạn bè](https://www.cnblogs.com/deali/p/starblog-28.html)
+- [Phát triển dự án blog bằng .NetCore StarBlog - (29) Phát triển chức năng đăng ký RSS](https://www.cnblogs.com/deali/p/17501704.html)
+- [Phát triển dự án blog bằng .NetCore StarBlog - (30) Triển khai hệ thống bình luận](https://www.cnblogs.com/deali/p/17910094.html)
+- [Phát triển dự án blog bằng .NetCore StarBlog - (31) Publish và triển khai](https://www.cnblogs.com/deali/p/18011965)
+- [Phát triển dự án blog bằng .NetCore StarBlog - (32) Kết thúc giai đoạn một](https://www.cnblogs.com/deali/p/18582026)
 - ...
 
-Side Stories (Extras):
+Ngoại truyện:
 
-- [StarBlog Extra (1): New Visit Statistics, Asynchronous Queues, and Sharded Database Storage](https://blog.deali.cn/Blog/Post/a97ecc01df52707a)
-- [StarBlog Extra (2): A Deep Dive into Markdig Source Code – Optimizing ToC Heading Extraction and Article Directory Tree Generation](https://blog.deali.cn/Blog/Post/d47403a6c7399c44)
-- [StarBlog Extra (3): StarBlog Publisher – A Cross-Platform, One-Click Publishing Tool for Content Creation, Powered by DeepSeek](https://blog.deali.cn/Blog/Post/211884ccc25b02e2)
+- [StarBlog Ngoại truyện (1) Chức năng thống kê truy cập hoàn toàn mới, hàng đợi bất đồng bộ, lưu trữ tách cơ sở dữ liệu](https://blog.deali.cn/Blog/Post/a97ecc01df52707a)
+- [StarBlog Ngoại truyện (2) Phân tích sâu mã nguồn Markdig, tối ưu logic trích xuất tiêu đề ToC và sinh cây mục lục bài viết](https://blog.deali.cn/Blog/Post/d47403a6c7399c44)
+- [StarBlog Ngoại truyện (3) StarBlog Publisher, đăng bài đa nền tảng chỉ một cú nhấp, công cụ sáng tác bài viết được DeepSeek hỗ trợ](https://blog.deali.cn/Blog/Post/211884ccc25b02e2)
 
 
-## 📷 Screenshots
+## 📷 Ảnh chụp màn hình
 
-### Blog Homepage
+### Trang chủ blog
 
 ![](./docs/images/home.png)
 
-### Article List
+### Danh sách bài viết
 
 ![](./docs/images/post-list.jpg)
 
-### Photography Page ~~（Though I haven't actually uploaded any photos yet!）~~
+### Trang nhiếp ảnh ~~(tuy hiện giờ vẫn chưa đưa những tấm ảnh đã chụp lên)~~
 
 ![](./docs/images/photos.png)
 
-### Admin Dashboard
+### Trang chủ trang quản trị
 
 ![](./docs/images/admin.png)
 
-### Admin Article List
+### Danh sách bài viết trong trang quản trị
 
 ![](./docs/images/admin-posts.png)
 
-### Article Editor
+### Giao diện chỉnh sửa bài viết
 
 ![](./docs/images/admin-post-edit.png)
 
-### Admin Image List
+### Danh sách hình ảnh trong trang quản trị
 
 ![](./docs/images/admin-photos.png)
 
-## 🔗 Follow Me
+## 🔗 Theo dõi tôi
 
-Official Account | QR Code
-------- | ------
+Tài khoản công chúng (WeChat) | Mã QR tài khoản công chúng 
+------- | ------ 
 ![](./docs/images/coding_lab_logo.jpg) | ![](./docs/images/coding_lab_qr_code.jpg)
 
 
-## 🔄 Limitations of the Current Version
+## 🔄 Những điểm còn thiếu sót của phiên bản hiện tại
 
-Since the launch of the StarBlog project, I have been continuously learning about ASP.NET Core... Compared to when this project was first developed, my familiarity with the framework has grown, and I have naturally come to recognize certain limitations in the existing code:
+Từ khi dự án StarBlog ra mắt đến nay, tôi liên tục học thêm các kiến thức chi tiết về AspNetCore; so với lúc mới phát triển dự án này, mức độ quen thuộc với framework đã tăng lên đôi chút, tự nhiên cũng phát hiện ra những hạn chế trong mã nguồn trước đây:
 
-- The "Read" operation in CRUD should be implemented using the `PATCH` method.
-- The `[HttpHead]` attribute should be added to `GET` endpoints to support the `HEAD` method.
-- Input parameters for filtering and search endpoints should be trimmed.
-- Instead of forcing all API return types to `ApiResponse`, the framework’s native `ActionResult` type should be retained to allow for greater functionality.
-- While API return types were standardized, exception handling was not; a unified error-handling approach should be implemented using the `app.UseExceptionHandler` middleware (or alternatively, exception filters).
-- Support for certain Markdown elements—such as Tables of Contents (TOC), mathematical formulas, code blocks, and images nested within tables—remains inadequate.
+- Thao tác “truy vấn” trong CRUD nên dùng phương thức patch
+- Thêm `[HttpHead]` vào các API phương thức Get để hỗ trợ phương thức Head
+- Các API lọc và tìm kiếm cần trim tham số
+- Không nên đổi toàn bộ giá trị trả về của API thành kiểu `ApiResponse`, nên giữ kiểu `ActionResult` của framework để có nhiều chức năng hơn
+- Chỉ thống nhất giá trị trả về của API mà chưa bọc ngoại lệ, nên dùng middleware `app.UseExceptionHandler` để xử lý lỗi thống nhất (cũng có thể dùng exception filter)
+- Hỗ trợ markdown vẫn chưa tốt ở các phần toc, công thức, khối mã, bảng lồng hình ảnh, v.v.
 
-These issues will be addressed in the v2 release. ## 🚀 v2 Roadmap
+Những vấn đề này sẽ được giải quyết ở phiên bản v2.
 
-I have outlined several new features and optimizations, though this is by no means an exhaustive list for the v2 release. If you have any great suggestions, feel free to share them in the comments!
+## 🚀 Kế hoạch phiên bản v2 mới
 
-### Frontend Refactoring
+Hiện đã lên kế hoạch một số tính năng mới và tối ưu hóa, nhưng chắc chắn đây chưa phải toàn bộ của phiên bản v2, các bạn nếu có đề xuất hay cũng có thể để lại bình luận thảo luận nhé~
 
-- Rebuild using Next.js, Remix, or Astro (specific tech stack TBD).
-- Implement Markdown parsing using a Node.js-based stack.
+### Tái cấu trúc giao diện blog
 
-### Admin Dashboard Refactoring
+- Tái cấu trúc bằng Next.js/Remix/Astro (công nghệ cụ thể sẽ quyết định sau)
+- Dùng chức năng phân tích markdown của hệ sinh thái nodejs
 
-- Rebuild using a React-based tech stack.
+### Tái cấu trúc trang quản trị
 
-### New Analytics Features
+- Tái cấu trúc bằng công nghệ dựa trên react
 
-- Geographic data visualization.
-- Search engine indexing analysis.
-- Anti-scraping/bot protection.
-- Article view count tracking.
+### Chức năng thống kê truy cập mới
 
-### Article Editing
+- Trực quan hóa thông tin địa lý
+- Phân tích việc công cụ tìm kiếm lập chỉ mục
+- Chức năng chống crawler
+- Thống kê lượt đọc bài viết
 
-- Integrate a new Markdown editor (ideally a WYSIWYG-style editor, similar to Wagtail).
-- Support for embedding richer content (e.g., videos) within articles.
+### Chức năng chỉnh sửa bài viết
 
-### Reading Experience Optimization
+- Dùng trình soạn thảo markdown mới (tốt nhất là kiểu WYSIWYG như wagtail)
+- Hỗ trợ thêm nhiều nội dung hơn vào bài viết (như video)
 
-- Replace the current Markdown rendering tool. (I am currently using a heavily modified fork of [editor.md](https://github.com/Deali-Axy/editor.md-ext); while it works, the project is quite old and no longer maintained. I am looking for a modern, well-maintained alternative.)
+### Tối ưu trải nghiệm đọc bài viết
 
-### Article Encryption
+- Dùng công cụ render markdown mới (hiện đang dùng bản [editor.md](https://github.com/Deali-Axy/editor.md-ext) do tôi fork và chỉnh sửa, dùng cũng tạm được, nhưng công cụ này đã rất cũ và cũng ngừng cập nhật, tôi hy vọng tìm được một công cụ render hiện đại hơn, được bảo trì tốt để thay thế)
 
-- Set a static password.
-- Require users to follow the official WeChat account to obtain a dynamic password.
+### Mã hóa bài viết
 
-### New Search Functionality
+- Đặt mật khẩu cố định
+- Theo dõi tài khoản công chúng để lấy mật khẩu động
 
-- Implement a full-text search engine.
-- Incorporate embeddings.
+### Chức năng tìm kiếm mới
 
-### AI Features
+- Dùng công cụ tìm kiếm toàn văn
+- Thêm Embedding
 
-- Knowledge base.
-- Conversational interface (chat).
-- AI-generated article summaries.
-- Automated commenting.
+### Chức năng AI
 
-## 🙏 Acknowledgments
+- Cơ sở tri thức
+- Chức năng hội thoại
+- Tóm tắt bài viết bằng AI
+- Bình luận tự động
+
+
+
+## 🙏 Lời cảm ơn
 
 <p align="center">
-<img src="https://resources.jetbrains.com/storage/products/company/brand/logos/Rider.png" alt="JetBrains Rider" width="200">
+  <img src="https://resources.jetbrains.com/storage/products/company/brand/logos/Rider.png" alt="JetBrains Rider" width="200">
 </p>
 
 <p align="center">
-Special thanks to <a href="https://jb.gg/OpenSourceSupport">JetBrains Open Source Support</a> for providing a free license for the development tool, Rider.
+  Cảm ơn <a href="https://jb.gg/OpenSourceSupport">JetBrains Open Source Support</a> đã cung cấp công cụ phát triển miễn phí Rider
 </p>
-
-#### StarBlog.Web
-	```
-	npm install     # hoặc pnpm install
-	npx gulp move
-	```
