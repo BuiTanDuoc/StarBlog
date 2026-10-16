@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>ClinicManagement.Domain</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- ApplicationUser extends IdentityUser<Guid>; kept in Domain intentionally
+         (pragmatic Clean Architecture: identity is a domain concept here). -->
+    <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="10.0.0" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<RootNamespace>ClinicManagement.Infrastructure</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Hangfire.AspNetCore" Version="1.8.23" />
+		<PackageReference Include="Hangfire.SqlServer" Version="1.8.23" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.21" />
+		<PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="10.0.0" />
+		<PackageReference Include="Serilog" Version="4.0.2" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.2.1" />
+		<PackageReference Include="ClosedXML" Version="0.104.2" />
+		<PackageReference Include="QuestPDF" Version="2024.10.3" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	</ItemGroup>
+
+
+
+	<ItemGroup>
+		<ProjectReference Include="..\ClinicManagement.Application\ClinicManagement.Application.csproj" />
+		<ProjectReference Include="..\ClinicManagement.Persistence\ClinicManagement.Persistence.csproj" />
+	</ItemGroup>
+
+</Project>

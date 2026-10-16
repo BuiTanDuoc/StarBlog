@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>ClinicManagement.Shared</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Needed only for IQueryable's CountAsync/ToListAsync extensions used by PaginatedList.
+         Shared stays otherwise dependency-free. -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.21" />
+  </ItemGroup>
+
+</Project>
