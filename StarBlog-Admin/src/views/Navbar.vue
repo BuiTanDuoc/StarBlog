@@ -69,7 +69,7 @@
         </template>
         <el-menu-item-group title="Quản lý liên kết bạn bè">
           <el-menu-item index="/link/list">Liên kết bạn bè</el-menu-item>
-          <el-menu-item index="/link_exchange/list">Quản lý yêu cầu trao đổi liên kết</el-menu-item>
+          <el-menu-item index="/link_exchange/list">Quản lý trao đổi liên kết</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
     </el-menu>

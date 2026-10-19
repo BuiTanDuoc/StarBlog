@@ -70,7 +70,7 @@
             @click="viewCategoryDetail(category)"
             icon="el-icon-document"
           >
-            Quản lý bài viết
+            Bài viết
           </el-button>
           <el-button
             size="mini"
@@ -236,7 +236,7 @@ export default {
     formatDate(dateString) {
       if (!dateString) return ''
       const date = new Date(dateString)
-      return date.toLocaleDateString('zh-CN')
+      return date.toLocaleDateString('vi-VN')
     }
   }
 }

@@ -16,6 +16,7 @@ import 'bootstrap/dist/css/bootstrap-utilities.css'
 
 // ElementUI
 import ElementUI from 'element-ui'
+import locale from 'element-ui/lib/locale/lang/vi'
 import 'element-ui/lib/theme-chalk/index.css'
 // FontAwesome
 import 'font-awesome/css/font-awesome.min.css'
@@ -62,7 +63,7 @@ Vue.config.productionTip = false
 
 Vue.use(dataV)
 // Import Element
-Vue.use(ElementUI)
+Vue.use(ElementUI, {locale})
 // Import module API
 Vue.use(api)
 // Exceptionless Module

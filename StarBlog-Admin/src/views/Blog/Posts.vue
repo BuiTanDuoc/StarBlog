@@ -67,7 +67,7 @@
         <el-table-column prop="id" label="ID" width="80" :show-overflow-tooltip="true" />
         <el-table-column prop="isPublish" label="Trạng thái" width="150" fixed="left">
           <template v-slot="scope">
-            <el-switch v-model="scope.row.isPublish" active-text="Đã xuất bản" inactive-text="Bản nháp"
+            <el-switch v-model="scope.row.isPublish" active-text="Online" inactive-text="Raw"
               @change="handlePublishToggle(scope.row)" :loading="scope.row.statusLoading">
             </el-switch>
           </template>

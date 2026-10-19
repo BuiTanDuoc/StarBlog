@@ -524,7 +524,7 @@ export default {
 
     formatDate(dateString) {
       if (!dateString) return ''
-      return new Date(dateString).toLocaleDateString('zh-CN')
+      return new Date(dateString).toLocaleDateString('vi-VN')
     }
   }
 }
